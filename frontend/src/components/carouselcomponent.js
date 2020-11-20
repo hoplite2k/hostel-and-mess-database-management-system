@@ -8,7 +8,7 @@ const CarouselComp = () => {
                 <Carousel.Item interval={3000}>
                     <img
                     className="d-block w-100 img-fit"
-                    src="https://rvce.edu.in/sites/default/files/Hostel2.JPG"
+                    src="assets/images/Hostel1.JPG"
                     alt="First slide"
                     />
                     <Carousel.Caption>
@@ -19,7 +19,7 @@ const CarouselComp = () => {
                 <Carousel.Item interval={3000}>
                     <img
                     className="d-block w-100 img-fit"
-                    src="https://rvce.edu.in/sites/default/files/Hostel1.JPG"
+                    src="assets/images/Hostel2.JPG"
                     alt="Third slide"
                     />
                     <Carousel.Caption>
@@ -30,7 +30,7 @@ const CarouselComp = () => {
                 <Carousel.Item interval={3000}>
                     <img
                     className="d-block w-100 img-fit"
-                    src="https://rvce.edu.in/sites/default/files/Hostel3.JPG"
+                    src="assets/images/Hostel3.JPG"
                     alt="Third slide"
                     />
                     <Carousel.Caption>

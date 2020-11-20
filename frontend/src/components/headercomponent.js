@@ -6,14 +6,14 @@ const Header = () => {
         <header>
             <Navbar bg="light" variant="light" expand="lg" collapseOnSelect>
                 <Container>
-                    <Navbar.Brand href="/"><span><img src="https://rvce.edu.in/sites/default/files/logo_0.png" alt="logo" className="logo" /></span></Navbar.Brand>
+                    <Navbar.Brand href="/"><span><img src="assets/images/logo.png" alt="logo" className="logo" /></span></Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
                             <Nav.Link href="/hostel"><span className="fas fa-building"></span> Hostel</Nav.Link>
                             <Nav.Link href="/aboutus" ><span className="fas fa-address-card"></span> About Us</Nav.Link>
-                            <Nav.Link href="/student"><span className="fas fa-user-graduate"></span> Student</Nav.Link>
-                            <Nav.Link href="/employee"><span className="fas fa-user"></span> Employee</Nav.Link>
+                            <Nav.Link href="/students"><span className="fas fa-user-graduate"></span> Student</Nav.Link>
+                            <Nav.Link href="/employees"><span className="fas fa-user"></span> Employee</Nav.Link>
                             <Nav.Link href="/mess"><span className="fas fa-utensils"></span> Mess</Nav.Link>
                         </Nav>
                         <Nav className="ml-auto">

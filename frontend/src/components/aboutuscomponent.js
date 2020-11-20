@@ -21,22 +21,22 @@ const About = () => {
             <Container>
                 <Row>
                     <Col xs={12} md={6}>
-                        <Image src="https://rvce.edu.in/sites/default/files/Hostel2.JPG" alt="Cauvery Hostel" thumbnail/>
+                        <Image src="assets/images/Hostel1.JPG" alt="Cauvery Hostel" thumbnail/>
                         <h3>Cauvery Hostel</h3>
                         <br />
                     </Col>
                     <Col xs={12} md={6}>
-                        <Image src="https://rvce.edu.in/sites/default/files/Hostel1.JPG" alt="Sir M. Visweswaraiah Block" thumbnail/>
+                        <Image src="assets/images/Hostel1.JPG" alt="Sir M. Visweswaraiah Block" thumbnail/>
                         <h3>Sir M. Visweswaraiah Block</h3>
                         <br />
                     </Col>
                     <Col xs={12} md={6}>
-                        <Image src="https://rvce.edu.in/sites/default/files/Hostel2.JPG" alt="Diamond Jubilee Block" thumbnail/>
+                        <Image src="assets/images/Hostel2.JPG" alt="Diamond Jubilee Block" thumbnail/>
                         <h3>Diamond Jubilee Block</h3>
                         <br />
                     </Col>
                     <Col xs={12} md={6}>
-                        <Image src="https://rvce.edu.in/sites/default/files/Hostel3.JPG" alt="Chamundi Block" thumbnail/>
+                        <Image src="assets/images/Hostel3.JPG" alt="Chamundi Block" thumbnail/>
                         <h3>Chamundi Block</h3>
                         <br />
                     </Col>
