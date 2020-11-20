@@ -1,18 +1,19 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const Employee = (props) => {
     return(
         <Card className="p-3 my-3 rounded">
-            <a href={`/employees/${props.employee._id}`}>
+            <Link to={`/employees/${props.employee._id}`}>
                 <Card.Img src={props.employee.image} variant="top"/>
-            </a>
+            </Link>
             <Card.Body>
-                <a href={`/employees/${props.employee._id}`}>
+                <Link to={`/employees/${props.employee._id}`}>
                     <Card.Title as="div">
                         <strong>{props.employee.name}</strong>
                     </Card.Title>
-                </a>
+                </Link>
                 <Card.Text>
                     <ul className="card-text">
                         <li>Staff ID: {props.employee.usn}</li>

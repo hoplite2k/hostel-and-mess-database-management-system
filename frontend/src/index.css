@@ -30,3 +30,13 @@ footer{
 .card-text{
     font-size: 13px;
 }
+
+.person-name{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 50px;
+    text-decoration: underline;
+}
+
+.person-details{
+    font-family: 'Courier New', Courier, monospace;
+}

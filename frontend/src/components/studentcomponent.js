@@ -1,18 +1,19 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const Student = (props) => {
     return(
         <Card className="p-3 my-3 rounded">
-            <a href={`/students/${props.student._id}`}>
+            <Link to={`/students/${props.student._id}`}>
                 <Card.Img src={props.student.image} variant="top"/>
-            </a>
+            </Link>
             <Card.Body>
-                <a href={`/students/${props.student._id}`}>
+                <Link to={`/students/${props.student._id}`}>
                     <Card.Title as="div">
                         <strong>{props.student.name}</strong>
                     </Card.Title>
-                </a>
+                </Link>
                 <Card.Text>
                     <ul className="card-text">
                         <li>USN: {props.student.usn}</li>
