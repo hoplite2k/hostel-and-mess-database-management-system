@@ -11,12 +11,12 @@ const Header = () => {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
-                            <LinkContainer to="/hostel"><Nav.Link><span className="fas fa-building"></span> Hostel</Nav.Link></LinkContainer>
-                            <LinkContainer to="/aboutus"><Nav.Link><span className="fas fa-address-card"></span> About Us</Nav.Link></LinkContainer>
-                            <LinkContainer to="/students"><Nav.Link><span className="fas fa-user-graduate"></span> Student</Nav.Link></LinkContainer>
-                            <LinkContainer to="/employees"><Nav.Link><span className="fas fa-user"></span> Employee</Nav.Link></LinkContainer>
-                            <LinkContainer to="/rooms"><Nav.Link><span className="fas fa-person-booth"></span> Rooms</Nav.Link></LinkContainer>
-                            <LinkContainer to="/mess"><Nav.Link><span className="fas fa-utensils"></span> Mess</Nav.Link></LinkContainer>
+                            <LinkContainer to="/hostel"><Nav.Link><span className="fas fa-building nav-pad"></span> Hostel</Nav.Link></LinkContainer>
+                            <LinkContainer to="/aboutus"><Nav.Link><span className="fas fa-address-card nav-pad"></span> About Us</Nav.Link></LinkContainer>
+                            <LinkContainer to="/students"><Nav.Link><span className="fas fa-user-graduate nav-pad"></span> Student</Nav.Link></LinkContainer>
+                            <LinkContainer to="/employees"><Nav.Link><span className="fas fa-user nav-pad"></span> Employee</Nav.Link></LinkContainer>
+                            <LinkContainer to="/rooms"><Nav.Link><span className="fas fa-person-booth nav-pad"></span> Rooms</Nav.Link></LinkContainer>
+                            <LinkContainer to="/mess"><Nav.Link><span className="fas fa-utensils nav-pad"></span> Mess</Nav.Link></LinkContainer>
                         </Nav>
                         <Nav className="ml-auto">
                         <LinkContainer to="/login"><Nav.Link><span className="fas fa-user-circle fa-lg"></span> Login</Nav.Link></LinkContainer>

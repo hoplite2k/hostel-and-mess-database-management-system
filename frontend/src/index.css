@@ -40,3 +40,7 @@ footer{
 .person-details{
     font-family: 'Courier New', Courier, monospace;
 }
+
+.nav-pad{
+    margin-left: 10px;
+}

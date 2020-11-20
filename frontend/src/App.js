@@ -7,9 +7,11 @@ import Home from './components/homecomponent';
 import About from './components/aboutuscomponent';
 import Students from './components/studentscomponent';
 import Employees from './components/employeescomponent';
+import Rooms from './components/roomscomponent';
 import Footer from './components/footercomponent';
 import StudentDetail from './components/studentdetailcomponent';
 import EmployeeDetail from './components/employeedetailcomponent';
+import RoomDetail from './components/roomdetailcomponent';
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
           <Route path="/students/:id" component={StudentDetail} />
           <Route path="/employees" component={Employees} exact/>
           <Route path="/employees/:id" component={EmployeeDetail} />
+          <Route path="/rooms" component={Rooms} exact/>
+          <Route path="/rooms/:id" component={RoomDetail} />
         </Container>
       </main>      
       <Footer/>
