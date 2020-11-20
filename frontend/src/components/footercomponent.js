@@ -5,6 +5,9 @@ import { Container, Row, Col, Nav } from 'react-bootstrap';
 const Footer = () => {
     return(
         <footer>
+            <div>
+                <hr />
+            </div>
             <Container>
                 <Row className="justify-content-md-center py-4">
                     <Col xs md={{span:2, offset:1}}>

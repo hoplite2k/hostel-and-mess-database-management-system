@@ -3,5 +3,26 @@ main{
 }
 
 footer{
+
     background-color: lavender;
 }
+
+.start{
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.no-padding {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .img-fit{
+      width: 100%;
+      height: 400px;
+  }
+
+  .logo{
+      height: 50px;
+      width: 50px;
+  }
