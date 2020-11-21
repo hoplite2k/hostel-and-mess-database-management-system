@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Breadcrumb, Row, Col, Image} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import STUDENTS from '../shared/students';
+import axios from 'axios';
 
 const StudentDetail = (props) => {
-    const student = STUDENTS.find((s) => s._id === props.match.params.id);
+    
+    const [student, setstudent] = useState({});
+
+    useEffect(() => {
+        const fetchstudent = async () => {
+            const res = await axios.get(`/students/${props.match.params.id}`);
+
+            setstudent(res.data);
+        }
+
+        fetchstudent();
+    });
+
     return(
         <>
             <Breadcrumb>

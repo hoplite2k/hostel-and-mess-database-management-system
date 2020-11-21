@@ -1,9 +1,24 @@
 import React from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
+const AdminButton = (props) => {
+    if(props.isadmin){
+        return(
+            <h3>
+                <strong>{props.name}</strong> 
+                <Badge variant="danger" className="badge-margin">Admin</Badge>
+            </h3>
+        );
+    }
+    else{
+        return(
+            <h3>{props.name}</h3>
+        );
+    }
+}
+
 const Employee = (props) => {
-    const IsAdmin = props.employee.isadmin ? "(Admin)" : "";
     return(
         <Card className="p-3 my-3 rounded">
             <Link to={`/employees/${props.employee._id}`}>
@@ -12,7 +27,7 @@ const Employee = (props) => {
             <Card.Body>
                 <Link to={`/employees/${props.employee._id}`}>
                     <Card.Title as="div">
-                        <strong>{props.employee.name} {IsAdmin}</strong>
+                        <AdminButton name={props.employee.name} isadmin={props.employee.isadmin}/>
                     </Card.Title>
                 </Link>
                 <Card.Text>

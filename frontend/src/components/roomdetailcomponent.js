@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Breadcrumb, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Student from '../components/studentcomponent';
-import ROOMS from '../shared/rooms';
-import STUDENTS from '../shared/students';
+import axios from 'axios';
 
 const Handler = (props) => {
     if(props.one === undefined && props.two === undefined){
@@ -21,9 +20,30 @@ const Handler = (props) => {
 }
 
 const RoomDetail = (props) => {
-    const room = ROOMS.find((r) => r._id === props.match.params.id);
-    const student1 = STUDENTS.find((s) => s.usn === room.oneusn);
-    const student2 = STUDENTS.find((s) => s.usn === room.twousn);
+
+    const [room, setroom] = useState({});
+    const [STUDENTS, setSTUDENTS] =  useState([]);
+
+    useEffect(() => {
+        const fetchroom = async () => {
+            const res = await axios.get(`/rooms/${props.match.params.id}`);
+
+            setroom(res.data);
+        }
+
+        const fetchSTUDENTS = async () => {
+            const res = await axios.get('/students');
+
+            setSTUDENTS(res.data);
+        }
+
+        fetchroom();
+        fetchSTUDENTS();
+    });
+
+    const student1 = STUDENTS.find((student) => student.usn === room.oneusn);
+    const student2 = STUDENTS.find((student) => student.usn === room.twousn);
+
     return(
         <>
             <Breadcrumb>
@@ -37,12 +57,13 @@ const RoomDetail = (props) => {
                         <Student student={student1} />
                     </Col> : <div></div>
                 }
-                {   student2 !== undefined ?
+                {
+                    student2 !== undefined ?
                     <Col key={student2._id} sm={12} md={6} lg={4} xl={3}>
                         <Student student={student2} />
                     </Col> : <div></div>
-                }
-                <Handler one={student1} two={student2}/>
+                }   
+                <Handler one={student1} two={student2} />
             </Row>
         </>
     );

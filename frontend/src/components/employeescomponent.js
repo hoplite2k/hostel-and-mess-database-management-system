@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Breadcrumb } from 'react-bootstrap';
-import EMPLOYEES from '../shared/employees';
+import axios from 'axios';
 import Employee from '../components/employeecomponent';
 
 const Employees = () => {
+
+    const [EMPLOYEES, setEMPLOYEES] = useState([]);
+
+    useEffect(() => {
+        const fetchEMPLOYEES = async () => {
+            const res = await axios.get('/employees');
+
+            setEMPLOYEES(res.data);
+        }
+
+        fetchEMPLOYEES();
+    }, []);
+
     return(
         <>
             <Breadcrumb>

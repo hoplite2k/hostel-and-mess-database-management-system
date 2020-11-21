@@ -1,25 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Breadcrumb, Row, Col, Image, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import EMPLOYEES from '../shared/employees';
+import axios from 'axios';
 
 const AdminButton = (props) => {
     if(props.isadmin){
         return(
-            <h4>
-                <Badge variant="danger">Admin</Badge>
-            </h4>
+            <h3>
+                <strong>{props.name}</strong>
+                <Badge variant="danger" className="badge-margin">Admin</Badge>
+            </h3>
         );
     }
     else{
         return(
-            <div></div>
+            <h3><strong>{props.name}</strong></h3>
         );
     }
 }
 
 const EmployeeDetail = (props) => {
-    const employee = EMPLOYEES.find((e) => e._id === props.match.params.id);
+
+
+    const [employee, setemployee] = useState({});
+
+    useEffect(() => {
+        const fetchemployee = async () => {
+            const res = await axios.get(`/employees/${props.match.params.id}`);
+
+            setemployee(res.data);
+        }
+
+        fetchemployee();
+    });
+
     return(
         <>
             <Breadcrumb>
@@ -33,7 +47,7 @@ const EmployeeDetail = (props) => {
                 <Col md={12} lg={{span:4, offset:2}}>
                     <div>
                         <h4 className="person-name">
-                            {employee.name} <AdminButton isadmin={employee.isadmin}/>
+                            <AdminButton name={employee.name} isadmin={employee.isadmin}/>
                         </h4>
                     </div>
                     <br />

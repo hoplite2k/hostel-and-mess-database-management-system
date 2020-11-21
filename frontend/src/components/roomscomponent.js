@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Breadcrumb, Row, Col } from 'react-bootstrap';
 import Room from '../components/roomcomponent';
-import ROOMS from '../shared/rooms';
+import axios from 'axios';
 
 const Rooms = () => {
+
+    const [ROOMS, setROOMS] = useState([]);
+
+    useEffect(() => {
+        const fetchROOMS = async () => {
+            const res = await axios.get('/rooms');
+
+            setROOMS(res.data);
+        }
+
+        fetchROOMS();
+    }, []);
+
     return(
         <>
             <Breadcrumb>

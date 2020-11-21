@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import { Row, Col, Breadcrumb } from 'react-bootstrap';
-import STUDENTS from '../shared/students';
 import Student from '../components/studentcomponent';
+import axios from 'axios';
 
 const Students = () => {
+    const [STUDENTS, setSTUDENTS] = useState([]);
+
+    useEffect(() => {
+        const fetchSTUDENTS = async () => {
+            const res = await axios.get('/students');
+
+            setSTUDENTS(res.data);
+        }
+
+        fetchSTUDENTS();
+    }, []);
+
     return(
         <>
             <Breadcrumb>

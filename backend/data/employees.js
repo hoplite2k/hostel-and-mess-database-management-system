@@ -74,4 +74,4 @@ const EMPLOYEES =
 		},
     ];
     
-export default EMPLOYEES;
+module.exports = EMPLOYEES;

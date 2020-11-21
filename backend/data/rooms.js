@@ -56,6 +56,6 @@ const ROOMS =
             oneusn: '1RV18IS026',
             twousn: '1RV18IS022',
         },
-    ]
+    ];
 
-export default ROOMS;
+module.exports = ROOMS;

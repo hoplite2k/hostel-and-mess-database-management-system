@@ -25,8 +25,8 @@ const Room = (props) => {
                     </Card.Title>
                     <Card.Text>
                         <ul className="card-text">
-                            <li><strong>Student 1:</strong> {props.room.one}</li>
-                            <li><strong>Student 2:</strong> {props.room.two}</li>
+                            <li><strong>Student 1:</strong> {props.room.one ? props.room.one : " - "}</li>
+                            <li><strong>Student 2:</strong> {props.room.two ? props.room.two : " - "}</li>
                         </ul>
                     </Card.Text>
                     <Card.Text>

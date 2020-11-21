@@ -104,4 +104,4 @@ const STUDENTS =
 		},
     ];
     
-export default STUDENTS;
+module.exports = STUDENTS;
