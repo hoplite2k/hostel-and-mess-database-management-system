@@ -21,7 +21,7 @@ const Room = (props) => {
             <Card className="p-3 my-3 rounded" bg={variant}>
                 <Card.Body>                    
                     <Card.Title as="div">
-                        <center><strong>{props.room.roomno}</strong></center>
+                        <center><h3><strong>{props.room.roomno}</strong></h3></center>
                     </Card.Title>
                     <Card.Text>
                         <ul className="card-text">

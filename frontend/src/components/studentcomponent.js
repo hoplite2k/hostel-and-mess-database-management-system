@@ -11,7 +11,7 @@ const Student = (props) => {
             <Card.Body>
                 <Link to={`/students/${props.student._id}`}>
                     <Card.Title as="div">
-                        <strong>{props.student.name}</strong>
+                        <h3><strong>{props.student.name}</strong></h3>
                     </Card.Title>
                 </Link>
                 <Card.Text>

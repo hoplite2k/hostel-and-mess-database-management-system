@@ -39,7 +39,7 @@ const RoomDetail = (props) => {
 
         fetchroom();
         fetchSTUDENTS();
-    });
+    }, [props.match]);
 
     const student1 = STUDENTS.find((student) => student.usn === room.oneusn);
     const student2 = STUDENTS.find((student) => student.usn === room.twousn);

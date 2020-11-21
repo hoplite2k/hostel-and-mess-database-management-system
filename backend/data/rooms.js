@@ -58,4 +58,4 @@ const ROOMS =
         },
     ];
 
-module.exports = ROOMS;
+export default ROOMS;

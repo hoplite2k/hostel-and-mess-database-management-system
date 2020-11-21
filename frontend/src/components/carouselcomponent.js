@@ -8,7 +8,7 @@ const CarouselComp = () => {
                 <Carousel.Item interval={3000}>
                     <img
                     className="d-block w-100 img-fit"
-                    src="assets/images/Hostel1.JPG"
+                    src="images/Hostel1.JPG"
                     alt="First slide"
                     />
                     <Carousel.Caption>
@@ -19,8 +19,8 @@ const CarouselComp = () => {
                 <Carousel.Item interval={3000}>
                     <img
                     className="d-block w-100 img-fit"
-                    src="assets/images/Hostel2.JPG"
-                    alt="Third slide"
+                    src="images/Hostel2.JPG"
+                    alt="Second slide"
                     />
                     <Carousel.Caption>
                     <h3>Second slide label</h3>
@@ -30,7 +30,7 @@ const CarouselComp = () => {
                 <Carousel.Item interval={3000}>
                     <img
                     className="d-block w-100 img-fit"
-                    src="assets/images/Hostel3.JPG"
+                    src="images/Hostel3.JPG"
                     alt="Third slide"
                     />
                     <Carousel.Caption>

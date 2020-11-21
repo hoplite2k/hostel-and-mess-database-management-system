@@ -32,7 +32,7 @@ const EmployeeDetail = (props) => {
         }
 
         fetchemployee();
-    });
+    }, [props.match]);
 
     return(
         <>

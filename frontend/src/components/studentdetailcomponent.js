@@ -15,7 +15,7 @@ const StudentDetail = (props) => {
         }
 
         fetchstudent();
-    });
+    }, [props.match]);
 
     return(
         <>

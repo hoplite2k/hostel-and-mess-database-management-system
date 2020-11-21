@@ -7,7 +7,7 @@ const Header = () => {
         <header>
             <Navbar bg="light" variant="light" expand="lg" collapseOnSelect>
                 <Container>
-                    <LinkContainer to="/"><Navbar.Brand><span><img src="assets/images/logo.png" alt="logo" className="logo" /></span></Navbar.Brand></LinkContainer>
+                    <LinkContainer to="/"><Navbar.Brand><span><img src="images/logo.png" alt="logo" className="logo" /></span></Navbar.Brand></LinkContainer>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
