@@ -3,9 +3,22 @@ import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 const Room = (props) => {
+    var variant, vacancy;
+    if(props.room.one === null && props.room.two === null){
+        variant = "danger";
+        vacancy = 2;
+    }
+    else if(props.room.one === null || props.room.two === null){
+        variant = "warning";
+        vacancy = 1;
+    }
+    else{
+        variant = "light";
+        vacancy = 0;
+    }
     return(
         <Link to={`/rooms/${props.room._id}`}>
-            <Card className="p-3 my-3 rounded" bg="light">
+            <Card className="p-3 my-3 rounded" bg={variant}>
                 <Card.Body>                    
                     <Card.Title as="div">
                         <center><strong>{props.room.roomno}</strong></center>
@@ -15,6 +28,9 @@ const Room = (props) => {
                             <li><strong>Student 1:</strong> {props.room.one}</li>
                             <li><strong>Student 2:</strong> {props.room.two}</li>
                         </ul>
+                    </Card.Text>
+                    <Card.Text>
+                        <center><strong>Vacancy:</strong> {vacancy}</center>
                     </Card.Text>
                 </Card.Body>
             </Card>

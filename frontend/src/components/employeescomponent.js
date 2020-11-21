@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col, Breadcrumb } from 'react-bootstrap';
-import STUDENTS from '../shared/students';
+import EMPLOYEES from '../shared/employees';
 import Employee from '../components/employeecomponent';
 
 const Employees = () => {
@@ -10,7 +10,7 @@ const Employees = () => {
                 <Breadcrumb.Item href="#" active>Employees</Breadcrumb.Item>
             </Breadcrumb>
             <Row>
-                {STUDENTS.map((employee) => (
+                {EMPLOYEES.map((employee) => (
                     <Col key={employee._id} sm={12} md={6} lg={4} xl={3}>
                         <Employee employee={employee} />
                     </Col>

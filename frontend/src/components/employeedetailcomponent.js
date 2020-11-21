@@ -1,14 +1,29 @@
 import React from 'react';
-import { Breadcrumb, Row, Col, Image} from 'react-bootstrap';
+import { Breadcrumb, Row, Col, Image, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import STUDENTS from '../shared/students';
+import EMPLOYEES from '../shared/employees';
+
+const AdminButton = (props) => {
+    if(props.isadmin){
+        return(
+            <h4>
+                <Badge variant="danger">Admin</Badge>
+            </h4>
+        );
+    }
+    else{
+        return(
+            <div></div>
+        );
+    }
+}
 
 const EmployeeDetail = (props) => {
-    const employee = STUDENTS.find((e) => e._id === props.match.params.id);
+    const employee = EMPLOYEES.find((e) => e._id === props.match.params.id);
     return(
         <>
             <Breadcrumb>
-                <Breadcrumb.Item><Link to="/students">Students</Link></Breadcrumb.Item>
+                <Breadcrumb.Item><Link to="/employees">Employees</Link></Breadcrumb.Item>
                 <Breadcrumb.Item href="#" active>{employee.name}</Breadcrumb.Item>
             </Breadcrumb>
             <Row>
@@ -16,12 +31,14 @@ const EmployeeDetail = (props) => {
                     <Image src={employee.image} alt={employee.name} thumbnail/>
                 </Col>
                 <Col md={12} lg={{span:4, offset:2}}>
-                    <div className="person-name">
-                        {employee.name}
+                    <div>
+                        <h4 className="person-name">
+                            {employee.name} <AdminButton isadmin={employee.isadmin}/>
+                        </h4>
                     </div>
                     <br />
                     <div className="person-details">
-                        <p><strong>Staff ID: </strong>{employee.usn}</p>
+                        <p><strong>Staff ID: </strong>{employee.staffid}</p>
                         <p><strong>Email: </strong>{employee.email}</p>
                         <p><strong>Contact: </strong>{employee.contact}</p>
                         <p><strong>DOB: </strong>{employee.dob}</p>
