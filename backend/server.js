@@ -1,10 +1,14 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import colors from 'colors';
+import ConnectDB from './config/db.js';
 import STUDENTS from './data/students.js';
 import EMPLOYEES from './data/employees.js';
 import ROOMS from './data/rooms.js';
 
 dotenv.config();
+
+ConnectDB();
 
 const app = express()
 
@@ -34,4 +38,4 @@ app.get('/rooms/:id', (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} on port ${PORT}`));
+app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} on port ${PORT}`.yellow.bold));
