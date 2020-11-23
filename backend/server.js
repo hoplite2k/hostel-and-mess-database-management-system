@@ -1,41 +1,33 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import colors from 'colors';
-import ConnectDB from './config/db.js';
-import STUDENTS from './data/students.js';
-import EMPLOYEES from './data/employees.js';
-import ROOMS from './data/rooms.js';
+import express from "express";
+import dotenv from "dotenv";
+import colors from "colors";
+import { notFound, errorHandler } from './middleware/errormiddleware.js';
+import ConnectDB from "./config/db.js";
+
+import Studentrouter from "./routes/studentsroute.js";
+import Employeerouter from "./routes/employeesroute.js";
+import Roomrouter from "./routes/roomsroute.js";
+import Messrouter from "./routes/messroute.js";
 
 dotenv.config();
 
 ConnectDB();
 
-const app = express()
+const app = express();
 
-app.get('/students', (req, res) => {
-    res.json(STUDENTS);
-});
-app.get('/students/:id', (req, res) => {
-    const student = STUDENTS.find((s) => s._id === req.params.id);
-    res.json(student);
-});
+app.use("/students", Studentrouter);
+app.use("/employees", Employeerouter);
+app.use("/rooms", Roomrouter);
+app.use("/mess", Messrouter);
 
-app.get('/employees', (req, res) => {
-    res.json(EMPLOYEES);
-});
-app.get('/employees/:id', (req, res) => {
-    const employee = EMPLOYEES.find((e) => e._id === req.params.id);
-    res.json(employee);
-});
-
-app.get('/rooms', (req, res) => {
-    res.json(ROOMS);
-});
-app.get('/rooms/:id', (req, res) => {
-    const room = ROOMS.find((r) => r._id === req.params.id);
-    res.json(room);
-});
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} on port ${PORT}`.yellow.bold));
+app.listen(
+  PORT,
+  console.log(
+    `Server running in ${process.env.NODE_ENV} on port ${PORT}`.yellow.bold
+  )
+);

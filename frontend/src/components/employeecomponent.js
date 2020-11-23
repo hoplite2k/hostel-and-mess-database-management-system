@@ -13,7 +13,7 @@ const AdminButton = (props) => {
     }
     else{
         return(
-            <h3>{props.name}</h3>
+            <h3><strong>{props.name}</strong></h3>
         );
     }
 }

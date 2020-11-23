@@ -5,6 +5,7 @@ const roomSchema = mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true
     },
     roomno: {
       type: Number,
@@ -14,11 +15,13 @@ const roomSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Student",
       default: null,
+      required: true
     },
     student2: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Student",
       default: null,
+      required: true
     },
     roomallocationyear: {
       type: Number,
