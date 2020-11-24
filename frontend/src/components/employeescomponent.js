@@ -1,34 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Breadcrumb } from 'react-bootstrap';
-import axios from 'axios';
 import Employee from '../components/employeecomponent';
+import { listemployees } from '../actions/employeeactions';
+import Loader from '../components/loadercomponent';
+import Message from '../components/messagecomponent';
 
 const Employees = () => {
 
-    const [EMPLOYEES, setEMPLOYEES] = useState([]);
+    const dispatch = useDispatch();
+
+    const employeelist = useSelector((state) => state.employeelist);
+    const { loading, error, employees } = employeelist;
 
     useEffect(() => {
-        const fetchEMPLOYEES = async () => {
-            const res = await axios.get('/employees');
-
-            setEMPLOYEES(res.data);
-        }
-
-        fetchEMPLOYEES();
-    }, []);
+        dispatch(listemployees());
+    }, [dispatch]);
 
     return(
         <>
             <Breadcrumb>
                 <Breadcrumb.Item href="#" active>Employees</Breadcrumb.Item>
             </Breadcrumb>
-            <Row>
-                {EMPLOYEES.map((employee) => (
-                    <Col key={employee._id} sm={12} md={6} lg={4} xl={3}>
-                        <Employee employee={employee} />
-                    </Col>
-                ))}
-            </Row>
+            {
+                loading ? <Loader /> : error ? <Message variant='danger'>{`Error ${error.status}: ${error.statusText}`}</Message> :
+                <Row>
+                    {employees.map((employee) => (
+                        <Col key={employee._id} sm={12} md={6} lg={4} xl={3}>
+                            <Employee employee={employee} />
+                        </Col>
+                    ))}
+                </Row>
+            }
         </>
     );
 }

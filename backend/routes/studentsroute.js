@@ -5,7 +5,7 @@ import Student from "../models/studentmodel.js";
 
 Studentrouter.get("/", asyncHandler(async (req, res) => {
   const students = await Student.find({});
-
+  
   res.json(students);
 }));
 

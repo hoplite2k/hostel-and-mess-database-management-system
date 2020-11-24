@@ -15,6 +15,10 @@ ConnectDB();
 
 const app = express();
 
+app.get("/", async (req,res) => {
+  res.json("Welcome!");
+});
+
 app.use("/students", Studentrouter);
 app.use("/employees", Employeerouter);
 app.use("/rooms", Roomrouter);

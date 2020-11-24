@@ -1,33 +1,33 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Breadcrumb, Row, Col } from 'react-bootstrap';
-import { listrooms } from '../actions/roomactions';
-import Room from '../components/roomcomponent';
+import { listmess } from '../actions/messactions';
+import Mess from '../components/messcomponent';
 import Loader from '../components/loadercomponent';
 import Message from '../components/messagecomponent';
 
-const Rooms = () => {
+const Messes = () => {
 
     const dispatch = useDispatch();
 
-    const roomlist = useSelector((state) => state.roomlist);
-    const {loading, error, rooms} = roomlist; 
+    const messlist = useSelector((state) => state.messlist);
+    const {loading, error, messes} = messlist; 
 
     useEffect(() => {
-        dispatch(listrooms());
+        dispatch(listmess());
     }, [dispatch]);
 
     return(
         <>
             <Breadcrumb>
-                <Breadcrumb.Item href="#" active>Rooms</Breadcrumb.Item>
+                <Breadcrumb.Item href="#" active>Mess</Breadcrumb.Item>
             </Breadcrumb>
             {
                 loading ? <Loader /> : error ? <Message variant='danger'>{`Error ${error.status}: ${error.statusText}`}</Message> :
                 <Row>
-                    {rooms.map((room) => (
-                        <Col key={room._id} sm={12} md={6} lg={4} xl={3}>
-                            <Room room={room} />
+                    {messes.map((mess) => (
+                        <Col key={mess._id} sm={12} md={6} lg={4} xl={3}>
+                            <Mess mess={mess} />
                         </Col>
                     ))}
                 </Row>
@@ -36,4 +36,4 @@ const Rooms = () => {
     );
 }
 
-export default Rooms;
+export default Messes;
