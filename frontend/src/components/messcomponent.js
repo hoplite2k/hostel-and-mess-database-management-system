@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Mess = (props) => {
     return(
         <Link to={`/mess/${props.mess._id}`}>
-            <Card className="p-3 my-3 rounded">
+            <Card style={{height:"200px"}} className="p-3 my-3 rounded">
                 <Card.Body>                    
                     <Card.Title as="div">
                         <center><h3><strong>{props.mess.date}</strong></h3></center>

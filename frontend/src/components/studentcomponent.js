@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Student = (props) => {
     return(
-        <Card className="p-3 my-3 rounded">
+        <Card style={{height:"350px"}} className="p-3 my-3 rounded">
             <Link to={`/students/${props.student._id}`}>
                 <Card.Img src={props.student.image} variant="top"/>
             </Link>

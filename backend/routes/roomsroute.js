@@ -10,7 +10,7 @@ Roomrouter.get("/", asyncHandler(async (req, res) => {
 }));
 
 Roomrouter.get("/:id", asyncHandler(async (req, res) => {
-  const room = await Room.findById(req.params.id);
+  const room = await Room.findById(req.params.id).populate('student1').populate('student2');
   if (room) {
     res.json(room);
   } else {

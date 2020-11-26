@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 
 const Room = (props) => {
     var variant, vacancy;
-    if(props.room.one === null && props.room.two === null){
+    if(props.room.student1 === null && props.room.student2 === null){
         variant = "danger";
         vacancy = 2;
     }
-    else if(props.room.one === null || props.room.two === null){
+    else if(props.room.student1 === null || props.room.student2 === null){
         variant = "warning";
         vacancy = 1;
     }
@@ -18,15 +18,15 @@ const Room = (props) => {
     }
     return(
         <Link to={`/rooms/${props.room._id}`}>
-            <Card className="p-3 my-3 rounded" bg={variant}>
+            <Card style={{height:"300px"}} className="p-3 my-3 rounded" bg={variant}>
                 <Card.Body>                    
                     <Card.Title as="div">
                         <center><h3><strong>{props.room.roomno}</strong></h3></center>
                     </Card.Title>
                     <Card.Text>
                         <ul className="card-text">
-                            <li><strong>Student 1:</strong> {props.room.one ? props.room.one : " - "}</li>
-                            <li><strong>Student 2:</strong> {props.room.two ? props.room.two : " - "}</li>
+                            <li><strong>Student 1:</strong> {props.room.student1 ? props.room.student1 : " - "}</li>
+                            <li><strong>Student 2:</strong> {props.room.student2 ? props.room.student2 : " - "}</li>
                         </ul>
                     </Card.Text>
                     <Card.Text>

@@ -2,11 +2,10 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import { studentlistReducer } from './reducers/studentreducers';
-import { employeelistReducer } from './reducers/employeereducers';
-import { roomlistReducer } from './reducers/roomreducers';
-import { messlistReducer } from './reducers/messreducers';
-
+import { studentlistReducer, studentdetailsReducer } from './reducers/studentreducers';
+import { employeelistReducer, employeedetailsReducer } from './reducers/employeereducers';
+import { roomlistReducer, roomdetailsReducer } from './reducers/roomreducers';
+import { messlistReducer, messdetailsReducer } from './reducers/messreducers';
 
 
 const reducer = combineReducers({
@@ -14,6 +13,11 @@ const reducer = combineReducers({
     employeelist: employeelistReducer,
     roomlist: roomlistReducer,
     messlist: messlistReducer,
+
+    studentdetails: studentdetailsReducer,
+    employeedetails: employeedetailsReducer,
+    roomdetails: roomdetailsReducer,
+    messdetails: messdetailsReducer,
 });
 
 const initialState = {};

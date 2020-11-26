@@ -56,7 +56,6 @@ const studentSchema = mongoose.Schema(
     },
     roomno: {
       type: String,
-      required: true,
     },
     roomatename: {
       type: String,

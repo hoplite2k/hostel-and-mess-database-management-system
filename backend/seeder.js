@@ -32,7 +32,7 @@ const importData = async () => {
     const students = STUDENTS.map((s) => {
       return { ...s, user: firstadmin };
     });
-    await Student.insertMany(students);
+    const createdStudents = await Student.insertMany(students);
 
     const employees = EMPLOYEES.map((e) => {
       return { ...e, user: firstadmin };
@@ -45,7 +45,13 @@ const importData = async () => {
     await Mess.insertMany(mess);
 
     const rooms = ROOMS.map((r) => {
-      return { ...r, user: firstadmin };
+      const inmates = createdStudents.filter((s) => s.roomno === r.roomno);
+      if(inmates.length === 2)
+        return { ...r, user: firstadmin, student1: inmates[0]._id , student2: inmates[1]._id };
+      else if(inmates.length === 1)
+        return { ...r, user: firstadmin, student1: inmates[0]._id, student2: null };
+      else
+        return { ...r, user: firstadmin, student1: null , student2: null };
     });
     await Room.insertMany(rooms);
 

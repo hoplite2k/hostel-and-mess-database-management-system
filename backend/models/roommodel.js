@@ -8,20 +8,18 @@ const roomSchema = mongoose.Schema(
       required: true
     },
     roomno: {
-      type: Number,
+      type: String,
       required: true,
     },
     student1: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Student",
-      default: null,
-      required: true
+      default: null
     },
     student2: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Student",
-      default: null,
-      required: true
+      default: null
     },
     roomallocationyear: {
       type: Number,

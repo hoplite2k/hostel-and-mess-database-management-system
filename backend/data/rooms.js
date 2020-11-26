@@ -1,36 +1,36 @@
 const ROOMS = [
   {
-    roomno: 1,
+    roomno: "001",
     roomallocationyear: 2014,
     roomvacatingyear: 2015,
   },
   {
-    roomno: 2,
+    roomno: "002",
     roomallocationyear: 2014,
     roomvacatingyear: 2015,
   },
   {
-    roomno: 3,
+    roomno: "003",
     roomallocationyear: 2014,
     roomvacatingyear: 2015,
   },
   {
-    roomno: 4,
+    roomno: "004",
     roomallocationyear: 2014,
     roomvacatingyear: 2015,
   },
   {
-    roomno: 5,
+    roomno: "005",
     roomallocationyear: 2014,
     roomvacatingyear: 2015,
   },
   {
-    roomno: 7,
+    roomno: "007",
     roomallocationyear: 2014,
     roomvacatingyear: 2015,
   },
   {
-    roomno: 6,
+    roomno: "006",
     roomallocationyear: 2014,
     roomvacatingyear: 2015,
   },
