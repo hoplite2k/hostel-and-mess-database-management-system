@@ -41,8 +41,9 @@ footer{
     font-family: 'Courier New', Courier, monospace;
 }
 
-.nav-pad{
-    margin-left: 10px;
+.nav-mar{
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .badge-margin{

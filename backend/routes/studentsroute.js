@@ -1,22 +1,10 @@
 import express from "express";
-import asyncHandler from "express-async-handler";
+import { protect } from "../middleware/authmiddleware.js";
 const Studentrouter = express.Router();
-import Student from "../models/studentmodel.js";
+import { getStudentbyId, getStudents } from '../controllers/studentcontroller.js';
 
-Studentrouter.get("/", asyncHandler(async (req, res) => {
-  const students = await Student.find({});
-  
-  res.json(students);
-}));
+Studentrouter.route('/').get(protect, getStudents);
 
-Studentrouter.get("/:id", asyncHandler(async (req, res) => {
-  const student = await Student.findById(req.params.id);
-  if (student) {
-    res.json(student);
-  } else {
-    res.status(404);
-    throw new Error("Student not found");
-  }
-}));
+Studentrouter.route('/:id').get(protect, getStudentbyId);
 
 export default Studentrouter;

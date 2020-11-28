@@ -6,6 +6,7 @@ import { studentlistReducer, studentdetailsReducer } from './reducers/studentred
 import { employeelistReducer, employeedetailsReducer } from './reducers/employeereducers';
 import { roomlistReducer, roomdetailsReducer } from './reducers/roomreducers';
 import { messlistReducer, messdetailsReducer } from './reducers/messreducers';
+import { userloginReducer, userdetailsReducer,userupdatepasswordReducer } from './reducers/userreducers';
 
 
 const reducer = combineReducers({
@@ -18,9 +19,17 @@ const reducer = combineReducers({
     employeedetails: employeedetailsReducer,
     roomdetails: roomdetailsReducer,
     messdetails: messdetailsReducer,
+
+    userlogin: userloginReducer,
+    userdetails: userdetailsReducer,
+    userupdatepassword: userupdatepasswordReducer,
 });
 
-const initialState = {};
+const userinfofromstorage = localStorage.getItem('userinfo') ? JSON.parse(localStorage.getItem('userinfo')) : null;
+
+const initialState = {
+    userlogin : { userinfo: userinfofromstorage },
+};
 
 const middleware = [thunk];
 

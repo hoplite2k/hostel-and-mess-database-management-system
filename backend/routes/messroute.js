@@ -1,22 +1,10 @@
 import express from "express";
-import asyncHandler from "express-async-handler";
+import { protect } from "../middleware/authmiddleware.js";
 const Messrouter = express.Router();
-import Mess from "../models/messmodel.js";
+import { getMessbyId, getMesses } from '../controllers/messcontroller.js';
 
-Messrouter.get("/", asyncHandler(async (req, res) => {
-  const mess = await Mess.find({});
+Messrouter.route('/').get(protect, getMesses);
 
-  res.json(mess);
-}));
-
-Messrouter.get("/:id", asyncHandler(async (req, res) => {
-  const mess = await Mess.findById(req.params.id);
-  if (mess) {
-    res.json(mess);
-  } else {
-    res.status(404);
-    throw new Error("Mess detail not found");
-  }
-}));
+Messrouter.route('/:id').get(protect, getMessbyId);
 
 export default Messrouter;

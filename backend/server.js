@@ -8,12 +8,15 @@ import Studentrouter from "./routes/studentsroute.js";
 import Employeerouter from "./routes/employeesroute.js";
 import Roomrouter from "./routes/roomsroute.js";
 import Messrouter from "./routes/messroute.js";
+import Userrouter from "./routes/userroutes.js";
 
 dotenv.config();
 
 ConnectDB();
 
 const app = express();
+
+app.use(express.json());
 
 app.get("/", async (req,res) => {
   res.json("Welcome!");
@@ -23,6 +26,7 @@ app.use("/students", Studentrouter);
 app.use("/employees", Employeerouter);
 app.use("/rooms", Roomrouter);
 app.use("/mess", Messrouter);
+app.use("/users", Userrouter);
 
 app.use(notFound);
 app.use(errorHandler);

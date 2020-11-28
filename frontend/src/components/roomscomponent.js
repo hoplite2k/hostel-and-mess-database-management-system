@@ -6,31 +6,40 @@ import Room from '../components/roomcomponent';
 import Loader from '../components/loadercomponent';
 import Message from '../components/messagecomponent';
 
-const Rooms = () => {
+const Rooms = (props) => {
 
     const dispatch = useDispatch();
 
     const roomlist = useSelector((state) => state.roomlist);
-    const {loading, error, rooms} = roomlist; 
+    const {loading, error, rooms} = roomlist;
+
+    const userlogin = useSelector((state) => state.userlogin);
+    const {userinfo} = userlogin;
 
     useEffect(() => {
-        dispatch(listrooms());
-    }, [dispatch]);
+        if(!userinfo){
+            props.history.push('/login');
+        } else {
+            dispatch(listrooms('profile'));
+        }    
+    }, [dispatch, props.history, userinfo]);
 
     return(
         <>
-            <Breadcrumb>
-                <Breadcrumb.Item href="#" active>Rooms</Breadcrumb.Item>
-            </Breadcrumb>
             {
                 loading ? <Loader /> : error ? <Message variant='danger'>{`Error ${error.status}: ${error.statusText}`}</Message> :
-                <Row>
-                    {rooms.map((room) => (
-                        <Col key={room._id} sm={12} md={6} lg={4} xl={3}>
-                            <Room room={room} />
-                        </Col>
-                    ))}
-                </Row>
+                <>
+                    <Breadcrumb>
+                        <Breadcrumb.Item href="#" active>Rooms</Breadcrumb.Item>
+                    </Breadcrumb>
+                    <Row>
+                        {rooms.map((room) => (
+                            <Col key={room._id} sm={12} md={6} lg={4} xl={3}>
+                                <Room room={room} />
+                            </Col>
+                        ))}
+                    </Row>
+                </>
             }
         </>
     );

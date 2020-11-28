@@ -14,6 +14,8 @@ import StudentDetail from './components/studentdetailcomponent';
 import EmployeeDetail from './components/employeedetailcomponent';
 import RoomDetail from './components/roomdetailcomponent';
 import MessDetail from './components/messdetailcomponent';
+import Login from './components/logincomponent';
+import Profile from './components/profilecomponent';
 
 function App() {
   return (
@@ -33,6 +35,8 @@ function App() {
           <Route path="/rooms/:id" component={RoomDetail} />
           <Route path="/mess" component={Messes} exact/>
           <Route path="/mess/:id" component={MessDetail} />
+          <Route path="/login" component={Login}/>
+          <Route path="/profile" component={Profile} />
         </Container>
       </main>      
       <Footer/>

@@ -25,8 +25,8 @@ const importData = async () => {
     await Room.deleteMany();
     await User.deleteMany();
 
-    const createdUsers = await User.insertMany(USERS);
-    const adminUsers = createdUsers.filter((u) => u.isadmin === true);
+    const admins = EMPLOYEES.filter((e) => e.isadmin === true);
+    const adminUsers = await Employee.insertMany(admins);
     const firstadmin = adminUsers[0]._id;
 
     const students = STUDENTS.map((s) => {
@@ -34,10 +34,20 @@ const importData = async () => {
     });
     const createdStudents = await Student.insertMany(students);
 
-    const employees = EMPLOYEES.map((e) => {
+    const EMPLOYEESTEMP = EMPLOYEES.filter((e) => e.isadmin === false);
+    const employees = EMPLOYEESTEMP.map((e) => {
       return { ...e, user: firstadmin };
     });
-    await Employee.insertMany(employees);
+    const createdEmployees = await Employee.insertMany(employees);
+
+    const users = USERS.map((u) => {
+      var emp = createdEmployees.find((e) => e.staffid === u.id);
+      if(emp === undefined){
+        emp = adminUsers.find((e) => e.staffid === u.id);
+      }
+      return { ...u, employeeid: emp._id };
+    });
+    await User.insertMany(users);
 
     const mess = MESS.map((m) => {
       return { ...m, user: firstadmin };

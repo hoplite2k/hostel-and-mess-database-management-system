@@ -3,8 +3,8 @@ import bcrypt from 'bcryptjs';
 const USERS = 
 	[
 		{
-			name: 'qqqqq',
-            id: 'STAFF001',
+			name: "qqqqq",
+            id: "STAFF001",
             password: bcrypt.hashSync('123456', 10),
 			isadmin: true,
 		},
