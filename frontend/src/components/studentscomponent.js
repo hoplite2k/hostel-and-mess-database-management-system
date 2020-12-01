@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { LinkContainer } from 'react-router-bootstrap';
 import { Row, Col, Breadcrumb, Button } from 'react-bootstrap';
 import { liststudents } from '../actions/studentactions';
 import Student from '../components/studentcomponent';
@@ -35,7 +36,7 @@ const Students = (props) => {
                             <Breadcrumb.Item href="#" active>Students</Breadcrumb.Item>
                         </Breadcrumb>
                         {
-                            userinfo && userinfo.isadmin && (<Button variant='success'><span className='fas fa-plus'></span> Add Student</Button>)
+                            userinfo && userinfo.isadmin && (<LinkContainer to={'/newstudent'}><Button variant='success'><span className='fas fa-plus'></span> Add Student</Button></LinkContainer>)
                         }
                     &nbsp;&nbsp;<Button variant='primary'><span className='fas fa-search-plus'></span> Search</Button>
                         <Row>

@@ -1,4 +1,4 @@
-import { EMPLOYEE_LIST_REQUEST, EMPLOYEE_LIST_SUCCESS, EMPLOYEE_LIST_FAIL, EMPLOYEE_DETAILS_FAIL, EMPLOYEE_DETAILS_REQUEST, EMPLOYEE_DETAILS_SUCCESS, EMPLOYEE_DELETE_FAIL, EMPLOYEE_DELETE_REQUEST, EMPLOYEE_DELETE_SUCCESS, EMPLOYEE_UPDATE_REQUEST, EMPLOYEE_UPDATE_SUCCESS, EMPLOYEE_UPDATE_FAIL, EMPLOYEE_UPDATE_RESET } from '../constants/employeeconstants';
+import { EMPLOYEE_LIST_REQUEST, EMPLOYEE_LIST_SUCCESS, EMPLOYEE_LIST_FAIL, EMPLOYEE_DETAILS_FAIL, EMPLOYEE_DETAILS_REQUEST, EMPLOYEE_DETAILS_SUCCESS, EMPLOYEE_DELETE_FAIL, EMPLOYEE_DELETE_REQUEST, EMPLOYEE_DELETE_SUCCESS, EMPLOYEE_UPDATE_REQUEST, EMPLOYEE_UPDATE_SUCCESS, EMPLOYEE_UPDATE_FAIL, EMPLOYEE_UPDATE_RESET, EMPLOYEE_ADD_REQUEST, EMPLOYEE_ADD_SUCCESS, EMPLOYEE_ADD_FAIL, EMPLOYEE_ADD_RESET } from '../constants/employeeconstants';
 
 export const employeelistReducer = (state = { employees: [] }, action) => {
     switch (action.type) {
@@ -48,6 +48,21 @@ export const updateemployeeReducer = (state = { employee: {} }, action) => {
         case EMPLOYEE_UPDATE_FAIL:
             return { loading: false, success: false, error: action.payload };
         case EMPLOYEE_UPDATE_RESET:
+            return { employee: {} };
+        default:
+            return state;
+    }
+};
+
+export const addemployeeReducer = (state = { employee: {} }, action) => {
+    switch (action.type) {
+        case EMPLOYEE_ADD_REQUEST:
+            return { loading: true };
+        case EMPLOYEE_ADD_SUCCESS:
+            return { loading: false, success: true, employee: action.payload };
+        case EMPLOYEE_ADD_FAIL:
+            return { loading: false, success: false, error: action.payload };
+        case EMPLOYEE_ADD_RESET:
             return { employee: {} };
         default:
             return state;

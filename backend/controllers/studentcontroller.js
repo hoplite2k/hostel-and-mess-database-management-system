@@ -21,13 +21,58 @@ const getStudentbyId = asyncHandler(async (req, res) => {
 const deleteStudent = asyncHandler(async (req, res) => {
     const student = await Student.findById(req.params.id);
     if (student) {
-        await Student.findOneAndUpdate({ usn: student.roomateusn }, { roomatename: " ", roomateusn: " " });
+        if (student.roomateusn === "") {
+            await Student.findOneAndUpdate({ usn: student.roomateusn }, { roomatename: "", roomateusn: "" });
+        }
         await Room.findOneAndUpdate({ roomno: student.roomno }, { $pull: { inmates: student._id } });
         await student.remove();
         res.json({ messsage: 'Student Deleted ' });
     } else {
         res.status(404);
         throw new Error("Student not found");
+    }
+});
+
+const addStudent = asyncHandler(async (req, res) => {
+    if (req.body) {
+        const student = new Student({
+            user: req.user._id,
+            name: req.body.name,
+            usn: req.body.usn,
+            image: req.body.image,
+            branch: req.body.branch,
+            year: req.body.year,
+            roomno: req.body.roomno,
+            roomatename: req.body.roomatename,
+            roomateusn: req.body.roomateusn,
+            dob: req.body.dob,
+            idproof: req.body.idproof,
+            contact: req.body.contact,
+            email: req.body.email,
+            address: req.body.address,
+            feespaid: req.body.feespaid,
+            feesdue: req.body.feesdue,
+            penalties: req.body.penalties,
+            firstyear: req.body.firstyear,
+            finalyear: req.body.finalyear,
+            bloodgrp: req.body.bloodgrp,
+            ispassedout: req.body.ispassedout,
+            parents: {
+                fname: req.body.parents.fname,
+                mname: req.body.parents.mname,
+                address: req.body.parents.address,
+                email: req.body.parents.email,
+                contact: req.body.parents.contact,
+            }
+        });
+        const newstudent = await student.save();
+        if (req.body.roomno) {
+            await Room.findOneAndUpdate({ roomno: req.body.roomno }, { $push: { inmates: newstudent._id } });
+        }
+        res.status(201).json(newstudent);
+    } else {
+        res.status(400);
+        throw new Error('Could not add student');
     }
 });
 
@@ -78,4 +123,4 @@ const updateStudent = asyncHandler(async (req, res) => {
     }
 });
 
-export { getStudentbyId, getStudents, deleteStudent, updateStudent };
+export { getStudentbyId, getStudents, deleteStudent, updateStudent, addStudent };

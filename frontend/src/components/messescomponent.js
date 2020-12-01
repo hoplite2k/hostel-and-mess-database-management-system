@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Breadcrumb, Row, Col, Button } from 'react-bootstrap';
 import { listmess } from '../actions/messactions';
+import { LinkContainer } from 'react-router-bootstrap';
 import Mess from '../components/messcomponent';
 import Loader from '../components/loadercomponent';
 import Message from '../components/messagecomponent';
@@ -35,7 +36,7 @@ const Messes = (props) => {
                         <Breadcrumb>
                             <Breadcrumb.Item href="#" active>Mess</Breadcrumb.Item>
                         </Breadcrumb>
-                        <Button variant='success'><span className='fas fa-plus'></span> Add Mess Detail</Button>&nbsp;&nbsp;
+                        <LinkContainer to={'/newmessdetail'}><Button variant='success'><span className='fas fa-plus'></span> Add Mess Detail</Button></LinkContainer>&nbsp;&nbsp;
                         <Button variant='primary'><span className='fas fa-search-plus'></span> Search</Button>
                         <Row>
                             {messes.map((mess) => (

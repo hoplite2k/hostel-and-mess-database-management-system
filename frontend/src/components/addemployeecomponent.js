@@ -6,11 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from "../components/messagecomponent";
 import Loader from "../components/loadercomponent";
 import FormContainer from "../components/formcontainercomponent";
-import { listemployeesdetails, updateemployeedetails } from "../actions/employeeactions";
-import { EMPLOYEE_UPDATE_RESET } from "../constants/employeeconstants";
+import { addnewemployee } from "../actions/employeeactions";
+import { EMPLOYEE_ADD_RESET } from "../constants/employeeconstants";
 
-const Editemployee = (props) => {
-    const employeeid = props.match.params.id;
+const Addemployee = (props) => {
 
     const [name, setname] = useState('');
     const [staffid, setstaffid] = useState('');
@@ -26,58 +25,37 @@ const Editemployee = (props) => {
 
     const dispatch = useDispatch();
 
-    const employeedetails = useSelector((state) => state.employeedetails);
-    const { loading, error, employee } = employeedetails;
-
-    const updateemployee = useSelector((state) => state.updateemployee);
-    const { loading: loadingupdate, error: errorupdate, success: successupdate } = updateemployee;
+    const addemployee = useSelector((state) => state.addemployee);
+    const { loading, error, success, employee } = addemployee;
 
     useEffect(() => {
-        if (successupdate) {
+        if (success) {
             dispatch({
-                type: EMPLOYEE_UPDATE_RESET
+                type: EMPLOYEE_ADD_RESET
             });
             props.history.push('/employees');
-        } else {
-            if (!employee.name || employee._id !== employeeid) {
-                dispatch(listemployeesdetails(employeeid));
-            } else {
-                setname(employee.name);
-                setstaffid(employee.staffid);
-                setimage(employee.image);
-                setdob(employee.dob);
-                setidproof(employee.idproof);
-                setcontact(employee.contact);
-                setemail(employee.email);
-                setaddress(employee.address);
-                setbloodgrp(employee.bloodgrp);
-                setrole(employee.role);
-                setisadmin(employee.isadmin);
-            }
         }
-    }, [dispatch, employeeid, employee, props.match, props.history, successupdate]);
+    }, [dispatch, props.history, success]);
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(updateemployeedetails({
-            _id: employeeid, name, staffid, image, dob, idproof, contact, email, address, bloodgrp, role, isadmin
+        dispatch(addnewemployee({
+            name, staffid, image, dob, idproof, contact, email, address, bloodgrp, role, isadmin
         }));
+        console.log(employee);
     }
 
     return (
         <>
             <Breadcrumb>
                 <Breadcrumb.Item><Link to="/employees">Employees</Link></Breadcrumb.Item>
-                <Breadcrumb.Item ><Link to={`/employees/${employee._id}`}>{employee.name}</Link></Breadcrumb.Item>
-                <Breadcrumb.Item href="#" active>Edit</Breadcrumb.Item>
+                <Breadcrumb.Item href="#" active>Add</Breadcrumb.Item>
             </Breadcrumb>
-            <LinkContainer classname='my-3' to={`/employees/${employee._id}`}><Button variant="dark"><span className="fas fa-chevron-left"></span> Back</Button></LinkContainer>
-            {loadingupdate && <Loader />}
-            {errorupdate && <Message variant='danger'>{errorupdate.statusText ? `Error ${errorupdate.status}: ${errorupdate.statusText}` : errorupdate}</Message>}
+            <LinkContainer classname='my-3' to={'/employees'}><Button variant="dark"><span className="fas fa-chevron-left"></span> Back</Button></LinkContainer>
             {
                 loading ? <Loader /> : error ? <Message variant='danger'>{error.statusText ? `Error ${error.status}: ${error.statusText}` : error}</Message> :
                     <FormContainer>
-                        <h1>Edit Employee</h1>
+                        <h1>Add Employee</h1>
                         <br />
                         <Form onSubmit={submitHandler}>
                             <Form.Group controlId='name'>
@@ -116,7 +94,7 @@ const Editemployee = (props) => {
                                 <Form.Label>Blood Grp</Form.Label>
                                 <Form.Control as='select' value={bloodgrp} onChange={(e) => setbloodgrp(e.target.value)}>
                                     {
-                                        ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"].map((b) => {
+                                        ["SELECT", "A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"].map((b) => {
                                             return <option key={b} value={b}>{b}</option>
                                         })
                                     }
@@ -129,7 +107,7 @@ const Editemployee = (props) => {
                             <Form.Group controlId='isadmin'>
                                 <Form.Check type='checkbox' label='Admin' checked={isadmin} onChange={(e) => setisadmin(e.target.checked)}></Form.Check>
                             </Form.Group>
-                            <Button type='submit' variant='primary'>Update</Button>
+                            <Button type='submit' variant='primary'>Add</Button>
                         </Form>
                     </FormContainer>
             }
@@ -137,4 +115,4 @@ const Editemployee = (props) => {
     )
 }
 
-export default Editemployee;
+export default Addemployee;

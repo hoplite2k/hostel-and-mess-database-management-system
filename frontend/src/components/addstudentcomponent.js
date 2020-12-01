@@ -6,11 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from "../components/messagecomponent";
 import Loader from "../components/loadercomponent";
 import FormContainer from "../components/formcontainercomponent";
-import { liststudentdetails, updatestudentdetails } from "../actions/studentactions";
-import { STUDENT_UPDATE_RESET } from "../constants/studentconstants";
+import { addnewstudent } from "../actions/studentactions";
+import { STUDENT_ADD_RESET } from "../constants/studentconstants";
 
-const Editstudent = (props) => {
-    const studentid = props.match.params.id;
+const Addstudent = (props) => {
 
     const [name, setname] = useState('');
     const [usn, setusn] = useState('');
@@ -25,8 +24,8 @@ const Editstudent = (props) => {
     const [contact, setcontact] = useState('');
     const [email, setemail] = useState('');
     const [address, setaddress] = useState('');
-    const [feespaid, setfeespaid] = useState(25000);
-    const [feesdue, setfeesdue] = useState(0);
+    const [feespaid, setfeespaid] = useState(0);
+    const [feesdue, setfeesdue] = useState(25000);
     const [penalties, setpenalties] = useState(0);
     const [firstyear, setfirstyear] = useState(2018);
     const [finalyear, setfinalyear] = useState(2022);
@@ -40,72 +39,37 @@ const Editstudent = (props) => {
 
     const dispatch = useDispatch();
 
-    const studentdetails = useSelector((state) => state.studentdetails);
-    const { loading, error, student } = studentdetails;
-
-    const updatestudent = useSelector((state) => state.updatestudent);
-    const { loading: loadingupdate, error: errorupdate, success: successupdate } = updatestudent;
+    const addstudent = useSelector((state) => state.addstudent);
+    const { loading, error, success, student } = addstudent;
 
     useEffect(() => {
-        if (successupdate) {
+        if (success) {
             dispatch({
-                type: STUDENT_UPDATE_RESET
+                type: STUDENT_ADD_RESET
             });
             props.history.push('/students');
-        } else {
-            if (!student.name || student._id !== studentid) {
-                dispatch(liststudentdetails(studentid));
-            } else {
-                setname(student.name);
-                setusn(student.usn);
-                setimage(student.image);
-                setbranch(student.branch);
-                setyear(student.year);
-                setroomno(student.roomno);
-                setroomatename(student.roomatename);
-                setroomateusn(student.roomateusn);
-                setdob(student.dob);
-                setidproof(student.idproof);
-                setcontact(student.contact);
-                setemail(student.email);
-                setaddress(student.address);
-                setfeespaid(student.feespaid);
-                setfeesdue(student.feesdue);
-                setpenalties(student.penalties);
-                setfirstyear(student.firstyear);
-                setfinalyear(student.finalyear);
-                setbloodgrp(student.bloodgrp);
-                setispassedout(student.ispassedout);
-                setfname(student.parents.fname);
-                setmname(student.parents.mname);
-                setpaddress(student.parents.address);
-                setpemail(student.parents.email);
-                setpcontact(student.parents.contact);
-            }
         }
-    }, [dispatch, studentid, student, props.match, props.history, successupdate]);
+    }, [dispatch, props.history, success]);
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(updatestudentdetails({
-            _id: studentid, name, usn, image, branch, year, roomno, roomatename, roomateusn, dob, idproof, contact, email, address, feespaid, feesdue, penalties, firstyear, finalyear, bloodgrp, parents: { fname, mname, address: paddress, email: pemail, contact: pcontact },
+        dispatch(addnewstudent({
+            name, usn, image, branch, year, roomno, roomatename, roomateusn, dob, idproof, contact, email, address, feespaid, feesdue, penalties, firstyear, finalyear, bloodgrp, parents: { fname, mname, address: paddress, email: pemail, contact: pcontact },
         }));
+        console.log(student);
     }
 
     return (
         <>
             <Breadcrumb>
                 <Breadcrumb.Item><Link to="/students">Students</Link></Breadcrumb.Item>
-                <Breadcrumb.Item ><Link to={`/students/${student._id}`}>{student.name}</Link></Breadcrumb.Item>
-                <Breadcrumb.Item href="#" active>Edit</Breadcrumb.Item>
+                <Breadcrumb.Item href="#" active>Add</Breadcrumb.Item>
             </Breadcrumb>
-            <LinkContainer classname='my-3' to={`/students/${student._id}`}><Button variant="dark"><span className="fas fa-chevron-left"></span> Back</Button></LinkContainer>
-            {loadingupdate && <Loader />}
-            {errorupdate && <Message variant='danger'>{errorupdate.statusText ? `Error ${errorupdate.status}: ${errorupdate.statusText}` : errorupdate}</Message>}
+            <LinkContainer classname='my-3' to={'/students'}><Button variant="dark"><span className="fas fa-chevron-left"></span> Back</Button></LinkContainer>
             {
                 loading ? <Loader /> : error ? <Message variant='danger'>{error.statusText ? `Error ${error.status}: ${error.statusText}` : error}</Message> :
                     <FormContainer>
-                        <h1>Edit Student</h1>
+                        <h1>Add New Student</h1>
                         <br />
                         <Form onSubmit={submitHandler}>
                             <Form.Group controlId='name'>
@@ -124,7 +88,7 @@ const Editstudent = (props) => {
                                 <Form.Label>Branch</Form.Label>
                                 <Form.Control as='select' value={branch} onChange={(e) => setbranch(e.target.value)}>
                                     {
-                                        ["CSE", "ISE", "ECE", "EEE", "TCE", "ME", "IEM", "AE", "CV"].map((b) => {
+                                        ["SELECT", "CSE", "ISE", "ECE", "EEE", "TCE", "ME", "IEM", "AE", "CV"].map((b) => {
                                             return <option key={b} value={b}>{b}</option>
                                         })
                                     }
@@ -134,7 +98,7 @@ const Editstudent = (props) => {
                                 <Form.Label>Year</Form.Label>
                                 <Form.Control as='select' value={year} onChange={(e) => setyear(e.target.value)}>
                                     {
-                                        ["1", "2", "3", "4"].map((y) => {
+                                        ["SELECT", "1", "2", "3", "4"].map((y) => {
                                             return <option key={y} value={y}>{y}</option>
                                         })
                                     }
@@ -196,7 +160,7 @@ const Editstudent = (props) => {
                                 <Form.Label>Blood Grp</Form.Label>
                                 <Form.Control as='select' value={bloodgrp} onChange={(e) => setbloodgrp(e.target.value)}>
                                     {
-                                        ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"].map((b) => {
+                                        ["SELECT", "A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"].map((b) => {
                                             return <option key={b} value={b}>{b}</option>
                                         })
                                     }
@@ -225,7 +189,7 @@ const Editstudent = (props) => {
                             <Form.Group controlId='ispassedout'>
                                 <Form.Check type='checkbox' label='Passed Out' checked={ispassedout} onChange={(e) => setispassedout(e.target.checked)}></Form.Check>
                             </Form.Group>
-                            <Button type='submit' variant='primary'>Update</Button>
+                            <Button type='submit' variant='primary'>Submit</Button>
                         </Form>
                     </FormContainer>
             }
@@ -233,4 +197,4 @@ const Editstudent = (props) => {
     )
 }
 
-export default Editstudent;
+export default Addstudent;

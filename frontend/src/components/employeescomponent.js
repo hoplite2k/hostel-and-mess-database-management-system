@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Breadcrumb, Button } from 'react-bootstrap';
 import Employee from '../components/employeecomponent';
 import { listemployees } from '../actions/employeeactions';
+import { LinkContainer } from 'react-router-bootstrap';
 import Loader from '../components/loadercomponent';
 import Message from '../components/messagecomponent';
 
@@ -36,7 +37,7 @@ const Employees = (props) => {
                             <Breadcrumb.Item href="#" active>Employees</Breadcrumb.Item>
                         </Breadcrumb>
                         {
-                            userinfo && userinfo.isadmin && (<Button variant='success'><span className='fas fa-plus'></span> Add Employee</Button>)
+                            userinfo && userinfo.isadmin && (<LinkContainer to={'/newemployee'}><Button variant='success'><span className='fas fa-plus'></span> Add Employee</Button></LinkContainer>)
                         }
                     &nbsp;&nbsp;<Button variant='primary'><span className='fas fa-search-plus'></span> Search</Button>
                         <Row>

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { MESS_LIST_REQUEST, MESS_LIST_SUCCESS, MESS_LIST_FAIL, MESS_DETAILS_FAIL, MESS_DETAILS_REQUEST, MESS_DETAILS_SUCCESS, MESS_UPDATE_REQUEST, MESS_UPDATE_SUCCESS, MESS_UPDATE_FAIL, MESS_DELETE_REQUEST, MESS_DELETE_SUCCESS, MESS_DELETE_FAIL } from '../constants/messconstants';
+import { MESS_LIST_REQUEST, MESS_LIST_SUCCESS, MESS_LIST_FAIL, MESS_DETAILS_FAIL, MESS_DETAILS_REQUEST, MESS_DETAILS_SUCCESS, MESS_UPDATE_REQUEST, MESS_UPDATE_SUCCESS, MESS_UPDATE_FAIL, MESS_DELETE_REQUEST, MESS_DELETE_SUCCESS, MESS_DELETE_FAIL, MESS_ADD_REQUEST, MESS_ADD_SUCCESS, MESS_ADD_FAIL } from '../constants/messconstants';
 
 export const listmess = () => async (dispatch, getState) => {
     try {
@@ -101,6 +101,32 @@ export const updatemessdetails = (mess) => async (dispatch, getState) => {
     } catch (error) {
         dispatch({
             type: MESS_UPDATE_FAIL,
+            payload: error.response && error.response.data.message ? error.response.data.message : error.response,
+        });
+    }
+};
+
+export const addnewmess = (mess) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: MESS_ADD_REQUEST });
+
+        const { userlogin: { userinfo } } = getState();
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userinfo.token}`,
+            }
+        };
+
+        const { data } = await axios.post(`/mess`, mess, config);
+        dispatch({
+            type: MESS_ADD_SUCCESS,
+            payload: data
+        });
+    } catch (error) {
+        dispatch({
+            type: MESS_ADD_FAIL,
             payload: error.response && error.response.data.message ? error.response.data.message : error.response,
         });
     }

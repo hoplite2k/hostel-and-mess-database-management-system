@@ -17,6 +17,9 @@ import MessDetail from './components/messdetailcomponent';
 import Editstudent from './components/editstudentcomponent';
 import Editemployee from './components/editemployeecomponent';
 import Editmess from './components/editmesscomponent';
+import Addstudent from './components/addstudentcomponent';
+import Addemployee from './components/addemployeecomponent';
+import Addmess from './components/addmesscomponent';
 import Login from './components/logincomponent';
 import Profile from './components/profilecomponent';
 
@@ -24,28 +27,31 @@ function App() {
   return (
     <BrowserRouter>
       <CarouselComp />
-      <Header/>
+      <Header />
       <main className="py-3">
         <Container>
-          <Route path="/" component={Home} exact/>
-          <Route path="/hostel" component={Home}/>
-          <Route path="/aboutus" component={About}/>
-          <Route path="/students" component={Students} exact/>
-          <Route path="/students/:id" component={StudentDetail} exact/>
-          <Route path="/employees" component={Employees} exact/>
-          <Route path="/employees/:id" component={EmployeeDetail} exact/>
-          <Route path="/rooms" component={Rooms} exact/>
+          <Route path="/" component={Home} exact />
+          <Route path="/hostel" component={Home} />
+          <Route path="/aboutus" component={About} />
+          <Route path="/students" component={Students} exact />
+          <Route path="/students/:id" component={StudentDetail} exact />
+          <Route path="/employees" component={Employees} exact />
+          <Route path="/employees/:id" component={EmployeeDetail} exact />
+          <Route path="/rooms" component={Rooms} exact />
           <Route path="/rooms/:id" component={RoomDetail} />
-          <Route path="/mess" component={Messes} exact/>
-          <Route path="/mess/:id" component={MessDetail} exact/>
-          <Route path="/login" component={Login}/>
+          <Route path="/mess" component={Messes} exact />
+          <Route path="/mess/:id" component={MessDetail} exact />
+          <Route path="/login" component={Login} />
           <Route path="/profile" component={Profile} />
           <Route path="/students/:id/edit" component={Editstudent} />
           <Route path="/employees/:id/edit" component={Editemployee} />
           <Route path="/mess/:id/edit" component={Editmess} />
+          <Route path="/newstudent" component={Addstudent} />
+          <Route path="/newemployee" component={Addemployee} />
+          <Route path="/newmessdetail" component={Addmess} />
         </Container>
-      </main>      
-      <Footer/>
+      </main>
+      <Footer />
     </BrowserRouter>
   );
 }
