@@ -13,7 +13,7 @@ export const roomlistReducer = (state = {rooms:[]}, action) => {
     }
 };
 
-export const roomdetailsReducer = (state = {room:{ student1: {}, student2: {} }}, action) => {
+export const roomdetailsReducer = (state = {room:{ inmates: [{}] }}, action) => {
     switch(action.type){
         case ROOM_DETAILS_REQUEST:
             return {loading: true, ...state};

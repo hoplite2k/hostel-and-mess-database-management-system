@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Breadcrumb } from 'react-bootstrap';
+import { Row, Col, Breadcrumb, Button } from 'react-bootstrap';
 import Employee from '../components/employeecomponent';
 import { listemployees } from '../actions/employeeactions';
 import Loader from '../components/loadercomponent';
@@ -14,32 +14,39 @@ const Employees = (props) => {
     const { loading, error, employees } = employeelist;
 
     const userlogin = useSelector((state) => state.userlogin);
-    const {userinfo} = userlogin;
+    const { userinfo } = userlogin;
+
+    const deleteemployee = useSelector((state) => state.deleteemployee);
+    const { success: successDelete } = deleteemployee;
 
     useEffect(() => {
-        if(!userinfo){
-            props.history.push('/login');
+        if (userinfo && userinfo.isadmin) {
+            dispatch(listemployees());
         } else {
-            dispatch(listemployees('profile'));
-        }    
-    }, [dispatch, props.history, userinfo]);
+            props.history.push('/login');
+        }
+    }, [dispatch, props.history, userinfo, successDelete]);
 
-    return(
+    return (
         <>
             {
                 loading ? <Loader /> : error ? <Message variant='danger'>{error.statusText ? `Error ${error.status}: ${error.statusText}` : error}</Message> :
-                <>
-                    <Breadcrumb>
-                        <Breadcrumb.Item href="#" active>Employees</Breadcrumb.Item>
-                    </Breadcrumb>
-                    <Row>
-                        {employees.map((employee) => (
-                            <Col key={employee._id} sm={12} md={6} lg={4} xl={3}>
-                                <Employee employee={employee} />
-                            </Col>
-                        ))}
-                    </Row>
-                </>
+                    <>
+                        <Breadcrumb>
+                            <Breadcrumb.Item href="#" active>Employees</Breadcrumb.Item>
+                        </Breadcrumb>
+                        {
+                            userinfo && userinfo.isadmin && (<Button variant='success'><span className='fas fa-plus'></span> Add Employee</Button>)
+                        }
+                    &nbsp;&nbsp;<Button variant='primary'><span className='fas fa-search-plus'></span> Search</Button>
+                        <Row>
+                            {employees.map((employee) => (
+                                <Col key={employee._id} sm={12} md={6} lg={4} xl={3}>
+                                    <Employee employee={employee} />
+                                </Col>
+                            ))}
+                        </Row>
+                    </>
             }
         </>
     );

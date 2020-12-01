@@ -1,26 +1,19 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Breadcrumb, Row, Col } from 'react-bootstrap';
+import { Breadcrumb, Row, Col, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { LinkContainer } from 'react-router-bootstrap';
 import { listroomdetails } from '../actions/roomactions';
 import Student from '../components/studentcomponent';
 import Loader from '../components/loadercomponent';
 import Message from '../components/messagecomponent';
 
-const Handler = (props) => {
-    if(props.one === null && props.two === null){
-        return(
-            <div className="py-3">
-                <h3>Room is Empty</h3>
-            </div>
-        );
-    }
-    else{
-        return(
-            <div></div>
-        );
-    }
+const Handler = () => {
+    return(
+        <h3>Room is Empty</h3>
+    );
 }
+
 
 const RoomDetail = (props) => {
 
@@ -39,20 +32,20 @@ const RoomDetail = (props) => {
                 <Breadcrumb.Item><Link to="/rooms">Rooms</Link></Breadcrumb.Item>
                 <Breadcrumb.Item href="#" active>Students</Breadcrumb.Item>
             </Breadcrumb>
+            <LinkContainer classname='my-3' to='/rooms'><Button variant="dark"><span className="fas fa-chevron-left"></span> Back</Button></LinkContainer>
             {
                 loading ? <Loader /> : error ? <Message variant='danger'>{`Error ${error.status}: ${error.statusText}`}</Message> :
-                    <Row>
-                        {room.student1 !== null ?
-                        <Col key={room.student1._id} sm={12} md={6} lg={4} xl={3}>
-                            <Student student={room.student1} />
-                        </Col> : <div></div> }
-
-                        {room.student2 !== null ?
-                        <Col key={room.student2._id} sm={12} md={6} lg={4} xl={3}>
-                            <Student student={room.student2} />
-                        </Col> : <div></div>}
-                        <Handler one={room.student1} two={room.student2} />
+                    room.inmates.length > 0 ?
+                    <Row className="start">
+                        {room.inmates.map((s) => {
+                            return (
+                            <Col key={s._id} sm={12} md={6} lg={4} xl={3}>
+                                <Student student={s} />
+                            </Col>)
+                        })}
                     </Row>
+                    :
+                    <Handler />
                 
             }
         </>

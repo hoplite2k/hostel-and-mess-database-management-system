@@ -11,16 +11,10 @@ const roomSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    student1: {
+    inmates: [{
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Student",
-      default: null
-    },
-    student2: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Student",
-      default: null
-    },
+      ref: "Student"
+    }],
     roomallocationyear: {
       type: Number,
       required: true,

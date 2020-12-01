@@ -47,5 +47,16 @@ footer{
 }
 
 .badge-margin{
-    margin-left: 20px;
+    margin-left: 15px;
+}
+
+.button-right{
+    float: right;
+}
+
+.bottom-right
+{
+    right: 20px;
+    bottom: 20px;
+    position: absolute;
 }

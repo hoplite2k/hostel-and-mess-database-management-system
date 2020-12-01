@@ -2,11 +2,11 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import { studentlistReducer, studentdetailsReducer } from './reducers/studentreducers';
-import { employeelistReducer, employeedetailsReducer } from './reducers/employeereducers';
+import { studentlistReducer, studentdetailsReducer, deletestudentReducer, updatestudentReducer } from './reducers/studentreducers';
+import { employeelistReducer, employeedetailsReducer, deleteemployeeReducer, updateemployeeReducer } from './reducers/employeereducers';
 import { roomlistReducer, roomdetailsReducer } from './reducers/roomreducers';
-import { messlistReducer, messdetailsReducer } from './reducers/messreducers';
-import { userloginReducer, userdetailsReducer,userupdatepasswordReducer } from './reducers/userreducers';
+import { messlistReducer, messdetailsReducer, deletemessReducer, updatemessReducer } from './reducers/messreducers';
+import { userloginReducer, userdetailsReducer, userupdatepasswordReducer } from './reducers/userreducers';
 
 
 const reducer = combineReducers({
@@ -23,12 +23,20 @@ const reducer = combineReducers({
     userlogin: userloginReducer,
     userdetails: userdetailsReducer,
     userupdatepassword: userupdatepasswordReducer,
+
+    deletestudent: deletestudentReducer,
+    deleteemployee: deleteemployeeReducer,
+    deletemess: deletemessReducer,
+
+    updatestudent: updatestudentReducer,
+    updateemployee: updateemployeeReducer,
+    updatemess: updatemessReducer,
 });
 
 const userinfofromstorage = localStorage.getItem('userinfo') ? JSON.parse(localStorage.getItem('userinfo')) : null;
 
 const initialState = {
-    userlogin : { userinfo: userinfofromstorage },
+    userlogin: { userinfo: userinfofromstorage },
 };
 
 const middleware = [thunk];

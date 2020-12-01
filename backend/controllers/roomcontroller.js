@@ -8,7 +8,7 @@ const getRooms = asyncHandler(async (req, res) => {
 });
 
 const getRoombyId = asyncHandler(async (req, res) => {
-    const room = await Room.findById(req.params.id).populate('student1').populate('student2');
+    const room = await Room.findById(req.params.id).populate('inmates');
     if (room) {
       res.json(room);
     } else {

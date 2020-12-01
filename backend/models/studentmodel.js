@@ -59,13 +59,9 @@ const studentSchema = mongoose.Schema(
     },
     roomatename: {
       type: String,
-      required: false,
-      unique: true,
     },
     roomateusn: {
       type: String,
-      required: false,
-      unique: true,
     },
     dob: {
       type: String,

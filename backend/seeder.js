@@ -56,12 +56,10 @@ const importData = async () => {
 
     const rooms = ROOMS.map((r) => {
       const inmates = createdStudents.filter((s) => s.roomno === r.roomno);
-      if(inmates.length === 2)
-        return { ...r, user: firstadmin, student1: inmates[0]._id , student2: inmates[1]._id };
-      else if(inmates.length === 1)
-        return { ...r, user: firstadmin, student1: inmates[0]._id, student2: null };
+      if(inmates.length > 0)
+        return { ...r, user: firstadmin, inmates: inmates };
       else
-        return { ...r, user: firstadmin, student1: null , student2: null };
+        return { ...r, user: firstadmin, inmates: [] };
     });
     await Room.insertMany(rooms);
 

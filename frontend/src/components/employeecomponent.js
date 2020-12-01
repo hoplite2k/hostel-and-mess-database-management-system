@@ -1,33 +1,48 @@
 import React from 'react';
-import { Card, Badge } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { Card, Badge, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { LinkContainer } from 'react-router-bootstrap';
+import { deleteemployeedetails } from "../actions/employeeactions";
 
 const AdminButton = (props) => {
-    if(props.isadmin){
-        return(
-            <h3>
-                <strong>{props.name}</strong> 
+    if (props.isadmin) {
+        return (
+            <h4>
+                <strong>{props.name}</strong>
                 <Badge variant="danger" className="badge-margin">Admin</Badge>
-            </h3>
+            </h4>
         );
     }
-    else{
-        return(
-            <h3><strong>{props.name}</strong></h3>
+    else {
+        return (
+            <h4><strong>{props.name}</strong></h4>
         );
     }
 }
 
 const Employee = (props) => {
-    return(
-        <Card style={{height:"400px"}} className="p-3 my-3 rounded">
+
+    const dispatch = useDispatch();
+
+    const userlogin = useSelector((state) => state.userlogin);
+    const { userinfo } = userlogin;
+
+    const deleteHandler = (id) => {
+        if (window.confirm("Are you sure?")) {
+            dispatch(deleteemployeedetails(id));
+        }
+    }
+
+    return (
+        <Card style={{ height: "400px" }} className="p-3 my-3 rounded">
             <Link to={`/employees/${props.employee._id}`}>
-                <Card.Img src={props.employee.image} variant="top"/>
+                <Card.Img src={props.employee.image} variant="top" />
             </Link>
             <Card.Body>
                 <Link to={`/employees/${props.employee._id}`}>
                     <Card.Title as="div">
-                        <AdminButton name={props.employee.name} isadmin={props.employee.isadmin}/>
+                        <AdminButton name={props.employee.name} isadmin={props.employee.isadmin} />
                     </Card.Title>
                 </Link>
                 <Card.Text>
@@ -38,6 +53,12 @@ const Employee = (props) => {
                         <li>Address: {props.employee.address}</li>
                     </ul>
                 </Card.Text>
+                {userinfo && userinfo.isadmin && (
+                    <div className="bottom-right">
+                        <LinkContainer to={`/employees/${props.employee._id}/edit`}><Button variant='success'><span className="fas fa-edit"></span></Button></LinkContainer>{' '}
+                        <Button variant='danger' onClick={() => deleteHandler(props.employee._id)}><span className="fas fa-trash-alt"></span></Button>
+                    </div>
+                )}
             </Card.Body>
         </Card>
     );
