@@ -1,11 +1,26 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Breadcrumb, Row, Col, Image, Badge, Button } from 'react-bootstrap';
+import { Breadcrumb, Row, Col, Image, Badge, Button, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { listemployeesdetails } from '../actions/employeeactions';
 import Loader from '../components/loadercomponent';
 import Message from '../components/messagecomponent';
+
+function IDModal(props) {
+    return (
+        <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+            <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">
+                    Identity: {props.name}
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <img src={props.image} alt={props.name} className="img-fluid" />
+            </Modal.Body>
+        </Modal>
+    );
+}
 
 const AdminButton = (props) => {
     if (props.isadmin) {
@@ -24,6 +39,8 @@ const AdminButton = (props) => {
 }
 
 const EmployeeDetail = (props) => {
+
+    const [modalShow, setModalShow] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -68,6 +85,8 @@ const EmployeeDetail = (props) => {
                                 <p><strong>Contact: </strong>{employee.contact}</p>
                                 <p><strong>DOB: </strong>{employee.dob}</p>
                                 <p><strong>Address: </strong>{employee.address}</p>
+                                <Button onClick={() => setModalShow(true)}>ID Proof</Button>
+                                <IDModal name={employee.name} image={employee.idproof} show={modalShow} onHide={() => setModalShow(false)} />
                             </div>
                         </Col>
                     </Row>

@@ -1,13 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Breadcrumb, Row, Col, Image, Button } from 'react-bootstrap';
+import { Breadcrumb, Row, Col, Image, Button, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { liststudentdetails } from '../actions/studentactions';
 import Loader from '../components/loadercomponent';
 import Message from '../components/messagecomponent';
 
+function IDModal(props) {
+    return (
+        <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+            <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">
+                    Identity: {props.name}
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <img src={props.image} alt={props.name} className="img-fluid" />
+            </Modal.Body>
+        </Modal>
+    );
+}
+
 const StudentDetail = (props) => {
+
+    const [modalShow, setModalShow] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -55,6 +72,8 @@ const StudentDetail = (props) => {
                                 <p><strong>Penalties: </strong>{student.penalties}</p>
                                 <p><strong>Room Number: </strong>{student.roomno}</p>
                                 <p><strong>Roomate USN: </strong>{student.roomateusn}</p>
+                                <Button onClick={() => setModalShow(true)}>ID Proof</Button>
+                                <IDModal name={student.name} image={student.idproof} show={modalShow} onHide={() => setModalShow(false)} />
                             </div>
                         </Col>
                     </Row>

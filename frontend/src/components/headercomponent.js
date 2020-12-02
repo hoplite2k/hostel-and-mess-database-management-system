@@ -6,16 +6,20 @@ import { logout } from '../actions/useractions';
 
 const Header = () => {
 
-    const dispatch = useDispatch(); 
+    const dispatch = useDispatch();
 
     const userlogin = useSelector((state) => state.userlogin);
-    const {userinfo} = userlogin;
+    const { userinfo } = userlogin;
 
     const logoutHandler = () => {
         dispatch(logout());
     }
 
-    return(
+    if (userinfo) {
+        var usertitle = (<span className='fas fa-user-circle'> {userinfo.name}</span>);
+    }
+
+    return (
         <header>
             <Navbar bg="light" variant="light" expand="lg" collapseOnSelect>
                 <Container>
@@ -36,18 +40,18 @@ const Header = () => {
                             }
                             {
                                 userinfo && (<LinkContainer to="/mess"><Nav.Link><span className="fas fa-utensils nav-mar"></span> Mess</Nav.Link></LinkContainer>)
-                            }                          
+                            }
                         </Nav>
                         <Nav className='ml-auto'>
-                        {
-                            userinfo ? (
-                                <NavDropdown title={userinfo.name} id='username'>
-                                    <LinkContainer to='/profile'><NavDropdown.Item>Profile</NavDropdown.Item></LinkContainer>
-                                    <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
-                                </NavDropdown>
-                            ) :
-                            <LinkContainer to="/login"><Nav.Link><span className="fas fa-user-circle fa-lg"></span> Login</Nav.Link></LinkContainer>
-                        }
+                            {
+                                userinfo ? (
+                                    <NavDropdown title={usertitle} id='username'>
+                                        <LinkContainer to='/profile'><NavDropdown.Item>Profile</NavDropdown.Item></LinkContainer>
+                                        <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
+                                    </NavDropdown>
+                                ) :
+                                    <LinkContainer to="/login"><Nav.Link><span className="fas fa-user-circle fa-lg"></span> Login</Nav.Link></LinkContainer>
+                            }
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

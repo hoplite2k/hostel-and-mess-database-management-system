@@ -37,7 +37,7 @@ const Employee = (props) => {
     return (
         <Card style={{ height: "400px" }} className="p-3 my-3 rounded">
             <Link to={`/employees/${props.employee._id}`}>
-                <Card.Img src={props.employee.image} variant="top" />
+                <Card.Img src={props.employee.image} style={{ height: "125px", width: "220px" }} variant="top" />
             </Link>
             <Card.Body>
                 <Link to={`/employees/${props.employee._id}`}>

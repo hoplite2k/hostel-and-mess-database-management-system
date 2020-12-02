@@ -2,10 +2,10 @@ import React from 'react';
 import { Container, Row, Col, Image, Breadcrumb } from 'react-bootstrap';
 
 const About = () => {
-    return(
+    return (
         <>
             <Breadcrumb>
-                    <Breadcrumb.Item href="#" active>About Us</Breadcrumb.Item>
+                <Breadcrumb.Item href="#" active>About Us</Breadcrumb.Item>
             </Breadcrumb>
             <div className="start">
                 <h3>Hostel</h3>
@@ -25,22 +25,22 @@ const About = () => {
                 <Container>
                     <Row>
                         <Col xs={12} md={6}>
-                            <Image src="images/Hostel1.JPG" alt="Cauvery Hostel" thumbnail/>
+                            <Image src="images/Hostel4.png" alt="Cauvery Hostel" style={{ height: "300px", width: "525px" }} thumbnail />
                             <h3>Cauvery Hostel</h3>
                             <br />
                         </Col>
                         <Col xs={12} md={6}>
-                            <Image src="images/Hostel1.JPG" alt="Sir M. Visweswaraiah Block" thumbnail/>
+                            <Image src="images/Hostel1.JPG" alt="Sir M. Visweswaraiah Block" thumbnail />
                             <h3>Sir M. Visweswaraiah Block</h3>
                             <br />
                         </Col>
                         <Col xs={12} md={6}>
-                            <Image src="images/Hostel2.JPG" alt="Diamond Jubilee Block" thumbnail/>
+                            <Image src="images/Hostel2.JPG" alt="Diamond Jubilee Block" thumbnail />
                             <h3>Diamond Jubilee Block</h3>
                             <br />
                         </Col>
                         <Col xs={12} md={6}>
-                            <Image src="images/Hostel3.JPG" alt="Chamundi Block" thumbnail/>
+                            <Image src="images/Hostel3.JPG" alt="Chamundi Block" thumbnail />
                             <h3>Chamundi Block</h3>
                             <br />
                         </Col>

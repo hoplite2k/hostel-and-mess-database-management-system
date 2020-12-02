@@ -21,7 +21,7 @@ const Student = (props) => {
     return (
         <Card style={{ height: "375px" }} className="p-3 my-3 rounded">
             <Link to={`/students/${props.student._id}`}>
-                <Card.Img src={props.student.image} variant="top" />
+                <Card.Img src={props.student.image} style={{ height: "125px", width: "220px" }} variant="top" />
             </Link>
             <Card.Body>
                 <Link to={`/students/${props.student._id}`}>

@@ -8,6 +8,7 @@ import Loader from "../components/loadercomponent";
 import FormContainer from "../components/formcontainercomponent";
 import { addnewemployee } from "../actions/employeeactions";
 import { EMPLOYEE_ADD_RESET } from "../constants/employeeconstants";
+import axios from 'axios';
 
 const Addemployee = (props) => {
 
@@ -22,6 +23,7 @@ const Addemployee = (props) => {
     const [bloodgrp, setbloodgrp] = useState('');
     const [role, setrole] = useState('');
     const [isadmin, setisadmin] = useState(false);
+    const [uploading, setuploading] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -36,6 +38,48 @@ const Addemployee = (props) => {
             props.history.push('/employees');
         }
     }, [dispatch, props.history, success]);
+
+    const uploadprofileHandler = async (e) => {
+        const file = e.target.files[0];
+        const formData = new FormData();
+        formData.append('image', file);
+        setuploading(true);
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+
+            const { data } = await axios.post('/uploads/profile/employee', formData, config);
+            setimage(data);
+            setuploading(false);
+        } catch (error) {
+            console.error(error);
+            setuploading(false);
+        }
+    }
+
+    const uploadidentityHandler = async (e) => {
+        const file = e.target.files[0];
+        const formData = new FormData();
+        formData.append('image', file);
+        setuploading(true);
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+
+            const { data } = await axios.post('/uploads/identity/employee', formData, config);
+            setidproof(data);
+            setuploading(false);
+        } catch (error) {
+            console.error(error);
+            setuploading(false);
+        }
+    }
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -69,6 +113,9 @@ const Addemployee = (props) => {
                             <Form.Group controlId='image'>
                                 <Form.Label>Image</Form.Label>
                                 <Form.Control type='text' placeholder='Enter Image' value={image} onChange={(e) => setimage(e.target.value)}></Form.Control>
+                                <br />
+                                <Form.File id='employee-image-file' onChange={uploadprofileHandler} />
+                                {uploading && <Loader />}
                             </Form.Group>
                             <Form.Group controlId='dob'>
                                 <Form.Label>DOB</Form.Label>
@@ -77,6 +124,9 @@ const Addemployee = (props) => {
                             <Form.Group controlId='idproof'>
                                 <Form.Label>ID Proof</Form.Label>
                                 <Form.Control type='text' placeholder='Enter ID Proof' value={idproof} onChange={(e) => setidproof(e.target.value)}></Form.Control>
+                                <br />
+                                <Form.File id='employee-identity-file' onChange={uploadidentityHandler} />
+                                {uploading && <Loader />}
                             </Form.Group>
                             <Form.Group controlId='contact'>
                                 <Form.Label>Contact No</Form.Label>

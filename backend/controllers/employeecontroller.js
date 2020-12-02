@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler";
 import Employee from "../models/employeemodel.js";
 import User from "../models/usermodel.js";
+import nodemailer from 'nodemailer';
 
 const getEmployees = asyncHandler(async (req, res) => {
   const employees = await Employee.find({});
@@ -49,12 +50,35 @@ const addEmployee = asyncHandler(async (req, res) => {
     });
     const newemployee = await employee.save();
 
+    const transporter = nodemailer.createTransport({
+      service: process.env.MAIL_SERVICE,
+      auth: {
+        user: process.env.ADMIN_MAIL_ID,
+        pass: process.env.ADMIN_MAIL_PASSWORD
+      }
+    });
+
+    const mailOptions = {
+      from: process.env.ADMIN_MAIL_ID,
+      to: newemployee.email,
+      subject: 'Welcome to the Hostel!',
+      html: `<div style="font-family: Arial"><h1>Welcome</h1><p>Hello,</p><p>You have been successfully registerd as an Employee in the Hostel</p><p>You have your account in our portal, please change your password when you login for the first time</p><div><p>Credentials:</p><ul><li>user id: <em>${req.body.staffid}</em></li><li>password: <em>${process.env.USER_DEFAULT_PASSWORD}</em></li></ul></div></div>`
+    };
+
     User.create({
       name: req.body.name,
       id: req.body.staffid,
       password: process.env.USER_DEFAULT_PASSWORD,
       isadmin: req.body.isadmin,
       employeeid: newemployee._id
+    });
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
     });
 
     res.status(201).json(newemployee);

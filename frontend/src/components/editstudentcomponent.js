@@ -8,6 +8,7 @@ import Loader from "../components/loadercomponent";
 import FormContainer from "../components/formcontainercomponent";
 import { liststudentdetails, updatestudentdetails } from "../actions/studentactions";
 import { STUDENT_UPDATE_RESET } from "../constants/studentconstants";
+import axios from 'axios';
 
 const Editstudent = (props) => {
     const studentid = props.match.params.id;
@@ -37,6 +38,8 @@ const Editstudent = (props) => {
     const [paddress, setpaddress] = useState('');
     const [pemail, setpemail] = useState('');
     const [pcontact, setpcontact] = useState('');
+
+    const [uploading, setuploading] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -85,6 +88,48 @@ const Editstudent = (props) => {
         }
     }, [dispatch, studentid, student, props.match, props.history, successupdate]);
 
+    const uploadprofileHandler = async (e) => {
+        const file = e.target.files[0];
+        const formData = new FormData();
+        formData.append('image', file);
+        setuploading(true);
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+
+            const { data } = await axios.post('/uploads/profile/student', formData, config);
+            setimage(data);
+            setuploading(false);
+        } catch (error) {
+            console.error(error);
+            setuploading(false);
+        }
+    }
+
+    const uploadidentityHandler = async (e) => {
+        const file = e.target.files[0];
+        const formData = new FormData();
+        formData.append('image', file);
+        setuploading(true);
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+
+            const { data } = await axios.post('/uploads/identity/student', formData, config);
+            setidproof(data);
+            setuploading(false);
+        } catch (error) {
+            console.error(error);
+            setuploading(false);
+        }
+    }
+
     const submitHandler = (e) => {
         e.preventDefault();
         dispatch(updatestudentdetails({
@@ -119,6 +164,9 @@ const Editstudent = (props) => {
                             <Form.Group controlId='image'>
                                 <Form.Label>Image</Form.Label>
                                 <Form.Control type='text' placeholder='Enter Image' value={image} onChange={(e) => setimage(e.target.value)}></Form.Control>
+                                <br />
+                                <Form.File id='student-image-file' onChange={uploadprofileHandler} />
+                                {uploading && <Loader />}
                             </Form.Group>
                             <Form.Group controlId='branch'>
                                 <Form.Label>Branch</Form.Label>
@@ -159,9 +207,12 @@ const Editstudent = (props) => {
                             <Form.Group controlId='idproof'>
                                 <Form.Label>ID Proof</Form.Label>
                                 <Form.Control type='text' placeholder='Enter ID Proof' value={idproof} onChange={(e) => setidproof(e.target.value)}></Form.Control>
+                                <br />
+                                <Form.File id='student-identity-file' onChange={uploadidentityHandler} />
+                                {uploading && <Loader />}
                             </Form.Group>
                             <Form.Group controlId='contact'>
-                                <Form.Label>contact No</Form.Label>
+                                <Form.Label>Contact No</Form.Label>
                                 <Form.Control type='text' placeholder='Enter Contact No' value={contact} onChange={(e) => setcontact(e.target.value)}></Form.Control>
                             </Form.Group>
                             <Form.Group controlId='email'>
