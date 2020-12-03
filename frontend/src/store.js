@@ -4,7 +4,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { studentlistReducer, studentdetailsReducer, deletestudentReducer, updatestudentReducer, addstudentReducer } from './reducers/studentreducers';
 import { employeelistReducer, employeedetailsReducer, deleteemployeeReducer, updateemployeeReducer, addemployeeReducer } from './reducers/employeereducers';
-import { roomlistReducer, roomdetailsReducer } from './reducers/roomreducers';
+import { roomlistReducer, roomdetailsReducer, addroomsetReducer, deleteroomsetReducer } from './reducers/roomreducers';
 import { messlistReducer, messdetailsReducer, deletemessReducer, updatemessReducer, addmessReducer } from './reducers/messreducers';
 import { userloginReducer, userdetailsReducer, userupdatepasswordReducer } from './reducers/userreducers';
 
@@ -27,6 +27,7 @@ const reducer = combineReducers({
     deletestudent: deletestudentReducer,
     deleteemployee: deleteemployeeReducer,
     deletemess: deletemessReducer,
+    deleteroomset: deleteroomsetReducer,
 
     updatestudent: updatestudentReducer,
     updateemployee: updateemployeeReducer,
@@ -35,6 +36,7 @@ const reducer = combineReducers({
     addstudent: addstudentReducer,
     addemployee: addemployeeReducer,
     addmess: addmessReducer,
+    addroomset: addroomsetReducer,
 });
 
 const userinfofromstorage = localStorage.getItem('userinfo') ? JSON.parse(localStorage.getItem('userinfo')) : null;

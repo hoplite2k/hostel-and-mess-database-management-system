@@ -2,19 +2,55 @@ import asyncHandler from "express-async-handler";
 import Room from "../models/roommodel.js";
 
 const getRooms = asyncHandler(async (req, res) => {
-    const rooms = await Room.find({});
-  
-    res.json(rooms);
+  const rooms = await Room.find({});
+
+  res.json(rooms);
 });
 
 const getRoombyId = asyncHandler(async (req, res) => {
-    const room = await Room.findById(req.params.id).populate('inmates');
-    if (room) {
-      res.json(room);
-    } else {
-      res.status(404);
-      throw new Error("Room not found");
-    }
+  const room = await Room.findById(req.params.id).populate('inmates');
+  if (room) {
+    res.json(room);
+  } else {
+    res.status(404);
+    throw new Error("Room not found");
+  }
 });
 
-export { getRoombyId, getRooms };
+const deleteRoomset = asyncHandler(async (req, res) => {
+  if (req.body) {
+    await Room.deleteMany({ $and: [{ roomallocationyear: req.body.roomallocationyear }, { roomvacatingyear: req.body.roomvacatingyear }] });
+    res.json({ messsage: 'Roomset Deleted ' });
+  } else {
+    res.status(404);
+    throw new Error("Roomset not found");
+  }
+});
+
+const addRoomset = asyncHandler(async (req, res) => {
+  if (req.body) {
+    var i;
+    const n = process.env.NUMBER_OF_ROOMS.length > 3 ? process.env.NUMBER_OF_ROOMS.length : 3;
+    for (i = 1; i <= process.env.NUMBER_OF_ROOMS; i++) {
+      var roomnos = '' + i;
+      while (roomnos.length < n) {
+        roomnos = '0' + roomnos;
+      }
+      const room = new Room({
+        user: req.user._id,
+        roomno: roomnos,
+        inmates: [],
+        roomallocationyear: req.body.roomallocationyear,
+        roomvacatingyear: req.body.roomvacatingyear
+      });
+
+      room.save();
+    }
+    res.json({ messsage: "Roomset Added" });
+  } else {
+    res.status(400);
+    throw new Error('Could not add roomset');
+  }
+});
+
+export { getRoombyId, getRooms, addRoomset, deleteRoomset };
