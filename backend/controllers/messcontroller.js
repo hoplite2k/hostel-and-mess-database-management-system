@@ -64,4 +64,29 @@ const updateMess = asyncHandler(async (req, res) => {
   }
 });
 
-export { getMessbyId, getMesses, updateMess, deleteMess, addMess };
+const searchMess = asyncHandler(async (req, res) => {
+  if (req.body) {
+    var dict = {};
+    if (req.body.yearmonth) {
+      const yearmonth = req.body.yearmonth; if (yearmonth !== '') {
+        dict['date'] = { $regex: yearmonth };
+      }
+    }
+    if (req.body.date) { const date = req.body.date; if (date !== '') { dict['date'] = date; } }
+    if (req.body.day) { const day = req.body.day; if (day !== '') { dict['day'] = day; } }
+    if (req.body.rationused) { const rationused = Number(req.body.rationused); if (req.body.rationused !== '') { dict['rationused'] = { $gte: rationused }; } }
+    if (req.body.foodwasted) { const foodwasted = Number(req.body.foodwasted); if (req.body.foodwasted !== '') { dict['foodwasted'] = { $gte: foodwasted }; } }
+
+    const mess = await Mess.find(dict);
+
+    if (mess.length > 0)
+      res.status(201).json(mess);
+    else
+      res.status(404).json('No mess detail found');
+  } else {
+    res.status(400);
+    throw new Error('Could not find mess details');
+  }
+});
+
+export { getMessbyId, getMesses, updateMess, deleteMess, addMess, searchMess };

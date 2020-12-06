@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Breadcrumb, Row, Col, Button, Form, Card } from 'react-bootstrap';
-import { listrooms, addnewroomset, roomsetdelete } from '../actions/roomactions';
+import { listrooms, addnewroomset, roomsetdelete, searchrooms } from '../actions/roomactions';
 import { ROOMSET_ADD_RESET } from '../constants/roomconstants';
 import Room from '../components/roomcomponent';
 import Loader from '../components/loadercomponent';
 import Message from '../components/messagecomponent';
-import FormContainer from '../components/formcontainercomponent';
 
 const Rooms = (props) => {
 
@@ -15,8 +14,9 @@ const Rooms = (props) => {
     const [showaddform, setshowaddform] = useState(false);
     const [showdelform, setshowdelform] = useState(false);
     const [showserform, setshowserform] = useState(false);
-    const [roomallocationyear, setroomallocationyear] = useState(2012);
-    const [roomvacatingyear, setroomvacatingyear] = useState(2013);
+    const [roomallocationyear, setroomallocationyear] = useState('');
+    const [roomvacatingyear, setroomvacatingyear] = useState('');
+    const [roomno, setroomno] = useState('');
 
     const roomlist = useSelector((state) => state.roomlist);
     const { loading, error, rooms } = roomlist;
@@ -26,6 +26,9 @@ const Rooms = (props) => {
 
     const deleteroomset = useSelector((state) => state.deleteroomset);
     const { success: successDelete } = deleteroomset;
+
+    const roomsearch = useSelector((state) => state.roomsearch);
+    const { loading: searchloading, error: searcherror, success: searchsuccess, rooms: serrooms } = roomsearch;
 
     const addroomset = useSelector((state) => state.addroomset);
     const { success: successAdd } = addroomset;
@@ -37,16 +40,17 @@ const Rooms = (props) => {
             dispatch({
                 type: ROOMSET_ADD_RESET
             });
-        } else {
+        } else if (searchsuccess !== true) {
             dispatch(listrooms());
         }
-    }, [dispatch, props.history, userinfo, successDelete, successAdd]);
+    }, [dispatch, props.history, userinfo, successDelete, successAdd, searchsuccess]);
 
     const delsubmitHandler = (e) => {
         e.preventDefault();
         dispatch(roomsetdelete({
             roomallocationyear, roomvacatingyear
         }));
+        setshowdelform(false);
     }
 
     const addsubmitHandler = (e) => {
@@ -54,10 +58,15 @@ const Rooms = (props) => {
         dispatch(addnewroomset({
             roomallocationyear, roomvacatingyear
         }));
+        setshowaddform(false);
     }
 
-    const sersubmitHandler = () => {
-        console.log('search');
+    const sersubmitHandler = (e) => {
+        e.preventDefault();
+        dispatch(searchrooms({
+            roomno, roomallocationyear, roomvacatingyear
+        }));
+        setshowserform(false);
     }
 
     var submitHandler;
@@ -79,41 +88,85 @@ const Rooms = (props) => {
                         }
                     &nbsp;&nbsp;
                         <Button variant='primary' onClick={() => { setshowserform(true); setshowaddform(false); setshowdelform(false); }}><span className='fas fa-search-plus'></span> Search</Button>
+                        <Button variant='secondary' style={{ float: 'right' }}><span className="fas fa-database"></span> Get All</Button>
                         {
-                            (showaddform || showdelform || showserform) &&
+                            (showaddform || showdelform) &&
                             <>
                                 <br />
                                 <br />
                                 <Card className="my-4" bg="light">
-                                    <Card.Title style={{ textAlign: 'center' }}><strong>{showaddform ? "Add Roomset" : showdelform ? "Delete Roomset" : "Search"}</strong></Card.Title>
+                                    <Card.Header><h2 style={{ textAlign: 'center' }}>{showaddform ? "Add Roomset" : "Delete Roomset"}</h2></Card.Header>
                                     <Card.Body>
-                                        <FormContainer>
-                                            {submitHandler = showaddform ? addsubmitHandler : showdelform ? delsubmitHandler : sersubmitHandler}
-                                            <Form onSubmit={submitHandler}>
-                                                <Form.Group controlId='roomallocation'>
-                                                    <Form.Label>Room Allocation Year</Form.Label>
-                                                    <Form.Control type='number' value={roomallocationyear} onChange={(e) => setroomallocationyear(e.target.value)}></Form.Control>
-                                                </Form.Group>
-                                                <Form.Group controlId='roomvacating'>
-                                                    <Form.Label>Room Vacating Year</Form.Label>
-                                                    <Form.Control type='number' value={roomvacatingyear} onChange={(e) => setroomvacatingyear(e.target.value)}></Form.Control>
-                                                </Form.Group>
-                                                {showaddform && <Button variant='success' type='submit'>Add</Button>}
-                                                {showdelform && <Button variant='danger' type='submit'>Delete</Button>}
-                                                {showserform && <Button variant='primary' type='submit'>Search</Button>}
-                                            </Form>
-                                        </FormContainer>
+                                        {submitHandler = showaddform ? addsubmitHandler : delsubmitHandler}
+                                        <Form onSubmit={submitHandler}>
+                                            <Form.Row>
+                                                <Col xs={12} md={6}>
+                                                    <Form.Group controlId='roomallocation'>
+                                                        <Form.Label>Room Allocation Year</Form.Label>
+                                                        <Form.Control type='text' value={roomallocationyear} onChange={(e) => setroomallocationyear(e.target.value)}></Form.Control>
+                                                    </Form.Group>
+                                                </Col>
+                                                <Col xs={12} md={6}>
+                                                    <Form.Group controlId='roomvacating'>
+                                                        <Form.Label>Room Vacating Year</Form.Label>
+                                                        <Form.Control type='text' value={roomvacatingyear} onChange={(e) => setroomvacatingyear(e.target.value)}></Form.Control>
+                                                    </Form.Group>
+                                                </Col>
+                                            </Form.Row>
+                                            {showaddform && <Button variant='success' type='submit'>Add</Button>}
+                                            {showdelform && <Button variant='danger' type='submit'>Delete</Button>}
+                                        </Form>
+                                    </Card.Body>
+                                </Card>
+                            </>
+                        }
+                        {
+                            showserform &&
+                            <>
+                                <br />
+                                <br />
+                                <Card className="my-4" bg="light">
+                                    <Card.Header><h2 style={{ textAlign: 'center' }}>Search</h2></Card.Header>
+                                    <Card.Body>
+                                        <Form onSubmit={sersubmitHandler}>
+                                            <Form.Row>
+                                                <Col xs={12} md={6}>
+                                                    <Form.Group controlId='roomallocation'>
+                                                        <Form.Label>Room Allocation Year</Form.Label>
+                                                        <Form.Control type='text' value={roomallocationyear} onChange={(e) => setroomallocationyear(e.target.value)}></Form.Control>
+                                                    </Form.Group>
+                                                    <Form.Group controlId='roomno'>
+                                                        <Form.Label>Room No</Form.Label>
+                                                        <Form.Control type='text' value={roomno} onChange={(e) => setroomno(e.target.value)}></Form.Control>
+                                                    </Form.Group>
+                                                </Col>
+                                                <Col xs={12} md={6}>
+                                                    <Form.Group controlId='roomvacating'>
+                                                        <Form.Label>Room Vacating Year</Form.Label>
+                                                        <Form.Control type='text' value={roomvacatingyear} onChange={(e) => setroomvacatingyear(e.target.value)}></Form.Control>
+                                                    </Form.Group>
+                                                </Col>
+                                            </Form.Row>
+                                            <Button variant='primary' type='submit'>Search</Button>
+                                        </Form>
                                     </Card.Body>
                                 </Card>
                             </>
                         }
                         <br />
+                        {searchloading ? <Loader /> : searcherror ? (<><br /><Message variant='danger'>{searcherror.status ? `Error ${searcherror.status}: ${searcherror.statusText}` : searcherror}</Message></>) : ""}
                         <Row>
-                            {rooms.map((room) => (
+                            {rooms && (serrooms === [] || searchsuccess !== true) && rooms.map((room) => (
                                 <Col key={room._id} sm={12} md={6} lg={4} xl={3}>
                                     <Room room={room} />
                                 </Col>
                             ))}
+                            {
+                                serrooms && serrooms.map((room) => (
+                                    <Col key={room._id} sm={12} md={6} lg={4} xl={3}>
+                                        <Room room={room} />
+                                    </Col>
+                                ))}
                         </Row>
                     </>
             }

@@ -123,4 +123,33 @@ const updateStudent = asyncHandler(async (req, res) => {
     }
 });
 
-export { getStudentbyId, getStudents, deleteStudent, updateStudent, addStudent };
+const searchStudents = asyncHandler(async (req, res) => {
+    if (req.body) {
+        console.log(req.body.ispassedout);
+        var dict = {};
+        if (req.body.name) { const name = req.body.name; if (name !== '') { dict['name'] = name; } }
+        if (req.body.usn) { const usn = req.body.usn; if (usn !== '') { dict['usn'] = usn; } }
+        if (req.body.branch) { const branch = req.body.branch; if (branch !== '') { dict['branch'] = branch; } }
+        if (req.body.year) { const year = req.body.year; if (year !== 'SELECT') { dict['year'] = year; } }
+        if (req.body.roomno) { const roomno = req.body.roomno; if (roomno !== '') { dict['roomno'] = roomno; } }
+        if (req.body.contact) { const contact = req.body.contact; if (contact !== '') { dict['contact'] = contact; } }
+        if (req.body.email) { const email = req.body.email; if (email !== '') { dict['email'] = email; } }
+        if (req.body.feespaid) { const feespaid = Number(req.body.feespaid); if (req.body.feespaid !== '') { dict['feespaid'] = { $gte: feespaid }; } }
+        if (req.body.feesdue) { const feesdue = Number(req.body.feesdue); if (req.body.feesdue !== '') { dict['feesdue'] = { $gte: feesdue }; } }
+        if (req.body.penalties) { const penalties = Number(req.body.penalties); if (req.body.penalties !== '') { dict['penalties'] = { $gte: penalties }; } }
+        if (req.body.firstyear) { const firstyear = Number(req.body.firstyear); if (req.body.firstyear !== '') { dict['firstyear'] = firstyear; } }
+        if (req.body.ispassedout && req.body.ispassedout !== 'SELECT') { const ispassedout = req.body.ispassedout === 'YES' ? true : false; dict['ispassedout'] = ispassedout; }
+
+        const students = await Student.find(dict);
+
+        if (students.length > 0)
+            res.status(201).json(students);
+        else
+            res.status(404).json(dict);
+    } else {
+        res.status(400);
+        throw new Error('Could not find students');
+    }
+});
+
+export { getStudentbyId, getStudents, deleteStudent, updateStudent, addStudent, searchStudents };

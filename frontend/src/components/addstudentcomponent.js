@@ -176,7 +176,7 @@ const Addstudent = (props) => {
                                 {uploading && <Loader />}
                             </Form.Group>
                             <Form.Group controlId='contact'>
-                                <Form.Label>contact No</Form.Label>
+                                <Form.Label>Contact No</Form.Label>
                                 <Form.Control type='text' placeholder='Enter Contact No' value={contact} onChange={(e) => setcontact(e.target.value)}></Form.Control>
                             </Form.Group>
                             <Form.Group controlId='email'>

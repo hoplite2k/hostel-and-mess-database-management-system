@@ -53,4 +53,23 @@ const addRoomset = asyncHandler(async (req, res) => {
   }
 });
 
-export { getRoombyId, getRooms, addRoomset, deleteRoomset };
+const searchRooms = asyncHandler(async (req, res) => {
+  if (req.body) {
+    var dict = {};
+    if (req.body.roomno) { const roomno = req.body.roomno; if (roomno !== '') { dict['roomno'] = roomno; } }
+    if (req.body.roomallocationyear) { const roomallocationyear = Number(req.body.roomallocationyear); if (req.body.roomallocationyear !== '') { dict['roomallocationyear'] = roomallocationyear; } }
+    if (req.body.roomvacatingyear) { const roomvacatingyear = Number(req.body.roomvacatingyear); if (req.body.roomvacatingyear !== '') { dict['roomvacatingyear'] = roomvacatingyear; } }
+
+    const rooms = await Room.find(dict);
+
+    if (rooms.length > 0)
+      res.status(201).json(rooms);
+    else
+      res.status(404).json('No room found');
+  } else {
+    res.status(400);
+    throw new Error('Could not find rooms');
+  }
+});
+
+export { getRoombyId, getRooms, addRoomset, deleteRoomset, searchRooms };

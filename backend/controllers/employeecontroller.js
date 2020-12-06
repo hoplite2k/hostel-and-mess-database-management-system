@@ -122,4 +122,26 @@ const updateEmployee = asyncHandler(async (req, res) => {
   }
 });
 
-export { getEmployeebyId, getEmployees, deleteEmployee, updateEmployee, addEmployee }
+const searchEmployees = asyncHandler(async (req, res) => {
+  if (req.body) {
+    var dict = {};
+    if (req.body.name) { const name = req.body.name; if (name !== '') { dict['name'] = name; } }
+    if (req.body.staffid) { const staffid = req.body.staffid; if (staffid !== '') { dict['staffid'] = staffid; } }
+    if (req.body.contact) { const contact = req.body.contact; if (contact !== '') { dict['contact'] = contact; } }
+    if (req.body.email) { const email = req.body.email; if (email !== '') { dict['email'] = email; } }
+    if (req.body.role) { const role = req.body.role; if (role !== '') { dict['role'] = role; } }
+    if (req.body.isadmin && req.body.isadmin !== 'SELECT') { const isadmin = req.body.isadmin === 'YES' ? true : false; dict['isadmin'] = isadmin; }
+
+    const employees = await Employee.find(dict);
+
+    if (employees.length > 0)
+      res.status(201).json(employees);
+    else
+      res.status(404).json('No employee found');
+  } else {
+    res.status(400);
+    throw new Error('Could not find employees');
+  }
+});
+
+export { getEmployeebyId, getEmployees, deleteEmployee, updateEmployee, addEmployee, searchEmployees }
