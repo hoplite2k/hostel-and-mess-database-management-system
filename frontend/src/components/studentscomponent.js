@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Row, Col, Breadcrumb, Button, Form, Card } from 'react-bootstrap';
-import { liststudents, searchstudents } from '../actions/studentactions';
+import { liststudents, searchstudents, listallstudents } from '../actions/studentactions';
 import Student from '../components/studentcomponent';
 import Loader from '../components/loadercomponent';
 import Message from '../components/messagecomponent';
@@ -27,6 +27,9 @@ const Students = (props) => {
     const studentlist = useSelector((state) => state.studentlist);
     const { loading, error, students } = studentlist;
 
+    const studentlistall = useSelector((state) => state.studentlistall);
+    const { loading: allloading, error: allerror, success: allsuccess, students: allstudents } = studentlistall;
+
     const studentsearch = useSelector((state) => state.studentsearch);
     const { loading: searchloading, error: searcherror, success: searchsuccess, students: serstudents } = studentsearch;
 
@@ -39,16 +42,22 @@ const Students = (props) => {
     useEffect(() => {
         if (!userinfo) {
             props.history.push('/login');
-        } else if (searchsuccess !== true) {
+        } else if (searchsuccess !== true && allsuccess !== true) {
             dispatch(liststudents());
         }
-    }, [dispatch, props.history, userinfo, successDelete, searchsuccess]);
+    }, [dispatch, props.history, userinfo, successDelete, searchsuccess, allsuccess]);
 
     const submitHandler = (e) => {
         e.preventDefault();
         dispatch(searchstudents({
             name, usn, branch, year, roomno, contact, email, feespaid, feesdue, penalties, firstyear, ispassedout
         }));
+        setshowserform(false);
+    }
+
+    const all = (e) => {
+        e.preventDefault();
+        dispatch(listallstudents());
         setshowserform(false);
     }
 
@@ -64,7 +73,7 @@ const Students = (props) => {
                             userinfo && userinfo.isadmin && (<LinkContainer to={'/newstudent'}><Button variant='success'><span className='fas fa-plus'></span> Add Student</Button></LinkContainer>)
                         }
                         &nbsp;&nbsp;<Button variant='primary' onClick={() => setshowserform(true)}><span className='fas fa-search-plus'></span> Search</Button>
-                        <Button variant='secondary' style={{ float: 'right' }}><span className="fas fa-database"></span> Get All</Button>
+                        <Button variant='secondary' style={{ float: 'right' }} onClick={all}><span className="fas fa-database"></span> Get All</Button>
                         <br />
                         {
                             showserform &&
@@ -148,16 +157,24 @@ const Students = (props) => {
                             </>
                         }
                         {searchloading ? <Loader /> : searcherror ? (<><br /><Message variant='danger'>{searcherror.status ? `Error ${searcherror.status}: ${searcherror.statusText}` : searcherror}</Message></>) : ""}
+                        {allloading ? <Loader /> : allerror ? (<><br /><Message variant='danger'>{allerror.status ? `Error ${allerror.status}: ${allerror.statusText}` : allerror}</Message></>) : ""}
                         <Row>
                             {
-                                students && (serstudents === [] || searchsuccess !== true) && students.map((student) => (
+                                students && (serstudents === [] || searchsuccess !== true) && (allstudents === [] || allsuccess !== true) && students.map((student) => (
                                     <Col key={student._id} sm={12} md={6} lg={4} xl={3}>
                                         <Student student={student} />
                                     </Col>
                                 ))
                             }
                             {
-                                serstudents && serstudents.map((student) => (
+                                serstudents && (allstudents === [] || allsuccess !== true) && serstudents.map((student) => (
+                                    <Col key={student._id} sm={12} md={6} lg={4} xl={3}>
+                                        <Student student={student} />
+                                    </Col>
+                                ))
+                            }
+                            {
+                                allstudents && allstudents.map((student) => (
                                     <Col key={student._id} sm={12} md={6} lg={4} xl={3}>
                                         <Student student={student} />
                                     </Col>

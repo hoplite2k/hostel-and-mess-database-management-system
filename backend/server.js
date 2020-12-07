@@ -1,7 +1,8 @@
 import express from "express";
-import path from 'path';
+import path from "path";
 import dotenv from "dotenv";
 import colors from "colors";
+import morgan from "morgan";
 import { notFound, errorHandler } from './middleware/errormiddleware.js';
 import ConnectDB from "./config/db.js";
 
@@ -18,6 +19,10 @@ dotenv.config();
 ConnectDB();
 
 const app = express();
+
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 
 app.use(express.json());
 

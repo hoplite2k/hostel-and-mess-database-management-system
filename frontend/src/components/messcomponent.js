@@ -6,6 +6,12 @@ import { Link } from 'react-router-dom';
 import { deletemessdetails } from "../actions/messactions";
 
 const Mess = (props) => {
+    var border;
+    var d = new Date();
+    var year = d.getFullYear();
+    if (props.mess.date.substring(0, 4) === year) {
+        border = 'success';
+    }
 
     const dispatch = useDispatch();
 
@@ -19,7 +25,7 @@ const Mess = (props) => {
     }
 
     return (
-        <Card style={{ height: "225px" }} className="p-3 my-3 rounded">
+        <Card style={{ height: "225px" }} className="p-3 my-3 rounded" border={border}>
             <Card.Body>
                 <Link to={`/mess/${props.mess._id}`}>
                     <Card.Title as="div">

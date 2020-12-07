@@ -1,8 +1,16 @@
 import asyncHandler from "express-async-handler";
 import Room from "../models/roommodel.js";
 
+const getallRooms = asyncHandler(async (req, res) => {
+  const rooms = await Room.find({}).sort({ roomallocationyear: 1, roomno: 1 });
+
+  res.json(rooms);
+});
+
 const getRooms = asyncHandler(async (req, res) => {
-  const rooms = await Room.find({});
+  var d = new Date();
+  var year = d.getFullYear();
+  const rooms = await Room.find({ roomallocationyear: year }).sort({ roomallocationyear: 1, roomno: 1 });
 
   res.json(rooms);
 });
@@ -60,7 +68,7 @@ const searchRooms = asyncHandler(async (req, res) => {
     if (req.body.roomallocationyear) { const roomallocationyear = Number(req.body.roomallocationyear); if (req.body.roomallocationyear !== '') { dict['roomallocationyear'] = roomallocationyear; } }
     if (req.body.roomvacatingyear) { const roomvacatingyear = Number(req.body.roomvacatingyear); if (req.body.roomvacatingyear !== '') { dict['roomvacatingyear'] = roomvacatingyear; } }
 
-    const rooms = await Room.find(dict);
+    const rooms = await Room.find(dict).sort({ roomallocationyear: 1, roomno: 1 });
 
     if (rooms.length > 0)
       res.status(201).json(rooms);
@@ -72,4 +80,4 @@ const searchRooms = asyncHandler(async (req, res) => {
   }
 });
 
-export { getRoombyId, getRooms, addRoomset, deleteRoomset, searchRooms };
+export { getRoombyId, getRooms, addRoomset, deleteRoomset, searchRooms, getallRooms };

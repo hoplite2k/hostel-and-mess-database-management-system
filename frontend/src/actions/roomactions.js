@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ROOM_LIST_REQUEST, ROOM_LIST_SUCCESS, ROOM_LIST_FAIL, ROOM_DETAILS_FAIL, ROOM_DETAILS_REQUEST, ROOM_DETAILS_SUCCESS, ROOMSET_ADD_FAIL, ROOMSET_ADD_REQUEST, ROOMSET_ADD_SUCCESS, ROOMSET_DELETE_REQUEST, ROOMSET_DELETE_SUCCESS, ROOMSET_DELETE_FAIL, ROOM_SEARCH_REQUEST, ROOM_SEARCH_SUCCESS, ROOM_SEARCH_FAIL } from '../constants/roomconstants';
+import { ROOM_LIST_REQUEST, ROOM_LIST_SUCCESS, ROOM_LIST_FAIL, ROOM_DETAILS_FAIL, ROOM_DETAILS_REQUEST, ROOM_DETAILS_SUCCESS, ROOMSET_ADD_FAIL, ROOMSET_ADD_REQUEST, ROOMSET_ADD_SUCCESS, ROOMSET_DELETE_REQUEST, ROOMSET_DELETE_SUCCESS, ROOMSET_DELETE_FAIL, ROOM_SEARCH_REQUEST, ROOM_SEARCH_SUCCESS, ROOM_SEARCH_FAIL, ROOM_LIST_ALL_REQUEST, ROOM_LIST_ALL_SUCCESS, ROOM_LIST_ALL_FAIL } from '../constants/roomconstants';
 
 export const listrooms = () => async (dispatch, getState) => {
     try {
@@ -124,6 +124,31 @@ export const searchrooms = (room) => async (dispatch, getState) => {
     } catch (error) {
         dispatch({
             type: ROOM_SEARCH_FAIL,
+            payload: error.response && error.response.data.message ? error.response.data.message : error.response,
+        });
+    }
+};
+
+export const listallrooms = () => async (dispatch, getState) => {
+    try {
+        dispatch({ type: ROOM_LIST_ALL_REQUEST });
+
+        const { userlogin: { userinfo } } = getState();
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userinfo.token}`,
+            }
+        };
+
+        const { data } = await axios.get('/rooms/all', config);
+        dispatch({
+            type: ROOM_LIST_ALL_SUCCESS,
+            payload: data,
+        });
+    } catch (error) {
+        dispatch({
+            type: ROOM_LIST_ALL_FAIL,
             payload: error.response && error.response.data.message ? error.response.data.message : error.response,
         });
     }

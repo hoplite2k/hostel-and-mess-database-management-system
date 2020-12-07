@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Breadcrumb, Row, Col, Button, Form, Card } from 'react-bootstrap';
-import { listrooms, addnewroomset, roomsetdelete, searchrooms } from '../actions/roomactions';
+import { listrooms, addnewroomset, roomsetdelete, searchrooms, listallrooms } from '../actions/roomactions';
 import { ROOMSET_ADD_RESET } from '../constants/roomconstants';
 import Room from '../components/roomcomponent';
 import Loader from '../components/loadercomponent';
@@ -20,6 +20,9 @@ const Rooms = (props) => {
 
     const roomlist = useSelector((state) => state.roomlist);
     const { loading, error, rooms } = roomlist;
+
+    const roomlistall = useSelector((state) => state.roomlistall);
+    const { loading: allloading, error: allerror, success: allsuccess, rooms: allrooms } = roomlistall;
 
     const userlogin = useSelector((state) => state.userlogin);
     const { userinfo } = userlogin;
@@ -40,10 +43,10 @@ const Rooms = (props) => {
             dispatch({
                 type: ROOMSET_ADD_RESET
             });
-        } else if (searchsuccess !== true) {
+        } else if (searchsuccess !== true && allsuccess !== true) {
             dispatch(listrooms());
         }
-    }, [dispatch, props.history, userinfo, successDelete, successAdd, searchsuccess]);
+    }, [dispatch, props.history, userinfo, successDelete, successAdd, searchsuccess, allsuccess]);
 
     const delsubmitHandler = (e) => {
         e.preventDefault();
@@ -69,6 +72,12 @@ const Rooms = (props) => {
         setshowserform(false);
     }
 
+    const all = (e) => {
+        e.preventDefault();
+        dispatch(listallrooms());
+        setshowserform(false);
+    }
+
     var submitHandler;
 
     return (
@@ -88,7 +97,7 @@ const Rooms = (props) => {
                         }
                     &nbsp;&nbsp;
                         <Button variant='primary' onClick={() => { setshowserform(true); setshowaddform(false); setshowdelform(false); }}><span className='fas fa-search-plus'></span> Search</Button>
-                        <Button variant='secondary' style={{ float: 'right' }}><span className="fas fa-database"></span> Get All</Button>
+                        <Button variant='secondary' style={{ float: 'right' }} onClick={all}><span className="fas fa-database"></span> Get All</Button>
                         {
                             (showaddform || showdelform) &&
                             <>
@@ -155,18 +164,29 @@ const Rooms = (props) => {
                         }
                         <br />
                         {searchloading ? <Loader /> : searcherror ? (<><br /><Message variant='danger'>{searcherror.status ? `Error ${searcherror.status}: ${searcherror.statusText}` : searcherror}</Message></>) : ""}
+                        {allloading ? <Loader /> : allerror ? (<><br /><Message variant='danger'>{allerror.status ? `Error ${allerror.status}: ${allerror.statusText}` : allerror}</Message></>) : ""}
                         <Row>
-                            {rooms && (serrooms === [] || searchsuccess !== true) && rooms.map((room) => (
-                                <Col key={room._id} sm={12} md={6} lg={4} xl={3}>
-                                    <Room room={room} />
-                                </Col>
-                            ))}
                             {
-                                serrooms && serrooms.map((room) => (
+                                rooms && (serrooms === [] || searchsuccess !== true) && (allrooms === [] || allsuccess !== true) && rooms.map((room) => (
                                     <Col key={room._id} sm={12} md={6} lg={4} xl={3}>
                                         <Room room={room} />
                                     </Col>
-                                ))}
+                                ))
+                            }
+                            {
+                                serrooms && (allrooms === [] || allsuccess !== true) && serrooms.map((room) => (
+                                    <Col key={room._id} sm={12} md={6} lg={4} xl={3}>
+                                        <Room room={room} />
+                                    </Col>
+                                ))
+                            }
+                            {
+                                allrooms && allrooms.map((room) => (
+                                    <Col key={room._id} sm={12} md={6} lg={4} xl={3}>
+                                        <Room room={room} />
+                                    </Col>
+                                ))
+                            }
                         </Row>
                     </>
             }

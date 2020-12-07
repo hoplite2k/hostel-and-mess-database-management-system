@@ -59,7 +59,6 @@ const Employees = (props) => {
                             userinfo && userinfo.isadmin && (<LinkContainer to={'/newemployee'}><Button variant='success'><span className='fas fa-plus'></span> Add Employee</Button></LinkContainer>)
                         }
                         &nbsp;&nbsp;<Button variant='primary' onClick={() => setshowserform(true)}><span className='fas fa-search-plus'></span> Search</Button>
-                        <Button variant='secondary' style={{ float: 'right' }}><span className="fas fa-database"></span> Get All</Button>
                         {
                             showserform &&
                             <>

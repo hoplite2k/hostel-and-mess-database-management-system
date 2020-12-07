@@ -1,8 +1,18 @@
 import asyncHandler from "express-async-handler";
 import Mess from "../models/messmodel.js";
 
+const getallMesses = asyncHandler(async (req, res) => {
+  const mess = await Mess.find({}).sort({ date: -1 });
+
+  res.json(mess);
+});
+
 const getMesses = asyncHandler(async (req, res) => {
-  const mess = await Mess.find({});
+  var d = new Date();
+  var year = d.getFullYear();
+  var month = d.getMonth() + 1;
+  const yearmonth = '' + year + '-' + month;
+  const mess = await Mess.find({ date: { $regex: yearmonth } }).sort({ date: -1 });
 
   res.json(mess);
 });
@@ -77,7 +87,7 @@ const searchMess = asyncHandler(async (req, res) => {
     if (req.body.rationused) { const rationused = Number(req.body.rationused); if (req.body.rationused !== '') { dict['rationused'] = { $gte: rationused }; } }
     if (req.body.foodwasted) { const foodwasted = Number(req.body.foodwasted); if (req.body.foodwasted !== '') { dict['foodwasted'] = { $gte: foodwasted }; } }
 
-    const mess = await Mess.find(dict);
+    const mess = await Mess.find(dict).sort({ date: -1 });
 
     if (mess.length > 0)
       res.status(201).json(mess);
@@ -89,4 +99,4 @@ const searchMess = asyncHandler(async (req, res) => {
   }
 });
 
-export { getMessbyId, getMesses, updateMess, deleteMess, addMess, searchMess };
+export { getMessbyId, getMesses, updateMess, deleteMess, addMess, searchMess, getallMesses };

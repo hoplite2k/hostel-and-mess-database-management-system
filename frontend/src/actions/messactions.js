@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { MESS_LIST_REQUEST, MESS_LIST_SUCCESS, MESS_LIST_FAIL, MESS_DETAILS_FAIL, MESS_DETAILS_REQUEST, MESS_DETAILS_SUCCESS, MESS_UPDATE_REQUEST, MESS_UPDATE_SUCCESS, MESS_UPDATE_FAIL, MESS_DELETE_REQUEST, MESS_DELETE_SUCCESS, MESS_DELETE_FAIL, MESS_ADD_REQUEST, MESS_ADD_SUCCESS, MESS_ADD_FAIL, MESS_SEARCH_REQUEST, MESS_SEARCH_SUCCESS, MESS_SEARCH_FAIL } from '../constants/messconstants';
+import { MESS_LIST_REQUEST, MESS_LIST_SUCCESS, MESS_LIST_FAIL, MESS_DETAILS_FAIL, MESS_DETAILS_REQUEST, MESS_DETAILS_SUCCESS, MESS_UPDATE_REQUEST, MESS_UPDATE_SUCCESS, MESS_UPDATE_FAIL, MESS_DELETE_REQUEST, MESS_DELETE_SUCCESS, MESS_DELETE_FAIL, MESS_ADD_REQUEST, MESS_ADD_SUCCESS, MESS_ADD_FAIL, MESS_SEARCH_REQUEST, MESS_SEARCH_SUCCESS, MESS_SEARCH_FAIL, MESS_LIST_ALL_REQUEST, MESS_LIST_ALL_SUCCESS, MESS_LIST_ALL_FAIL } from '../constants/messconstants';
 
 export const listmess = () => async (dispatch, getState) => {
     try {
@@ -153,6 +153,31 @@ export const searchmess = (mess) => async (dispatch, getState) => {
     } catch (error) {
         dispatch({
             type: MESS_SEARCH_FAIL,
+            payload: error.response && error.response.data.message ? error.response.data.message : error.response,
+        });
+    }
+};
+
+export const listallmess = () => async (dispatch, getState) => {
+    try {
+        dispatch({ type: MESS_LIST_ALL_REQUEST });
+
+        const { userlogin: { userinfo } } = getState();
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userinfo.token}`,
+            }
+        };
+
+        const { data } = await axios.get('/mess/all', config);
+        dispatch({
+            type: MESS_LIST_ALL_SUCCESS,
+            payload: data,
+        });
+    } catch (error) {
+        dispatch({
+            type: MESS_LIST_ALL_FAIL,
             payload: error.response && error.response.data.message ? error.response.data.message : error.response,
         });
     }

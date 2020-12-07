@@ -4,7 +4,7 @@ import User from "../models/usermodel.js";
 import nodemailer from 'nodemailer';
 
 const getEmployees = asyncHandler(async (req, res) => {
-  const employees = await Employee.find({});
+  const employees = await Employee.find({}).sort({ isadmin: -1, name: 1 });
 
   res.json(employees);
 });
@@ -132,7 +132,7 @@ const searchEmployees = asyncHandler(async (req, res) => {
     if (req.body.role) { const role = req.body.role; if (role !== '') { dict['role'] = role; } }
     if (req.body.isadmin && req.body.isadmin !== 'SELECT') { const isadmin = req.body.isadmin === 'YES' ? true : false; dict['isadmin'] = isadmin; }
 
-    const employees = await Employee.find(dict);
+    const employees = await Employee.find(dict).sort({ isadmin: -1, name: 1 });
 
     if (employees.length > 0)
       res.status(201).json(employees);

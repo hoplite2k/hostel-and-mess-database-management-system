@@ -6,7 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deletestudentdetails } from "../actions/studentactions";
 
 const Student = (props) => {
-
+    var variant = '';
+    if (props.student.ispassedout) {
+        variant = 'danger';
+    }
     const dispatch = useDispatch();
 
     const userlogin = useSelector((state) => state.userlogin);
@@ -19,7 +22,7 @@ const Student = (props) => {
     }
 
     return (
-        <Card style={{ height: "375px" }} className="p-3 my-3 rounded">
+        <Card style={{ height: "375px" }} className="p-3 my-3 rounded" border={variant}>
             <Link to={`/students/${props.student._id}`}>
                 <Card.Img src={props.student.image} style={{ height: "125px", width: "220px" }} variant="top" />
             </Link>

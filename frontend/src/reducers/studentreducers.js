@@ -1,4 +1,4 @@
-import { STUDENT_LIST_REQUEST, STUDENT_LIST_SUCCESS, STUDENT_LIST_FAIL, STUDENT_DETAILS_FAIL, STUDENT_DETAILS_SUCCESS, STUDENT_DETAILS_REQUEST, STUDENT_DELETE_FAIL, STUDENT_DELETE_REQUEST, STUDENT_DELETE_SUCCESS, STUDENT_UPDATE_FAIL, STUDENT_UPDATE_REQUEST, STUDENT_UPDATE_RESET, STUDENT_UPDATE_SUCCESS, STUDENT_ADD_REQUEST, STUDENT_ADD_SUCCESS, STUDENT_ADD_FAIL, STUDENT_ADD_RESET, STUDENT_SEARCH_FAIL, STUDENT_SEARCH_REQUEST, STUDENT_SEARCH_SUCCESS } from '../constants/studentconstants';
+import { STUDENT_LIST_REQUEST, STUDENT_LIST_SUCCESS, STUDENT_LIST_FAIL, STUDENT_DETAILS_FAIL, STUDENT_DETAILS_SUCCESS, STUDENT_DETAILS_REQUEST, STUDENT_DELETE_FAIL, STUDENT_DELETE_REQUEST, STUDENT_DELETE_SUCCESS, STUDENT_UPDATE_FAIL, STUDENT_UPDATE_REQUEST, STUDENT_UPDATE_RESET, STUDENT_UPDATE_SUCCESS, STUDENT_ADD_REQUEST, STUDENT_ADD_SUCCESS, STUDENT_ADD_FAIL, STUDENT_ADD_RESET, STUDENT_SEARCH_FAIL, STUDENT_SEARCH_REQUEST, STUDENT_SEARCH_SUCCESS, STUDENT_LIST_ALL_REQUEST, STUDENT_LIST_ALL_SUCCESS, STUDENT_LIST_ALL_FAIL } from '../constants/studentconstants';
 
 export const studentlistReducer = (state = { students: [] }, action) => {
     switch (action.type) {
@@ -76,6 +76,19 @@ export const studentsearchReducer = (state = { students: [] }, action) => {
         case STUDENT_SEARCH_SUCCESS:
             return { loading: false, success: true, students: action.payload };
         case STUDENT_SEARCH_FAIL:
+            return { loading: false, success: false, error: action.payload };
+        default:
+            return state;
+    }
+};
+
+export const studentlistallReducer = (state = { students: [] }, action) => {
+    switch (action.type) {
+        case STUDENT_LIST_ALL_REQUEST:
+            return { loading: true, students: [] };
+        case STUDENT_LIST_ALL_SUCCESS:
+            return { loading: false, success: true, students: action.payload };
+        case STUDENT_LIST_ALL_FAIL:
             return { loading: false, success: false, error: action.payload };
         default:
             return state;

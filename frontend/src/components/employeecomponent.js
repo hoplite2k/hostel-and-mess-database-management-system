@@ -22,7 +22,10 @@ const AdminButton = (props) => {
 }
 
 const Employee = (props) => {
-
+    var variant = '';
+    if (props.employee.isadmin) {
+        variant = 'info';
+    }
     const dispatch = useDispatch();
 
     const userlogin = useSelector((state) => state.userlogin);
@@ -35,7 +38,7 @@ const Employee = (props) => {
     }
 
     return (
-        <Card style={{ height: "400px" }} className="p-3 my-3 rounded">
+        <Card style={{ height: "400px" }} className="p-3 my-3 rounded" border={variant}>
             <Link to={`/employees/${props.employee._id}`}>
                 <Card.Img src={props.employee.image} style={{ height: "125px", width: "220px" }} variant="top" />
             </Link>

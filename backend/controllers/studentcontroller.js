@@ -2,8 +2,14 @@ import asyncHandler from "express-async-handler";
 import Student from "../models/studentmodel.js";
 import Room from "../models/roommodel.js";
 
+const getallStudents = asyncHandler(async (req, res) => {
+    const students = await Student.find({}).sort({ ispassedout: 1, year: 1, name: 1 });
+
+    res.json(students);
+});
+
 const getStudents = asyncHandler(async (req, res) => {
-    const students = await Student.find({});
+    const students = await Student.find({ ispassedout: false }).sort({ year: 1, name: 1 });
 
     res.json(students);
 });
@@ -140,7 +146,7 @@ const searchStudents = asyncHandler(async (req, res) => {
         if (req.body.firstyear) { const firstyear = Number(req.body.firstyear); if (req.body.firstyear !== '') { dict['firstyear'] = firstyear; } }
         if (req.body.ispassedout && req.body.ispassedout !== 'SELECT') { const ispassedout = req.body.ispassedout === 'YES' ? true : false; dict['ispassedout'] = ispassedout; }
 
-        const students = await Student.find(dict);
+        const students = await Student.find(dict).sort({ ispassedout: 1, year: 1, name: 1 });
 
         if (students.length > 0)
             res.status(201).json(students);
@@ -152,4 +158,4 @@ const searchStudents = asyncHandler(async (req, res) => {
     }
 });
 
-export { getStudentbyId, getStudents, deleteStudent, updateStudent, addStudent, searchStudents };
+export { getStudentbyId, getStudents, deleteStudent, updateStudent, addStudent, searchStudents, getallStudents };

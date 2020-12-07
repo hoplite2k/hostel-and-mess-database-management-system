@@ -2,10 +2,10 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import { studentlistReducer, studentdetailsReducer, deletestudentReducer, updatestudentReducer, addstudentReducer, studentsearchReducer } from './reducers/studentreducers';
+import { studentlistReducer, studentdetailsReducer, deletestudentReducer, updatestudentReducer, addstudentReducer, studentsearchReducer, studentlistallReducer } from './reducers/studentreducers';
 import { employeelistReducer, employeedetailsReducer, deleteemployeeReducer, updateemployeeReducer, addemployeeReducer, employeesearchReducer } from './reducers/employeereducers';
-import { roomlistReducer, roomdetailsReducer, addroomsetReducer, deleteroomsetReducer, roomsearchReducer } from './reducers/roomreducers';
-import { messlistReducer, messdetailsReducer, deletemessReducer, updatemessReducer, addmessReducer, messsearchReducer } from './reducers/messreducers';
+import { roomlistReducer, roomdetailsReducer, addroomsetReducer, deleteroomsetReducer, roomsearchReducer, roomlistallReducer } from './reducers/roomreducers';
+import { messlistReducer, messdetailsReducer, deletemessReducer, updatemessReducer, addmessReducer, messsearchReducer, messlistallReducer } from './reducers/messreducers';
 import { userloginReducer, userdetailsReducer, userupdatepasswordReducer } from './reducers/userreducers';
 
 
@@ -43,6 +43,9 @@ const reducer = combineReducers({
     roomsearch: roomsearchReducer,
     messsearch: messsearchReducer,
 
+    studentlistall: studentlistallReducer,
+    roomlistall: roomlistallReducer,
+    messlistall: messlistallReducer,
 });
 
 const userinfofromstorage = localStorage.getItem('userinfo') ? JSON.parse(localStorage.getItem('userinfo')) : null;
