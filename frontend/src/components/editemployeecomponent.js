@@ -28,6 +28,9 @@ const Editemployee = (props) => {
 
     const dispatch = useDispatch();
 
+    const userlogin = useSelector((state) => state.userlogin);
+    const { userinfo } = userlogin;
+
     const employeedetails = useSelector((state) => state.employeedetails);
     const { loading, error, employee } = employeedetails;
 
@@ -35,6 +38,9 @@ const Editemployee = (props) => {
     const { loading: loadingupdate, error: errorupdate, success: successupdate } = updateemployee;
 
     useEffect(() => {
+        if (!userinfo) {
+            props.history.push('/login');
+        }
         if (successupdate) {
             dispatch({
                 type: EMPLOYEE_UPDATE_RESET
@@ -57,7 +63,7 @@ const Editemployee = (props) => {
                 setisadmin(employee.isadmin);
             }
         }
-    }, [dispatch, employeeid, employee, props.match, props.history, successupdate]);
+    }, [dispatch, employeeid, employee, props.match, props.history, successupdate, userinfo]);
 
     const uploadprofileHandler = async (e) => {
         const file = e.target.files[0];

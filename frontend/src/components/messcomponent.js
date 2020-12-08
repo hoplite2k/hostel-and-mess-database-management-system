@@ -8,7 +8,7 @@ import { deletemessdetails } from "../actions/messactions";
 const Mess = (props) => {
     var border;
     var d = new Date();
-    var year = d.getFullYear();
+    var year = d.getFullYear().toString();
     if (props.mess.date.substring(0, 4) === year) {
         border = 'success';
     }

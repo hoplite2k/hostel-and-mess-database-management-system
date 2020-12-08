@@ -30,14 +30,20 @@ const Addemployee = (props) => {
     const addemployee = useSelector((state) => state.addemployee);
     const { loading, error, success, employee } = addemployee;
 
+    const userlogin = useSelector((state) => state.userlogin);
+    const { userinfo } = userlogin;
+
     useEffect(() => {
+        if (!userinfo) {
+            props.history.push('/login');
+        }
         if (success) {
             dispatch({
                 type: EMPLOYEE_ADD_RESET
             });
             props.history.push('/employees');
         }
-    }, [dispatch, props.history, success]);
+    }, [dispatch, props.history, success, userinfo]);
 
     const uploadprofileHandler = async (e) => {
         const file = e.target.files[0];

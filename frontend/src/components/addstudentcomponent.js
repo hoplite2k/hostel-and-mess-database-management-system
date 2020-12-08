@@ -45,14 +45,20 @@ const Addstudent = (props) => {
     const addstudent = useSelector((state) => state.addstudent);
     const { loading, error, success, student } = addstudent;
 
+    const userlogin = useSelector((state) => state.userlogin);
+    const { userinfo } = userlogin;
+
     useEffect(() => {
+        if (!userinfo) {
+            props.history.push('/login');
+        }
         if (success) {
             dispatch({
                 type: STUDENT_ADD_RESET
             });
             props.history.push('/students');
         }
-    }, [dispatch, props.history, success]);
+    }, [dispatch, props.history, success, userinfo]);
 
     const uploadprofileHandler = async (e) => {
         const file = e.target.files[0];

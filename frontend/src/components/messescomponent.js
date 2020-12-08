@@ -6,6 +6,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import Mess from '../components/messcomponent';
 import Loader from '../components/loadercomponent';
 import Message from '../components/messagecomponent';
+import Chartcomponent from '../components/chartcomponent';
 
 const Messes = (props) => {
 
@@ -116,6 +117,11 @@ const Messes = (props) => {
                         <br />
                         {searchloading ? <Loader /> : searcherror ? (<><br /><Message variant='danger'>{searcherror.status ? `Error ${searcherror.status}: ${searcherror.statusText}` : searcherror}</Message></>) : ""}
                         {allloading ? <Loader /> : allerror ? (<><br /><Message variant='danger'>{allerror.status ? `Error ${allerror.status}: ${allerror.statusText}` : allerror}</Message></>) : ""}
+                        <br />
+                        <Chartcomponent />
+                        <br />
+                        <br />
+                        <h2>Mess</h2>
                         <Row>
                             {
                                 sermesses && (sermesses === [] || searchsuccess !== true) && (allmesses === [] || allsuccess !== true) && messes.map((mess) => (

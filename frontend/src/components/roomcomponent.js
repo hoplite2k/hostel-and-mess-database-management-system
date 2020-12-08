@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Room = (props) => {
     var variant, vacancy, border;
     var d = new Date();
-    var year = d.getFullYear();
+    var year = d.getFullYear().toString();
     if (props.room.inmates.length === 0) {
         variant = "danger";
         vacancy = 2;
@@ -18,8 +18,8 @@ const Room = (props) => {
         variant = "light";
         vacancy = 0;
     }
-    if (props.room.allocationyear === year) {
-        border = 'success'
+    if (props.room.roomallocationyear.toString() === year) {
+        border = 'success';
     }
     return (
         <Link to={`/rooms/${props.room._id}`}>

@@ -7,6 +7,7 @@ import { employeelistReducer, employeedetailsReducer, deleteemployeeReducer, upd
 import { roomlistReducer, roomdetailsReducer, addroomsetReducer, deleteroomsetReducer, roomsearchReducer, roomlistallReducer } from './reducers/roomreducers';
 import { messlistReducer, messdetailsReducer, deletemessReducer, updatemessReducer, addmessReducer, messsearchReducer, messlistallReducer } from './reducers/messreducers';
 import { userloginReducer, userdetailsReducer, userupdatepasswordReducer } from './reducers/userreducers';
+import { chartReducer } from './reducers/chartreducers';
 
 
 const reducer = combineReducers({
@@ -46,6 +47,8 @@ const reducer = combineReducers({
     studentlistall: studentlistallReducer,
     roomlistall: roomlistallReducer,
     messlistall: messlistallReducer,
+
+    chart: chartReducer,
 });
 
 const userinfofromstorage = localStorage.getItem('userinfo') ? JSON.parse(localStorage.getItem('userinfo')) : null;

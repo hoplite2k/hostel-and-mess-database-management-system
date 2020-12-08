@@ -22,10 +22,16 @@ const Editmess = (props) => {
     const messdetails = useSelector((state) => state.messdetails);
     const { loading, error, mess } = messdetails;
 
+    const userlogin = useSelector((state) => state.userlogin);
+    const { userinfo } = userlogin;
+
     const updatemess = useSelector((state) => state.updatemess);
     const { loading: loadingupdate, error: errorupdate, success: successupdate } = updatemess;
 
     useEffect(() => {
+        if (!userinfo) {
+            props.history.push('/login');
+        }
         if (successupdate) {
             dispatch({
                 type: MESS_UPDATE_RESET
@@ -41,7 +47,7 @@ const Editmess = (props) => {
                 setfoodwasted(mess.foodwasted);
             }
         }
-    }, [dispatch, messid, mess, props.match, props.history, successupdate]);
+    }, [dispatch, messid, mess, props.match, props.history, successupdate, userinfo]);
 
     const submitHandler = (e) => {
         e.preventDefault();

@@ -13,6 +13,7 @@ import Messrouter from "./routes/messroute.js";
 import Userrouter from "./routes/userroutes.js";
 import Uploadprofilerouter from "./routes/uploadsprofileroute.js";
 import Uploadidentityrouter from "./routes/uploadsidentityroute.js";
+import MLrouter from "./routes/mlroute.js";
 
 dotenv.config();
 
@@ -37,6 +38,7 @@ app.use("/mess", Messrouter);
 app.use("/users", Userrouter);
 app.use("/uploads/profile", Uploadprofilerouter);
 app.use("/uploads/identity", Uploadidentityrouter);
+app.use("/ml", MLrouter);
 
 const __dirname = path.resolve();
 app.use('/database/uploads/', express.static(path.join(__dirname, '/database/uploads/')));

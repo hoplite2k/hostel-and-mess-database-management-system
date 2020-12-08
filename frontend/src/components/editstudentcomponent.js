@@ -49,7 +49,13 @@ const Editstudent = (props) => {
     const updatestudent = useSelector((state) => state.updatestudent);
     const { loading: loadingupdate, error: errorupdate, success: successupdate } = updatestudent;
 
+    const userlogin = useSelector((state) => state.userlogin);
+    const { userinfo } = userlogin;
+
     useEffect(() => {
+        if (!userinfo) {
+            props.history.push('/login');
+        }
         if (successupdate) {
             dispatch({
                 type: STUDENT_UPDATE_RESET
@@ -86,7 +92,7 @@ const Editstudent = (props) => {
                 setpcontact(student.parents.contact);
             }
         }
-    }, [dispatch, studentid, student, props.match, props.history, successupdate]);
+    }, [dispatch, studentid, student, props.match, props.history, successupdate, userinfo]);
 
     const uploadprofileHandler = async (e) => {
         const file = e.target.files[0];

@@ -21,14 +21,20 @@ const Addmess = (props) => {
     const addmess = useSelector((state) => state.addmess);
     const { loading, error, success, mess } = addmess;
 
+    const userlogin = useSelector((state) => state.userlogin);
+    const { userinfo } = userlogin;
+
     useEffect(() => {
+        if (!userinfo) {
+            props.history.push('/login');
+        }
         if (success) {
             dispatch({
                 type: MESS_ADD_RESET
             });
             props.history.push('/mess');
         }
-    }, [dispatch, props.history, success]);
+    }, [dispatch, props.history, success, userinfo]);
 
     const submitHandler = (e) => {
         e.preventDefault();

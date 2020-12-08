@@ -9,7 +9,7 @@ import Loader from '../components/loadercomponent';
 import Message from '../components/messagecomponent';
 
 const Handler = () => {
-    return(
+    return (
         <h3>Room is Empty</h3>
     );
 }
@@ -20,13 +20,20 @@ const RoomDetail = (props) => {
     const dispatch = useDispatch();
 
     const roomdetails = useSelector((state) => state.roomdetails);
-    const {loading, error, room} = roomdetails;
+    const { loading, error, room } = roomdetails;
+
+    const userlogin = useSelector((state) => state.userlogin);
+    const { userinfo } = userlogin;
 
     useEffect(() => {
-        dispatch(listroomdetails(props.match.params.id));
-    }, [dispatch, props.match]);
+        if (userinfo) {
+            dispatch(listroomdetails(props.match.params.id));
+        } else {
+            props.history.push('/login');
+        }
+    }, [dispatch, props.match, userinfo, props.history]);
 
-    return(
+    return (
         <>
             <Breadcrumb>
                 <Breadcrumb.Item><Link to="/rooms">Rooms</Link></Breadcrumb.Item>
@@ -36,17 +43,17 @@ const RoomDetail = (props) => {
             {
                 loading ? <Loader /> : error ? <Message variant='danger'>{`Error ${error.status}: ${error.statusText}`}</Message> :
                     room.inmates.length > 0 ?
-                    <Row className="start">
-                        {room.inmates.map((s) => {
-                            return (
-                            <Col key={s._id} sm={12} md={6} lg={4} xl={3}>
-                                <Student student={s} />
-                            </Col>)
-                        })}
-                    </Row>
-                    :
-                    <Handler />
-                
+                        <Row className="start">
+                            {room.inmates.map((s) => {
+                                return (
+                                    <Col key={s._id} sm={12} md={6} lg={4} xl={3}>
+                                        <Student student={s} />
+                                    </Col>)
+                            })}
+                        </Row>
+                        :
+                        <Handler />
+
             }
         </>
     );
