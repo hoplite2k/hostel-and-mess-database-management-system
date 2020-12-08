@@ -8,7 +8,7 @@ const CarouselComp = () => {
                 <Carousel.Item interval={3000}>
                     <img
                         className="d-block w-100 img-fit"
-                        src="images/Hostel1.JPG"
+                        src={window.location.origin + "/images/Hostel1.JPG"}
                         alt="Sir M. Visweswaraiah Block"
                     />
                     <Carousel.Caption>
@@ -18,7 +18,7 @@ const CarouselComp = () => {
                 <Carousel.Item interval={3000}>
                     <img
                         className="d-block w-100 img-fit"
-                        src="images/Hostel2.JPG"
+                        src={window.location.origin + "/images/Hostel2.JPG"}
                         alt="Diamond Jubilee Block"
                     />
                     <Carousel.Caption>
@@ -28,7 +28,7 @@ const CarouselComp = () => {
                 <Carousel.Item interval={3000}>
                     <img
                         className="d-block w-100 img-fit"
-                        src="images/Hostel3.JPG"
+                        src={window.location.origin + "/images/Hostel3.JPG"}
                         alt="Chamundi Block"
                     />
                     <Carousel.Caption>

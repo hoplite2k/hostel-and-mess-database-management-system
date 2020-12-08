@@ -35,7 +35,7 @@ const linear_regression = asyncHandler(async (req, res) => {
         const mlr = new MLR(x, y);
 
         let data = [];
-        for (let i = 20; i <= 50; i++) {
+        for (let i = 25; i <= 50; i++) {
             data.push([i, mlr.predict([month, day, i])[0]]);
         }
         res.send(data);

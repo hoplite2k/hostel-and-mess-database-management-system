@@ -20,10 +20,12 @@ const Room = (props) => {
     }
     if (props.room.roomallocationyear.toString() === year) {
         border = 'success';
+    } else {
+        border = 'danger';
     }
     return (
         <Link to={`/rooms/${props.room._id}`}>
-            <Card style={{ height: "300px" }} className="p-3 my-3 rounded" bg={variant} border={border}>
+            <Card style={{ height: "250px" }} className="p-3 my-3 rounded" bg={variant} border={border}>
                 <Card.Body>
                     <Card.Title as="div">
                         <center><h3><strong>{props.room.roomno}</strong></h3></center>
@@ -32,7 +34,7 @@ const Room = (props) => {
                         <ul className="card-text">
                             {
                                 props.room.inmates.map((s, i) => {
-                                    return <li><strong>{`Student ${i}`}</strong> {s ? s : " - "}</li>
+                                    return <li><strong>{`Student ${i + 1}`}</strong> {s ? (s.name).toUpperCase() : " - "}</li>
                                 })
                             }
                         </ul>

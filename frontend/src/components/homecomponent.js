@@ -5,7 +5,7 @@ function Home() {
     return (
         <>
             <Breadcrumb>
-                <Breadcrumb.Item href="#" active>Hostel</Breadcrumb.Item>
+                <Breadcrumb.Item href="#" active>RVCE Hostel</Breadcrumb.Item>
             </Breadcrumb>
             <div className="start">
                 <h3>R. V. College of Engineering</h3>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Breadcrumb, Row, Col, Image, Button, Modal } from 'react-bootstrap';
+import { Breadcrumb, Row, Col, Image, Button, Modal, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { liststudentdetails } from '../actions/studentactions';
@@ -20,6 +20,22 @@ function IDModal(props) {
             </Modal.Body>
         </Modal>
     );
+}
+
+const AdminButton = (props) => {
+    if (props.isadmin) {
+        return (
+            <h4>
+                <strong>{props.name}</strong>
+                <Badge variant="danger" className="badge-margin">Passed Out</Badge>
+            </h4>
+        );
+    }
+    else {
+        return (
+            <h3><strong>{props.name}</strong></h3>
+        );
+    }
 }
 
 const StudentDetail = (props) => {
@@ -54,15 +70,28 @@ const StudentDetail = (props) => {
                     <Row classname="start">
                         <Col md={12} lg={{ span: 4, offset: 1 }} className="py-5">
                             <Image src={student.image} alt={student.name} thumbnail />
+                            <br /> <br /> <br /> <br /> <br />
+                            <div className="person-details">
+                                <h4><u>Parent's Details</u></h4>
+                                <br />
+                                <p><strong>Father's Name: </strong>{student.parents.fname}</p>
+                                <p><strong>Mother's name: </strong>{student.parents.mname}</p>
+                                <p><strong>Parent's Address: </strong>{student.parents.address}</p>
+                                <p><strong>Parent's Email: </strong>{student.parents.email}</p>
+                                <p><strong>Parent's Contact: </strong>{student.parents.contact}</p>
+                            </div>
                         </Col>
                         <Col md={12} lg={{ span: 4, offset: 2 }}>
-                            <div className="person-name">
-                                {student.name}
+                            <div>
+                                <h4 className="person-name">
+                                    <AdminButton name={student.name} isadmin={student.ispassedout} />
+                                </h4>
                             </div>
                             <br />
                             <div className="person-details">
                                 <p><strong>USN: </strong>{student.usn}</p>
                                 <p><strong>Branch: </strong>{student.branch}</p>
+                                <p><strong>Year: </strong>{student.year}</p>
                                 <p><strong>Email: </strong>{student.email}</p>
                                 <p><strong>Contact: </strong>{student.contact}</p>
                                 <p><strong>DOB: </strong>{student.dob}</p>
@@ -72,6 +101,8 @@ const StudentDetail = (props) => {
                                 <p><strong>Penalties: </strong>{student.penalties}</p>
                                 <p><strong>Room Number: </strong>{student.roomno}</p>
                                 <p><strong>Roomate USN: </strong>{student.roomateusn}</p>
+                                <p><strong>Joining Year: </strong>{student.firstyear}</p>
+                                <p><strong>Blood Group: </strong>{student.bloodgrp}</p>
                                 <Button onClick={() => setModalShow(true)}>ID Proof</Button>
                                 <IDModal name={student.name} image={student.idproof} show={modalShow} onHide={() => setModalShow(false)} />
                             </div>
@@ -82,4 +113,4 @@ const StudentDetail = (props) => {
     );
 }
 
-export default StudentDetail;
+export default StudentDetail; 

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Breadcrumb, Row, Col, Button } from 'react-bootstrap';
+import { Breadcrumb, Row, Col, Button, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { listroomdetails } from '../actions/roomactions';
@@ -37,13 +37,28 @@ const RoomDetail = (props) => {
         <>
             <Breadcrumb>
                 <Breadcrumb.Item><Link to="/rooms">Rooms</Link></Breadcrumb.Item>
-                <Breadcrumb.Item href="#" active>Students</Breadcrumb.Item>
+                <Breadcrumb.Item href="#" active>{room.roomno}</Breadcrumb.Item>
             </Breadcrumb>
             <LinkContainer classname='my-3' to='/rooms'><Button variant="dark"><span className="fas fa-chevron-left"></span> Back</Button></LinkContainer>
             {
                 loading ? <Loader /> : error ? <Message variant='danger'>{`Error ${error.status}: ${error.statusText}`}</Message> :
                     room.inmates.length > 0 ?
                         <Row className="start">
+                            <Card style={{ height: "375px" }} className="p-3 my-3 rounded">
+                                <Card.Body>
+                                    <Card.Title as="div">
+                                        <center><h3><strong><u>Room Details</u></strong></h3></center>
+                                    </Card.Title>
+                                    <br /> <br />
+                                    <Card.Text>
+                                        <center><h5><strong>Room No : {room.roomno}</strong></h5></center>
+                                        <ul className="card-text">
+                                            <li>Room Allocation Year: {room.roomallocationyear}</li>
+                                            <li>Room Vacating Year: {room.roomvacatingyear}</li>
+                                        </ul>
+                                    </Card.Text>
+                                </Card.Body >
+                            </Card >
                             {room.inmates.map((s) => {
                                 return (
                                     <Col key={s._id} sm={12} md={6} lg={4} xl={3}>

@@ -85,6 +85,8 @@ const EmployeeDetail = (props) => {
                                 <p><strong>Contact: </strong>{employee.contact}</p>
                                 <p><strong>DOB: </strong>{employee.dob}</p>
                                 <p><strong>Address: </strong>{employee.address}</p>
+                                <p><strong>Blood Group: </strong>{employee.bloodgrp}</p>
+                                <p><strong>Role: </strong>{employee.role}</p>
                                 <Button onClick={() => setModalShow(true)}>ID Proof</Button>
                                 <IDModal name={employee.name} image={employee.idproof} show={modalShow} onHide={() => setModalShow(false)} />
                             </div>

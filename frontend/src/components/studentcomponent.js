@@ -37,7 +37,8 @@ const Student = (props) => {
                         <li>USN: {props.student.usn}</li>
                         <li>Room No.: {props.student.roomno}</li>
                         <li>Contact: {props.student.contact}</li>
-                        <li>Email: {props.student.email}</li>
+                        <li>Branch: {props.student.branch}</li>
+                        <li>Year: {props.student.year}</li>
                     </ul>
                 </Card.Text>
                 {userinfo && (
