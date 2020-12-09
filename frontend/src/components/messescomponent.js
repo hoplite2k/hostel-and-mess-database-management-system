@@ -96,8 +96,12 @@ const Messes = (props) => {
                                                         <Form.Label>Day</Form.Label>
                                                         <Form.Control as='select' value={day} onChange={(e) => setday(e.target.value)}>
                                                             {
-                                                                ["SELECT", "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"].map((d) => {
-                                                                    return <option key={d} value={d}>{d}</option>
+                                                                ["--select--", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"].map((d) => {
+                                                                    if (d === "--select--") {
+                                                                        return <option key={""} value={""}>{d}</option>
+                                                                    } else {
+                                                                        return <option key={d} value={d}>{d}</option>
+                                                                    }
                                                                 })
                                                             }
                                                         </Form.Control>

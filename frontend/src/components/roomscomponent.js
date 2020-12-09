@@ -54,6 +54,9 @@ const Rooms = (props) => {
             roomallocationyear, roomvacatingyear
         }));
         setshowdelform(false);
+        setroomallocationyear('');
+        setroomvacatingyear('');
+        setroomno('');
     }
 
     const addsubmitHandler = (e) => {
@@ -62,6 +65,9 @@ const Rooms = (props) => {
             roomallocationyear, roomvacatingyear
         }));
         setshowaddform(false);
+        setroomallocationyear('');
+        setroomvacatingyear('');
+        setroomno('');
     }
 
     const sersubmitHandler = (e) => {
@@ -70,6 +76,9 @@ const Rooms = (props) => {
             roomno, roomallocationyear, roomvacatingyear
         }));
         setshowserform(false);
+        setroomallocationyear('');
+        setroomvacatingyear('');
+        setroomno('');
     }
 
     const all = (e) => {

@@ -81,7 +81,7 @@ const EmployeeDetail = (props) => {
                             <br />
                             <div className="person-details">
                                 <p><strong>Staff ID: </strong>{employee.staffid}</p>
-                                <p><strong>Email: </strong>{employee.email}</p>
+                                <p><strong>Email: </strong><a href={`mailto:${employee.email}`}>{employee.email}</a></p>
                                 <p><strong>Contact: </strong>{employee.contact}</p>
                                 <p><strong>DOB: </strong>{employee.dob}</p>
                                 <p><strong>Address: </strong>{employee.address}</p>

@@ -136,15 +136,16 @@ const searchStudents = asyncHandler(async (req, res) => {
         if (req.body.name) { const name = req.body.name; if (name !== '') { dict['name'] = name; } }
         if (req.body.usn) { const usn = req.body.usn; if (usn !== '') { dict['usn'] = usn; } }
         if (req.body.branch) { const branch = req.body.branch; if (branch !== '') { dict['branch'] = branch; } }
-        if (req.body.year) { const year = req.body.year; if (year !== 'SELECT') { dict['year'] = year; } }
+        if (req.body.year) { const year = req.body.year; if (year !== '') { dict['year'] = year; } }
         if (req.body.roomno) { const roomno = req.body.roomno; if (roomno !== '') { dict['roomno'] = roomno; } }
         if (req.body.contact) { const contact = req.body.contact; if (contact !== '') { dict['contact'] = contact; } }
         if (req.body.email) { const email = req.body.email; if (email !== '') { dict['email'] = email; } }
+        if (req.body.bloodgrp) { const bloodgrp = req.body.bloodgrp; if (bloodgrp !== '') { dict['bloodgrp'] = bloodgrp; } }
         if (req.body.feespaid) { const feespaid = Number(req.body.feespaid); if (req.body.feespaid !== '') { dict['feespaid'] = { $gte: feespaid }; } }
         if (req.body.feesdue) { const feesdue = Number(req.body.feesdue); if (req.body.feesdue !== '') { dict['feesdue'] = { $gte: feesdue }; } }
         if (req.body.penalties) { const penalties = Number(req.body.penalties); if (req.body.penalties !== '') { dict['penalties'] = { $gte: penalties }; } }
         if (req.body.firstyear) { const firstyear = Number(req.body.firstyear); if (req.body.firstyear !== '') { dict['firstyear'] = firstyear; } }
-        if (req.body.ispassedout && req.body.ispassedout !== 'SELECT') { const ispassedout = req.body.ispassedout === 'YES' ? true : false; dict['ispassedout'] = ispassedout; }
+        if (req.body.ispassedout && req.body.ispassedout !== '') { const ispassedout = req.body.ispassedout === 'YES' ? true : false; dict['ispassedout'] = ispassedout; }
 
         const students = await Student.find(dict).sort({ ispassedout: 1, year: 1, name: 1 });
 

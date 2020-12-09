@@ -18,6 +18,7 @@ const Employees = (props) => {
     const [isadmin, setisadmin] = useState('');
     const [email, setemail] = useState('');
     const [contact, setcontact] = useState('');
+    const [bloodgrp, setbloodgrp] = useState('');
 
     const employeelist = useSelector((state) => state.employeelist);
     const { loading, error, employees } = employeelist;
@@ -42,7 +43,7 @@ const Employees = (props) => {
     const submitHandler = (e) => {
         e.preventDefault();
         dispatch(searchemployees({
-            name, staffid, contact, email, role, isadmin
+            name, staffid, contact, email, role, isadmin, bloodgrp
         }));
         setshowserform(false);
     }
@@ -82,6 +83,20 @@ const Employees = (props) => {
                                                         <Form.Label>Role</Form.Label>
                                                         <Form.Control type='text' value={role} onChange={(e) => setrole(e.target.value)}></Form.Control>
                                                     </Form.Group>
+                                                    <Form.Group controlId='isadmin'>
+                                                        <Form.Label>Admin</Form.Label>
+                                                        <Form.Control as='select' value={isadmin} onChange={(e) => setisadmin(e.target.value)}>
+                                                            {
+                                                                ["--SELECT--", "YES", "NO"].map((y) => {
+                                                                    if (y === "--SELECT--") {
+                                                                        return <option key={""} value={""}>{y}</option>
+                                                                    } else {
+                                                                        return <option key={y} value={y}>{y}</option>
+                                                                    }
+                                                                })
+                                                            }
+                                                        </Form.Control>
+                                                    </Form.Group>
                                                 </Col>
                                                 <Col xs={12} md={6}>
                                                     <Form.Group controlId='staffid'>
@@ -92,12 +107,16 @@ const Employees = (props) => {
                                                         <Form.Label>Email</Form.Label>
                                                         <Form.Control type='email' value={email} onChange={(e) => setemail(e.target.value)}></Form.Control>
                                                     </Form.Group>
-                                                    <Form.Group controlId='isadmin'>
-                                                        <Form.Label>Admin</Form.Label>
-                                                        <Form.Control as='select' value={isadmin} onChange={(e) => setisadmin(e.target.value)}>
+                                                    <Form.Group controlId='bloodgrp'>
+                                                        <Form.Label>Blood Group</Form.Label>
+                                                        <Form.Control as='select' value={bloodgrp} onChange={(e) => setbloodgrp(e.target.value)}>
                                                             {
-                                                                ["SELECT", "YES", "NO"].map((y) => {
-                                                                    return <option key={y} value={y}>{y}</option>
+                                                                ["--SELECT--", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map((y) => {
+                                                                    if (y === "--SELECT--") {
+                                                                        return <option key={""} value={""}>{y}</option>
+                                                                    } else {
+                                                                        return <option key={y} value={y}>{y}</option>
+                                                                    }
                                                                 })
                                                             }
                                                         </Form.Control>

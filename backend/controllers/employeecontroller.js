@@ -130,7 +130,8 @@ const searchEmployees = asyncHandler(async (req, res) => {
     if (req.body.contact) { const contact = req.body.contact; if (contact !== '') { dict['contact'] = contact; } }
     if (req.body.email) { const email = req.body.email; if (email !== '') { dict['email'] = email; } }
     if (req.body.role) { const role = req.body.role; if (role !== '') { dict['role'] = role; } }
-    if (req.body.isadmin && req.body.isadmin !== 'SELECT') { const isadmin = req.body.isadmin === 'YES' ? true : false; dict['isadmin'] = isadmin; }
+    if (req.body.bloodgrp) { const bloodgrp = req.body.bloodgrp; if (bloodgrp !== '') { dict['bloodgrp'] = bloodgrp; } }
+    if (req.body.isadmin && req.body.isadmin !== '') { const isadmin = req.body.isadmin === 'YES' ? true : false; dict['isadmin'] = isadmin; }
 
     const employees = await Employee.find(dict).sort({ isadmin: -1, name: 1 });
 

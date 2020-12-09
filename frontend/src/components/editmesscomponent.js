@@ -17,6 +17,11 @@ const Editmess = (props) => {
     const [rationused, setrationused] = useState(25);
     const [foodwasted, setfoodwasted] = useState(12);
 
+    const [errordate, seterrordate] = useState('');
+    const [errorday, seterrorday] = useState('');
+    const [errorrationused, seterrorrationused] = useState('');
+    const [errorfoodwasted, seterrorfoodwasted] = useState('');
+
     const dispatch = useDispatch();
 
     const messdetails = useSelector((state) => state.messdetails);
@@ -49,11 +54,48 @@ const Editmess = (props) => {
         }
     }, [dispatch, messid, mess, props.match, props.history, successupdate, userinfo]);
 
+    const validate = () => {
+        let res = true;
+
+        if (date === "") {
+            seterrordate("Enter a valid date");
+            res = false;
+        } else {
+            seterrordate("");
+        }
+
+        if (day === "") {
+            seterrorday("Enter a valid day");
+            res = false;
+        } else {
+            seterrorday("");
+        }
+
+        if (rationused === "") {
+            seterrorrationused("Enter a valid ration used");
+            res = false;
+        } else {
+            seterrorrationused("");
+        }
+
+        if (foodwasted === "") {
+            seterrorfoodwasted("Enter a valid food wasted");
+            res = false;
+        } else {
+            seterrorfoodwasted("");
+        }
+
+        return res;
+    }
+
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(updatemessdetails({
-            _id: messid, date, day, rationused, foodwasted
-        }));
+        const valid = validate();
+        if (valid) {
+            dispatch(updatemessdetails({
+                _id: messid, date, day, rationused, foodwasted
+            }));
+        }
     }
 
     return (
@@ -75,24 +117,32 @@ const Editmess = (props) => {
                             <Form.Group controlId='date'>
                                 <Form.Label>Date</Form.Label>
                                 <Form.Control type='date' placeholder='Enter Date' value={date} onChange={(e) => setdate((e.target.value).toString())}></Form.Control>
+                                <p style={{ color: 'red' }}>{errordate}</p>
                             </Form.Group>
                             <Form.Group controlId='day'>
                                 <Form.Label>Day</Form.Label>
                                 <Form.Control as='select' value={day} onChange={(e) => setday(e.target.value)}>
                                     {
-                                        ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"].map((d) => {
-                                            return <option key={d} value={d}>{d}</option>
+                                        ["--select--", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"].map((d) => {
+                                            if (d === "--select--") {
+                                                return <option key={""} value={""}>{d}</option>
+                                            } else {
+                                                return <option key={d} value={d}>{d}</option>
+                                            }
                                         })
                                     }
                                 </Form.Control>
+                                <p style={{ color: 'red' }}>{errorday}</p>
                             </Form.Group>
                             <Form.Group controlId='rationused'>
                                 <Form.Label>Ration Used</Form.Label>
                                 <Form.Control type='number' placeholder='Enter Ration Used' value={rationused} onChange={(e) => setrationused(e.target.value)}></Form.Control>
+                                <p style={{ color: 'red' }}>{errorrationused}</p>
                             </Form.Group>
                             <Form.Group controlId='foodwasted'>
                                 <Form.Label>Food Wasted</Form.Label>
                                 <Form.Control type='number' placeholder='Enter Food Wasted' value={foodwasted} onChange={(e) => setfoodwasted(e.target.value)}></Form.Control>
+                                <p style={{ color: 'red' }}>{errorfoodwasted}</p>
                             </Form.Group>
                             <Button type='submit' variant='primary'>Update</Button>
                         </Form>

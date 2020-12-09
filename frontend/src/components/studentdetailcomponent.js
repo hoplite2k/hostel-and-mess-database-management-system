@@ -92,7 +92,7 @@ const StudentDetail = (props) => {
                                 <p><strong>USN: </strong>{student.usn}</p>
                                 <p><strong>Branch: </strong>{student.branch}</p>
                                 <p><strong>Year: </strong>{student.year}</p>
-                                <p><strong>Email: </strong>{student.email}</p>
+                                <p><strong>Email: </strong><a href={`mailto:${student.email}`}>{student.email}</a></p>
                                 <p><strong>Contact: </strong>{student.contact}</p>
                                 <p><strong>DOB: </strong>{student.dob}</p>
                                 <p><strong>Address: </strong>{student.address}</p>

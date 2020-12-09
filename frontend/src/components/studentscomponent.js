@@ -23,6 +23,7 @@ const Students = (props) => {
     const [feesdue, setfeesdue] = useState('');
     const [penalties, setpenalties] = useState('');
     const [ispassedout, setispassedout] = useState('');
+    const [bloodgrp, setbloodgrp] = useState('');
 
     const studentlist = useSelector((state) => state.studentlist);
     const { loading, error, students } = studentlist;
@@ -50,7 +51,7 @@ const Students = (props) => {
     const submitHandler = (e) => {
         e.preventDefault();
         dispatch(searchstudents({
-            name, usn, branch, year, roomno, contact, email, feespaid, feesdue, penalties, firstyear, ispassedout
+            name, usn, branch, year, roomno, contact, email, feespaid, feesdue, penalties, firstyear, ispassedout, bloodgrp
         }));
         setshowserform(false);
     }
@@ -110,6 +111,20 @@ const Students = (props) => {
                                                         <Form.Label>Penalties</Form.Label>
                                                         <Form.Control type='text' value={penalties} onChange={(e) => setpenalties(e.target.value)}></Form.Control>
                                                     </Form.Group>
+                                                    <Form.Group controlId='ispassedout'>
+                                                        <Form.Label>Passed Out</Form.Label>
+                                                        <Form.Control as='select' value={ispassedout} onChange={(e) => setispassedout(e.target.value)}>
+                                                            {
+                                                                ["--SELECT--", "YES", "NO"].map((y) => {
+                                                                    if (y === "--SELECT--") {
+                                                                        return <option key={""} value={""}>{y}</option>
+                                                                    } else {
+                                                                        return <option key={y} value={y}>{y}</option>
+                                                                    }
+                                                                })
+                                                            }
+                                                        </Form.Control>
+                                                    </Form.Group>
                                                 </Col>
                                                 <Col xs={12} md={6}>
                                                     <Form.Group controlId='usn'>
@@ -120,8 +135,12 @@ const Students = (props) => {
                                                         <Form.Label>Year</Form.Label>
                                                         <Form.Control as='select' value={year} onChange={(e) => setyear(e.target.value)}>
                                                             {
-                                                                ["SELECT", "1", "2", "3", "4"].map((y) => {
-                                                                    return <option key={y} value={y}>{y}</option>
+                                                                ["--SELECT--", "1", "2", "3", "4"].map((y) => {
+                                                                    if (y === "--SELECT--") {
+                                                                        return <option key={""} value={""}>{y}</option>
+                                                                    } else {
+                                                                        return <option key={y} value={y}>{y}</option>
+                                                                    }
                                                                 })
                                                             }
                                                         </Form.Control>
@@ -138,12 +157,16 @@ const Students = (props) => {
                                                         <Form.Label>Fees Due</Form.Label>
                                                         <Form.Control type='text' value={feesdue} onChange={(e) => setfeesdue(e.target.value)}></Form.Control>
                                                     </Form.Group>
-                                                    <Form.Group controlId='ispassedout'>
-                                                        <Form.Label>Passed Out</Form.Label>
-                                                        <Form.Control as='select' value={ispassedout} onChange={(e) => setispassedout(e.target.value)}>
+                                                    <Form.Group controlId='bloodgrp'>
+                                                        <Form.Label>Blood Group</Form.Label>
+                                                        <Form.Control as='select' value={bloodgrp} onChange={(e) => setbloodgrp(e.target.value)}>
                                                             {
-                                                                ["SELECT", "YES", "NO"].map((y) => {
-                                                                    return <option key={y} value={y}>{y}</option>
+                                                                ["--SELECT--", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map((y) => {
+                                                                    if (y === "--SELECT--") {
+                                                                        return <option key={""} value={""}>{y}</option>
+                                                                    } else {
+                                                                        return <option key={y} value={y}>{y}</option>
+                                                                    }
                                                                 })
                                                             }
                                                         </Form.Control>
