@@ -2,7 +2,7 @@ import asyncHandler from "express-async-handler";
 import Room from "../models/roommodel.js";
 
 const getallRooms = asyncHandler(async (req, res) => {
-  const rooms = await Room.find({}).sort({ roomallocationyear: 1, roomno: 1 }).populate('inmates');
+  const rooms = await Room.find({}).sort({ roomallocationyear: -1, roomno: 1 }).populate('inmates');
 
   res.json(rooms);
 });

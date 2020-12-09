@@ -42,8 +42,8 @@ const MessDetail = (props) => {
                             <br />
                             <div className="person-details">
                                 <p><strong>Day: </strong>{mess.day}</p>
-                                <p><strong>Ration Used: </strong>{mess.rationused}</p>
-                                <p><strong>Food Wasted: </strong>{mess.foodwasted}</p>
+                                <p><strong>Ration Used: </strong>{mess.rationused} Kgs</p>
+                                <p><strong>Food Wasted: </strong>{mess.foodwasted} Kgs</p>
                             </div>
                         </Col>
                     </Row>
