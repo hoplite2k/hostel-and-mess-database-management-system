@@ -13,7 +13,7 @@ export const login = (id, password) => async (dispatch) => {
             }
         };
 
-        const { data } = await axios.post('/users/login', { id, password }, config);
+        const { data } = await axios.post('/api/users/login', { id, password }, config);
 
         dispatch({
             type: USER_LOGIN_SUCCESS,
@@ -56,7 +56,7 @@ export const getuserdetails = (id) => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.get(`/users/${id}`, config);
+        const { data } = await axios.get(`/api/users/${id}`, config);
 
         dispatch({
             type: USER_DETAILS_SUCCESS,
@@ -86,7 +86,7 @@ export const updateuserpassword = (user) => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.put(`/users/profile`, user, config);
+        const { data } = await axios.put(`/api/users/profile`, user, config);
 
         dispatch({
             type: USER_UPDATE_PASSWORD_SUCCESS,

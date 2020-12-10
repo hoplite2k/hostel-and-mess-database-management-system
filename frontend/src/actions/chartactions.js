@@ -13,7 +13,7 @@ export const getchart = () => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.get('/ml', config);
+        const { data } = await axios.get('/api/ml', config);
         dispatch({
             type: CHART_SUCCESS,
             payload: data,

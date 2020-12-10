@@ -13,7 +13,7 @@ export const listrooms = () => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.get('/rooms', config);
+        const { data } = await axios.get('/api/rooms', config);
         dispatch({
             type: ROOM_LIST_SUCCESS,
             payload: data,
@@ -38,7 +38,7 @@ export const listroomdetails = (id) => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.get(`/rooms/${id}`, config);
+        const { data } = await axios.get(`/api/rooms/${id}`, config);
         dispatch({
             type: ROOM_DETAILS_SUCCESS,
             payload: data,
@@ -65,7 +65,7 @@ export const roomsetdelete = (room) => async (dispatch, getState) => {
             data: room
         };
 
-        await axios.delete('/rooms', config);
+        await axios.delete('/api/rooms', config);
         dispatch({
             type: ROOMSET_DELETE_SUCCESS,
         });
@@ -90,7 +90,7 @@ export const addnewroomset = (room) => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.post(`/rooms`, room, config);
+        const { data } = await axios.post(`/api/rooms`, room, config);
         dispatch({
             type: ROOMSET_ADD_SUCCESS,
             payload: data
@@ -116,7 +116,7 @@ export const searchrooms = (room) => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.post('/rooms/search', room, config);
+        const { data } = await axios.post('/api/rooms/search', room, config);
         dispatch({
             type: ROOM_SEARCH_SUCCESS,
             payload: data,
@@ -141,7 +141,7 @@ export const listallrooms = () => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.get('/rooms/all', config);
+        const { data } = await axios.get('/api/rooms/all', config);
         dispatch({
             type: ROOM_LIST_ALL_SUCCESS,
             payload: data,

@@ -13,7 +13,7 @@ export const listemployees = () => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.get('/employees', config);
+        const { data } = await axios.get('/api/employees', config);
         dispatch({
             type: EMPLOYEE_LIST_SUCCESS,
             payload: data,
@@ -38,7 +38,7 @@ export const listemployeesdetails = (id) => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.get(`/employees/${id}`, config);
+        const { data } = await axios.get(`/api/employees/${id}`, config);
         dispatch({
             type: EMPLOYEE_DETAILS_SUCCESS,
             payload: data,
@@ -63,7 +63,7 @@ export const deleteemployeedetails = (id) => async (dispatch, getState) => {
             }
         };
 
-        await axios.delete(`/employees/${id}`, config);
+        await axios.delete(`/api/employees/${id}`, config);
         dispatch({
             type: EMPLOYEE_DELETE_SUCCESS,
         });
@@ -88,7 +88,7 @@ export const updateemployeedetails = (employee) => async (dispatch, getState) =>
             }
         };
 
-        const { data } = await axios.put(`/employees/${employee._id}`, employee, config);
+        const { data } = await axios.put(`/api/employees/${employee._id}`, employee, config);
 
         dispatch({
             type: EMPLOYEE_UPDATE_SUCCESS,
@@ -119,7 +119,7 @@ export const addnewemployee = (employee) => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.post(`/employees`, employee, config);
+        const { data } = await axios.post(`/api/employees`, employee, config);
         dispatch({
             type: EMPLOYEE_ADD_SUCCESS,
             payload: data
@@ -145,7 +145,7 @@ export const searchemployees = (employee) => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.post('/employees/search', employee, config);
+        const { data } = await axios.post('/api/employees/search', employee, config);
         dispatch({
             type: EMPLOYEE_SEARCH_SUCCESS,
             payload: data,

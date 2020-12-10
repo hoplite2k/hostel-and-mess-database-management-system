@@ -13,7 +13,7 @@ export const liststudents = () => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.get('/students', config);
+        const { data } = await axios.get('/api/students', config);
         dispatch({
             type: STUDENT_LIST_SUCCESS,
             payload: data,
@@ -38,7 +38,7 @@ export const liststudentdetails = (id) => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.get(`/students/${id}`, config);
+        const { data } = await axios.get(`/api/students/${id}`, config);
         dispatch({
             type: STUDENT_DETAILS_SUCCESS,
             payload: data,
@@ -63,7 +63,7 @@ export const deletestudentdetails = (id) => async (dispatch, getState) => {
             }
         };
 
-        await axios.delete(`/students/${id}`, config);
+        await axios.delete(`/api/students/${id}`, config);
         dispatch({
             type: STUDENT_DELETE_SUCCESS,
         });
@@ -88,7 +88,7 @@ export const updatestudentdetails = (student) => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.put(`/students/${student._id}`, student, config);
+        const { data } = await axios.put(`/api/students/${student._id}`, student, config);
 
         dispatch({
             type: STUDENT_UPDATE_SUCCESS,
@@ -119,7 +119,7 @@ export const addnewstudent = (student) => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.post(`/students`, student, config);
+        const { data } = await axios.post(`/api/students`, student, config);
         dispatch({
             type: STUDENT_ADD_SUCCESS,
             payload: data
@@ -145,7 +145,7 @@ export const searchstudents = (student) => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.post('/students/search', student, config);
+        const { data } = await axios.post('/api/students/search', student, config);
         dispatch({
             type: STUDENT_SEARCH_SUCCESS,
             payload: data,
@@ -170,7 +170,7 @@ export const listallstudents = () => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.get('/students/all', config);
+        const { data } = await axios.get('/api/students/all', config);
         dispatch({
             type: STUDENT_LIST_ALL_SUCCESS,
             payload: data,

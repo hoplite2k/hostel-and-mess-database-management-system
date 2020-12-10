@@ -88,7 +88,7 @@ const Editemployee = (props) => {
                 }
             }
 
-            const { data } = await axios.post('/uploads/profile/employee', formData, config);
+            const { data } = await axios.post('/api/uploads/profile/employee', formData, config);
             setimage(data);
             setuploading(false);
         } catch (error) {
@@ -109,7 +109,7 @@ const Editemployee = (props) => {
                 }
             }
 
-            const { data } = await axios.post('/uploads/identity/employee', formData, config);
+            const { data } = await axios.post('/api/uploads/identity/employee', formData, config);
             setidproof(data);
             setuploading(false);
         } catch (error) {
@@ -124,7 +124,7 @@ const Editemployee = (props) => {
         if (!(/^[a-zA-z]{2,20}$/.test(name))) {
             seterrorname("Enter a valid name with 2-10 characters");
             res = false;
-        } else {    
+        } else {
             seterrorname("");
         }
 

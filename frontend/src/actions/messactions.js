@@ -13,7 +13,7 @@ export const listmess = () => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.get('/mess', config);
+        const { data } = await axios.get('/api/mess', config);
         dispatch({
             type: MESS_LIST_SUCCESS,
             payload: data,
@@ -38,7 +38,7 @@ export const listmessdetails = (id) => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.get(`/mess/${id}`, config);
+        const { data } = await axios.get(`/api/mess/${id}`, config);
         dispatch({
             type: MESS_DETAILS_SUCCESS,
             payload: data,
@@ -63,7 +63,7 @@ export const deletemessdetails = (id) => async (dispatch, getState) => {
             }
         };
 
-        await axios.delete(`/mess/${id}`, config);
+        await axios.delete(`/api/mess/${id}`, config);
         dispatch({
             type: MESS_DELETE_SUCCESS,
         });
@@ -88,7 +88,7 @@ export const updatemessdetails = (mess) => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.put(`/mess/${mess._id}`, mess, config);
+        const { data } = await axios.put(`/api/mess/${mess._id}`, mess, config);
 
         dispatch({
             type: MESS_UPDATE_SUCCESS,
@@ -119,7 +119,7 @@ export const addnewmess = (mess) => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.post(`/mess`, mess, config);
+        const { data } = await axios.post(`/api/mess`, mess, config);
         dispatch({
             type: MESS_ADD_SUCCESS,
             payload: data
@@ -145,7 +145,7 @@ export const searchmess = (mess) => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.post('/mess/search', mess, config);
+        const { data } = await axios.post('/api/mess/search', mess, config);
         dispatch({
             type: MESS_SEARCH_SUCCESS,
             payload: data,
@@ -170,7 +170,7 @@ export const listallmess = () => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.get('/mess/all', config);
+        const { data } = await axios.get('/api/mess/all', config);
         dispatch({
             type: MESS_LIST_ALL_SUCCESS,
             payload: data,

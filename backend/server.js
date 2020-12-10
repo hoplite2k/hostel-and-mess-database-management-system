@@ -25,16 +25,16 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-app.use(express.json({ extended: false }));
+app.use(express.json());
 
-app.use("/students", Studentrouter);
-app.use("/employees", Employeerouter);
-app.use("/rooms", Roomrouter);
-app.use("/mess", Messrouter);
-app.use("/users", Userrouter);
-app.use("/uploads/profile", Uploadprofilerouter);
-app.use("/uploads/identity", Uploadidentityrouter);
-app.use("/ml", MLrouter);
+app.use("/api/students", Studentrouter);
+app.use("/api/employees", Employeerouter);
+app.use("/api/rooms", Roomrouter);
+app.use("/api/mess", Messrouter);
+app.use("/api/users", Userrouter);
+app.use("/api/uploads/profile", Uploadprofilerouter);
+app.use("/api/uploads/identity", Uploadidentityrouter);
+app.use("/api/ml", MLrouter);
 
 const __dirname = path.resolve();
 app.use('/database/uploads/', express.static(path.join(__dirname, '/database/uploads/')));

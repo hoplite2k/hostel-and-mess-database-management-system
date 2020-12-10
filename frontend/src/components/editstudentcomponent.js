@@ -124,7 +124,7 @@ const Editstudent = (props) => {
                 }
             }
 
-            const { data } = await axios.post('/uploads/profile/student', formData, config);
+            const { data } = await axios.post('/api/uploads/profile/student', formData, config);
             setimage(data);
             setuploading(false);
         } catch (error) {
@@ -145,7 +145,7 @@ const Editstudent = (props) => {
                 }
             }
 
-            const { data } = await axios.post('/uploads/identity/student', formData, config);
+            const { data } = await axios.post('/api/uploads/identity/student', formData, config);
             setidproof(data);
             setuploading(false);
         } catch (error) {

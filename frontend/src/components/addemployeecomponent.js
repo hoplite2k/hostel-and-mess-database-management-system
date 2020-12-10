@@ -68,7 +68,7 @@ const Addemployee = (props) => {
                 }
             }
 
-            const { data } = await axios.post('/uploads/profile/employee', formData, config);
+            const { data } = await axios.post('/api/uploads/profile/employee', formData, config);
             setimage(data);
             setuploading(false);
         } catch (error) {
@@ -89,7 +89,7 @@ const Addemployee = (props) => {
                 }
             }
 
-            const { data } = await axios.post('/uploads/identity/employee', formData, config);
+            const { data } = await axios.post('/api/uploads/identity/employee', formData, config);
             setidproof(data);
             setuploading(false);
         } catch (error) {
