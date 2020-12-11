@@ -25,15 +25,17 @@ function IDModal(props) {
 const AdminButton = (props) => {
     if (props.isadmin) {
         return (
-            <h4>
+            <div className="person-name">
                 <strong>{props.name}</strong>
                 <Badge variant="danger" className="badge-margin">Passed Out</Badge>
-            </h4>
+            </div>
         );
     }
     else {
         return (
-            <h3><strong>{props.name}</strong></h3>
+            <div className="person-name">
+                <strong>{props.name}</strong>
+            </div>
         );
     }
 }
@@ -72,7 +74,7 @@ const StudentDetail = (props) => {
                             <Image src={student.image} alt={student.name} thumbnail />
                             <br /> <br /> <br /> <br /> <br />
                             <div className="person-details">
-                                <h4><u>Parent's Details</u></h4>
+                                <div className='parent-detail-header'>Parent's Details</div>
                                 <br />
                                 <p><strong>Father's Name: </strong>{student.parents.fname}</p>
                                 <p><strong>Mother's name: </strong>{student.parents.mname}</p>
@@ -83,9 +85,7 @@ const StudentDetail = (props) => {
                         </Col>
                         <Col md={12} lg={{ span: 4, offset: 2 }}>
                             <div>
-                                <h4 className="person-name">
-                                    <AdminButton name={student.name} isadmin={student.ispassedout} />
-                                </h4>
+                                <AdminButton name={student.name} isadmin={student.ispassedout} />
                             </div>
                             <br />
                             <div className="person-details">

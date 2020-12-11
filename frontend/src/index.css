@@ -33,8 +33,13 @@ footer{
 
 .person-name{
     font-family: 'Times New Roman', Times, serif;
-    font-size: 50px;
-    text-decoration: underline;
+    font-size: xx-large;
+    color: black;
+}
+
+.parent-detail-header{
+    font-size: large;
+    color: black;
 }
 
 .person-details{

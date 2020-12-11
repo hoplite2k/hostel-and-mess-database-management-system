@@ -19,6 +19,8 @@ const Messes = (props) => {
     const [rationused, setrationused] = useState(0);
     const [foodwasted, setfoodwasted] = useState(0);
 
+    const [search, setsearch] = useState(true);
+
     const messlist = useSelector((state) => state.messlist);
     const { loading, error, messes } = messlist;
 
@@ -48,6 +50,7 @@ const Messes = (props) => {
             date, day, rationused, foodwasted, yearmonth
         }));
         setshowserform(false);
+        setsearch(false);
     }
 
     const all = (e) => {
@@ -119,19 +122,20 @@ const Messes = (props) => {
                             </>
                         }
                         <br />
-                        {searchloading ? <Loader /> : searcherror ? (<><br /><Message variant='danger'>{searcherror.status ? `Error ${searcherror.status}: ${searcherror.statusText}` : searcherror}</Message></>) : ""}
-                        {allloading ? <Loader /> : allerror ? (<><br /><Message variant='danger'>{allerror.status ? `Error ${allerror.status}: ${allerror.statusText}` : allerror}</Message></>) : ""}
                         <br />
                         <Chartcomponent />
                         <br />
                         <br />
-                        <h2>Mess</h2>
+                        {searchloading ? <Loader /> : searcherror ? (<><br /><Message variant='danger'>{searcherror.status ? `Error ${searcherror.status}: ${searcherror.statusText}` : searcherror}</Message></>) : ""}
+                        {allloading ? <Loader /> : allerror ? (<><br /><Message variant='danger'>{allerror.status ? `Error ${allerror.status}: ${allerror.statusText}` : allerror}</Message></>) : ""}
+                        {
+                            (search || allsuccess || searchsuccess) && (<><h2>Mess</h2> <br /></>)
+                        }
                         <Row>
                             {
-                                sermesses && (sermesses === [] || searchsuccess !== true) && (allmesses === [] || allsuccess !== true) && messes.map((mess) => (
-                                    <Col key={mess._id} sm={12} md={6} lg={4} xl={3}>
-                                        <Mess mess={mess} />
-                                    </Col>
+                                search && sermesses && (sermesses === [] || searchsuccess !== true) && (allmesses === [] || allsuccess !== true) && messes.map((mess) => (<Col key={mess._id} sm={12} md={6} lg={4} xl={3}>
+                                    <Mess mess={mess} />
+                                </Col>
                                 ))
                             }
                             {

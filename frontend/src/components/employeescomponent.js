@@ -20,6 +20,8 @@ const Employees = (props) => {
     const [contact, setcontact] = useState('');
     const [bloodgrp, setbloodgrp] = useState('');
 
+    const [search, setsearch] = useState(true);
+
     const employeelist = useSelector((state) => state.employeelist);
     const { loading, error, employees } = employeelist;
 
@@ -46,6 +48,7 @@ const Employees = (props) => {
             name, staffid, contact, email, role, isadmin, bloodgrp
         }));
         setshowserform(false);
+        setsearch(false);
     }
 
     return (
@@ -132,7 +135,7 @@ const Employees = (props) => {
                         <br />
                         {searchloading ? <Loader /> : searcherror ? (<><br /><Message variant='danger'>{searcherror.status ? `Error ${searcherror.status}: ${searcherror.statusText}` : searcherror}</Message></>) : ""}
                         <Row>
-                            {employees && (seremployees === [] || searchsuccess !== true) && employees.map((employee) => (
+                            {search && employees && (seremployees === [] || searchsuccess !== true) && employees.map((employee) => (
                                 <Col key={employee._id} sm={12} md={6} lg={4} xl={3}>
                                     <Employee employee={employee} />
                                 </Col>

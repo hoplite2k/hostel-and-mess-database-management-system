@@ -25,15 +25,17 @@ function IDModal(props) {
 const AdminButton = (props) => {
     if (props.isadmin) {
         return (
-            <h3>
+            <div className='person-name'>
                 <strong>{props.name}</strong>
                 <Badge variant="danger" className="badge-margin">Admin</Badge>
-            </h3>
+            </div>
         );
     }
     else {
         return (
-            <h3><strong>{props.name}</strong></h3>
+            <div className='person-name'>
+                <strong>{props.name}</strong>
+            </div>
         );
     }
 }
@@ -74,9 +76,7 @@ const EmployeeDetail = (props) => {
                         </Col>
                         <Col md={12} lg={{ span: 4, offset: 2 }}>
                             <div>
-                                <h4 className="person-name">
-                                    <AdminButton name={employee.name} isadmin={employee.isadmin} />
-                                </h4>
+                                <AdminButton name={employee.name} isadmin={employee.isadmin} />
                             </div>
                             <br />
                             <div className="person-details">

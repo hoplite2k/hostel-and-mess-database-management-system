@@ -25,6 +25,8 @@ const Students = (props) => {
     const [ispassedout, setispassedout] = useState('');
     const [bloodgrp, setbloodgrp] = useState('');
 
+    const [search, setsearch] = useState(true);
+
     const studentlist = useSelector((state) => state.studentlist);
     const { loading, error, students } = studentlist;
 
@@ -54,6 +56,7 @@ const Students = (props) => {
             name, usn, branch, year, roomno, contact, email, feespaid, feesdue, penalties, firstyear, ispassedout, bloodgrp
         }));
         setshowserform(false);
+        setsearch(false);
     }
 
     const all = (e) => {
@@ -183,7 +186,7 @@ const Students = (props) => {
                         {allloading ? <Loader /> : allerror ? (<><br /><Message variant='danger'>{allerror.status ? `Error ${allerror.status}: ${allerror.statusText}` : allerror}</Message></>) : ""}
                         <Row>
                             {
-                                students && (serstudents === [] || searchsuccess !== true) && (allstudents === [] || allsuccess !== true) && students.map((student) => (
+                                search && students && (serstudents === [] || searchsuccess !== true) && (allstudents === [] || allsuccess !== true) && students.map((student) => (
                                     <Col key={student._id} sm={12} md={6} lg={4} xl={3}>
                                         <Student student={student} />
                                     </Col>

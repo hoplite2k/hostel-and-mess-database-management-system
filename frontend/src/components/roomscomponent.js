@@ -18,6 +18,8 @@ const Rooms = (props) => {
     const [roomvacatingyear, setroomvacatingyear] = useState('');
     const [roomno, setroomno] = useState('');
 
+    const [search, setsearch] = useState(true);
+
     const roomlist = useSelector((state) => state.roomlist);
     const { loading, error, rooms } = roomlist;
 
@@ -79,6 +81,7 @@ const Rooms = (props) => {
         setroomallocationyear('');
         setroomvacatingyear('');
         setroomno('');
+        setsearch(false);
     }
 
     const all = (e) => {
@@ -176,7 +179,7 @@ const Rooms = (props) => {
                         {allloading ? <Loader /> : allerror ? (<><br /><Message variant='danger'>{allerror.status ? `Error ${allerror.status}: ${allerror.statusText}` : allerror}</Message></>) : ""}
                         <Row>
                             {
-                                rooms && (serrooms === [] || searchsuccess !== true) && (allrooms === [] || allsuccess !== true) && rooms.map((room) => (
+                                search && rooms && (serrooms === [] || searchsuccess !== true) && (allrooms === [] || allsuccess !== true) && rooms.map((room) => (
                                     <Col key={room._id} sm={12} md={6} lg={4} xl={3}>
                                         <Room room={room} />
                                     </Col>
