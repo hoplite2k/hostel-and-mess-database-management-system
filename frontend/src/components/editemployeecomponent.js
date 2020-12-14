@@ -227,7 +227,7 @@ const Editemployee = (props) => {
                             </Form.Group>
                             <Form.Group controlId='staffid'>
                                 <Form.Label>Staff ID</Form.Label>
-                                <Form.Control type='text' placeholder='Enter staffid' value={staffid} onChange={(e) => setstaffid(e.target.value)}></Form.Control>
+                                <Form.Control type='text' placeholder='Enter staffid' value={staffid} onChange={(e) => setstaffid(e.target.value)} disabled></Form.Control>
                                 <p style={{ color: 'red' }}>{errorstaffid}</p>
                             </Form.Group>
                             <Form.Group controlId='image'>

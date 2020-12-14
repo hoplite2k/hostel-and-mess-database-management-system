@@ -40,16 +40,23 @@ const deleteMess = asyncHandler(async (req, res) => {
 
 const addMess = asyncHandler(async (req, res) => {
   if (req.body) {
-    const mess = new Mess({
-      user: req.user._id,
-      date: req.body.date,
-      day: req.body.day,
-      rationused: req.body.rationused,
-      foodwasted: req.body.foodwasted
-    });
-    const newmess = await mess.save();
 
-    res.status(201).json(newmess);
+    const exist = await Mess.find({ date: req.body.date });
+
+    if (exist[0]) {
+      throw new Error("Mess Details on this date already exists")
+    } else {
+      const mess = new Mess({
+        user: req.user._id,
+        date: req.body.date,
+        day: req.body.day,
+        rationused: req.body.rationused,
+        foodwasted: req.body.foodwasted
+      });
+      const newmess = await mess.save();
+
+      res.status(201).json(newmess);
+    }
   } else {
     res.status(400);
     throw new Error('Could not add mess details');

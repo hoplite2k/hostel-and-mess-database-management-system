@@ -41,7 +41,7 @@ const Student = (props) => {
                         <li>Year: {props.student.year}</li>
                     </ul>
                 </Card.Text>
-                {userinfo && (
+                {userinfo && userinfo.isadmin && (
                     <div className="bottom-right">
                         <LinkContainer to={`/students/${props.student._id}/edit`}><Button variant='success'><span className="fas fa-edit"></span></Button></LinkContainer>{' '}
                         <Button variant='danger' onClick={() => deleteHandler(props.student._id)}><span className="fas fa-trash-alt"></span></Button>

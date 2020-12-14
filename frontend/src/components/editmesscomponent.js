@@ -116,7 +116,7 @@ const Editmess = (props) => {
                         <Form onSubmit={submitHandler}>
                             <Form.Group controlId='date'>
                                 <Form.Label>Date</Form.Label>
-                                <Form.Control type='date' placeholder='Enter Date' value={date} onChange={(e) => setdate((e.target.value).toString())}></Form.Control>
+                                <Form.Control type='date' placeholder='Enter Date' value={date} onChange={(e) => setdate((e.target.value).toString())} disabled></Form.Control>
                                 <p style={{ color: 'red' }}>{errordate}</p>
                             </Form.Group>
                             <Form.Group controlId='day'>

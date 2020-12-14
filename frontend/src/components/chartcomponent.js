@@ -6,7 +6,7 @@ import { getchart } from '../actions/chartactions';
 import Loader from '../components/loadercomponent';
 import Message from '../components/messagecomponent';
 
-const Chartcomponent = (props) => {
+const Chartcomponent = () => {
 
     const dispatch = useDispatch();
 
@@ -17,12 +17,10 @@ const Chartcomponent = (props) => {
     const { loading, error, data } = chart;
 
     useEffect(() => {
-        if (!userinfo) {
-            props.history.push('/login');
-        } else {
+        if (userinfo) {
             dispatch(getchart());
         }
-    }, [dispatch, props.history, userinfo]);
+    }, [dispatch, userinfo]);
 
     const datas = useMemo(
         () => [

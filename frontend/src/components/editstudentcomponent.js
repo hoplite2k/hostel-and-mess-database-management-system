@@ -312,7 +312,7 @@ const Editstudent = (props) => {
                             </Form.Group>
                             <Form.Group controlId='usn'>
                                 <Form.Label>Usn</Form.Label>
-                                <Form.Control type='text' placeholder='Enter Usn' value={usn} onChange={(e) => setusn(e.target.value)}></Form.Control>
+                                <Form.Control type='text' placeholder='Enter Usn' value={usn} onChange={(e) => setusn(e.target.value)} disabled></Form.Control>
                                 <p style={{ color: 'red' }}>{errorusn}</p>
                             </Form.Group>
                             <Form.Group controlId='image'>

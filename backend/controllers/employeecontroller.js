@@ -33,55 +33,63 @@ const deleteEmployee = asyncHandler(async (req, res) => {
 });
 
 const addEmployee = asyncHandler(async (req, res) => {
+
   if (req.body) {
-    const employee = new Employee({
-      user: req.user._id,
-      name: req.body.name,
-      staffid: req.body.staffid,
-      image: req.body.image,
-      dob: req.body.dob,
-      idproof: req.body.idproof,
-      contact: req.body.contact,
-      email: req.body.email,
-      address: req.body.address,
-      bloodgrp: req.body.bloodgrp,
-      role: req.body.role,
-      isadmin: req.body.isadmin
-    });
-    const newemployee = await employee.save();
 
-    const transporter = nodemailer.createTransport({
-      service: process.env.MAIL_SERVICE,
-      auth: {
-        user: process.env.ADMIN_MAIL_ID,
-        pass: process.env.ADMIN_MAIL_PASSWORD
-      }
-    });
+    const exist = await Employee.find({ staffid: req.body.staffid });
 
-    const mailOptions = {
-      from: process.env.ADMIN_MAIL_ID,
-      to: newemployee.email,
-      subject: 'Welcome to the Hostel!',
-      html: `<div style="font-family: Arial"><h1>Welcome</h1><p>Hello,</p><p>You have been successfully registerd as an Employee in the Hostel</p><p>You have your account in our portal, please change your password when you login for the first time</p><div><p>Credentials:</p><ul><li>user id: <em>${req.body.staffid}</em></li><li>password: <em>${process.env.USER_DEFAULT_PASSWORD}</em></li></ul></div></div>`
-    };
+    if (exist[0]) {
+      throw new Error("Employee with same StaffID already exists");
+    } else {
+      const employee = new Employee({
+        user: req.user._id,
+        name: req.body.name,
+        staffid: req.body.staffid,
+        image: req.body.image,
+        dob: req.body.dob,
+        idproof: req.body.idproof,
+        contact: req.body.contact,
+        email: req.body.email,
+        address: req.body.address,
+        bloodgrp: req.body.bloodgrp,
+        role: req.body.role,
+        isadmin: req.body.isadmin
+      });
+      const newemployee = await employee.save();
 
-    User.create({
-      name: req.body.name,
-      id: req.body.staffid,
-      password: process.env.USER_DEFAULT_PASSWORD,
-      isadmin: req.body.isadmin,
-      employeeid: newemployee._id
-    });
+      const transporter = nodemailer.createTransport({
+        service: process.env.MAIL_SERVICE,
+        auth: {
+          user: process.env.ADMIN_MAIL_ID,
+          pass: process.env.ADMIN_MAIL_PASSWORD
+        }
+      });
 
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log('Email sent: ' + info.response);
-      }
-    });
+      const mailOptions = {
+        from: process.env.ADMIN_MAIL_ID,
+        to: newemployee.email,
+        subject: 'Welcome to the Hostel!',
+        html: `<div style="font-family: Arial"><h1>Welcome</h1><p>Hello,</p><p>You have been successfully registerd as an Employee in the Hostel</p><p>You have your account in our portal, please change your password when you login for the first time</p><div><p>Credentials:</p><ul><li>user id: <em>${req.body.staffid}</em></li><li>password: <em>${process.env.USER_DEFAULT_PASSWORD}</em></li></ul></div></div>`
+      };
 
-    res.status(201).json(newemployee);
+      User.create({
+        name: req.body.name,
+        id: req.body.staffid,
+        password: process.env.USER_DEFAULT_PASSWORD,
+        isadmin: req.body.isadmin,
+        employeeid: newemployee._id
+      });
+
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+
+      res.status(201).json(newemployee);
+    }
   } else {
     res.status(400);
     throw new Error('Could not add employee');
